@@ -1,0 +1,157 @@
+/* Ajustes generales del body: letra, color de fondo y texto */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff7f8; /* Fondo rosita claro */
+  color: #2b2b2b;
+}
+
+/* Encabezado con fondo rojo oscuro, texto blanco y distribución horizontal */
+header {
+  background-color: #6b0014;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Agrupa el logo y el nombre */
+.logo-nombre {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Tamaño del logo */
+.logo {
+  height: 60px;
+}
+
+/* Estilo del texto del nombre del cole */
+.nombre-colegio {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Menú de navegación dentro del header */
+nav a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Subrayado cuando el mouse pasa o cuando está activo */
+nav a:hover,
+nav a.activo {
+  text-decoration: underline;
+}
+
+/* Contenedor principal con dos columnas: info y mapa */
+main.contenido-doble {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  height: 1000px;
+}
+
+/* Caja con la información de contacto */
+.info-contacto {
+  flex: 1 1 500px;
+  min-width: 280px;
+}
+
+/* Caja donde está el mapa */
+.mapa-contacto {
+  flex: 1 1 500px;
+  min-width: 280px;
+  height: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Título principal */
+h1 {
+  font-size: 32px;
+  color: #6b0014;
+  margin-bottom: 20px;
+}
+
+/* Títulos secundarios */
+h2 {
+  font-size: 24px;
+  color: #990033;
+  margin-top: 30px;
+}
+
+/* Lista sin viñetas visibles */
+ul {
+  padding-left: 20px;
+}
+
+/* Elementos de la lista */
+li {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+/* Párrafos normales */
+p {
+  font-size: 16px;
+}
+
+/* Ajustes para pantallas medianas o tablets */
+@media (max-width: 1024px) {
+  main.contenido-doble {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-contacto,
+  .mapa-contacto {
+    width: 100%;
+  }
+
+  .mapa-contacto {
+    height: 300px;
+    margin-top: 30px;
+  }
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  nav a {
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .nombre-colegio {
+    font-size: 1.2em;
+  }
+}
