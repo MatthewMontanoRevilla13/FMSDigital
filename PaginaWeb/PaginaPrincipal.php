@@ -7,6 +7,19 @@
 
   <!-- Conexión con el CSS -->
   <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/PaginaPrincipal.css">
+    <style>
+    .formulario-opinion{
+  background-color:#4b0010;
+  padding: 3px;
+  position: absolute;
+  color: white;
+  border: 5px solid black;
+  top:25.6cm;
+}
+.opinion:hover{
+background-color: rgb(224, 224, 224);
+}
+  </style>
 </head>
 <body>
 
@@ -84,3 +97,4 @@
 
 </body>
 </html>
+
