@@ -1,0 +1,206 @@
+/* Configuración general del cuerpo de la página */
+body {
+  margin: 0; /* Quitamos espacios por defecto */
+  font-family: 'Segoe UI', Arial, sans-serif; /* Tipografía moderna y clara */
+  background-color: #fdf9f9; /* Fondo clarito, casi blanco rosado */
+  color: #2e0f13; /* Texto color marrón oscuro */
+}
+
+/* Cabecera superior */
+header {
+  background-color: #6b0014; /* Color vino del colegio */
+  color: white; /* Texto blanco */
+  padding: 20px; /* Espacio interno */
+  display: flex; /* Para acomodar elementos uno al lado del otro */
+  flex-direction: column; /* Los pone uno encima del otro (en columna) */
+  align-items: center; /* Centra todo horizontalmente */
+  gap: 10px; /* Espacio entre elementos */
+  text-align: center; /* Centra el texto */
+}
+
+/* Contenedor del logo y el nombre del colegio */
+.logo-nombre {
+  display: flex; /* Los acomoda horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  gap: 15px; /* Espacio entre el logo y el texto */
+  justify-content: center; /* Centra en horizontal */
+  flex-wrap: wrap; /* Si no hay espacio, baja los elementos */
+}
+
+/* Imagen del logo del colegio */
+.logo {
+  width: 60px;
+  height: auto;
+  max-width: 60px;
+  border-radius: 50%; /* Hace que se vea redondo */
+}
+
+/* Nombre grande del colegio */
+.titulo-colegio {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+}
+
+/* Nombre del profesor que aparece arriba */
+.nombre-alumno {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+/* Menú de navegación principal */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Enlaces del menú */
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95em;
+}
+
+/* Efecto al pasar el mouse por los enlaces */
+nav a:hover {
+  text-decoration: underline;
+  color: #ffcdd0; /* Rosado claro */
+}
+
+/* Menú secundario debajo del header */
+.menu-secundario {
+  background-color: #800020; /* Otro tono de vino */
+  padding: 10px;
+  text-align: center;
+}
+
+/* Enlaces del menú secundario */
+.menu-secundario a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Efecto hover en menú secundario */
+.menu-secundario a:hover {
+  text-decoration: underline;
+  color: #ffd6d9;
+}
+
+/* Contenedor de todas las clases mostradas */
+.contenedor-clases {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 30px;
+}
+
+/* Cada tarjetita de clase */
+.clase {
+  width: 220px;
+  height: 240px;
+  background-color: #fff5f7; /* Fondo rosado muy claro */
+  border-radius: 20px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(107, 0, 20, 0.1); /* Sombra sutil */
+  transition: transform 0.3s;
+}
+
+/* Efecto cuando pasas el mouse por una clase */
+.clase:hover {
+  transform: scale(1.05); /* Hace que crezca un poquito */
+  box-shadow: 0 4px 10px rgba(107, 0, 20, 0.2); /* Sombra más fuerte */
+}
+
+/* Imagen dentro de cada clase */
+.clase img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+/* Texto del nombre de la clase */
+.clase span {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #6b0014;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Para tablets y pantallas medianas */
+@media (max-width: 1024px) {
+  .logo {
+    width: 50px;
+    max-width: 50px;
+  }
+
+  .titulo-colegio {
+    font-size: 1.3em;
+  }
+}
+
+/* Para tablets pequeñas o celulares grandes */
+@media (max-width: 768px) {
+  .logo {
+    width: 45px;
+    max-width: 45px;
+  }
+
+  .titulo-colegio {
+    font-size: 1.2em;
+  }
+
+  .nombre-alumno {
+    font-size: 0.95em;
+  }
+
+  nav a {
+    font-size: 0.9em;
+  }
+
+  .clase {
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
+/* Para celulares más pequeños */
+@media (max-width: 480px) {
+  .logo {
+    width: 40px;
+    max-width: 40px;
+  }
+
+  .titulo-colegio {
+    font-size: 1.1em;
+  }
+
+  .nombre-alumno {
+    font-size: 0.85em;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  nav a {
+    font-size: 0.85em;
+    margin: 3px 0;
+  }
+
+  .clase {
+    width: 100%;
+    max-width: 100%;
+  }
+}
