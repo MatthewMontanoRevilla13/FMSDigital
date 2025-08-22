@@ -60,29 +60,17 @@
     <p>Planificar por paralelo, exportar PDF.</p>
   </div>
 
-  <div class="item">
-    <img src="/icons/groups.svg" alt="Paralelos">
-    <a href="/admin/grupos/index.php">Paralelos & Grupos</a>
-    <p>Cupos, listas y transferencias.</p>
-  </div>
-
   <!-- Contenido y comunicación -->
   <div class="item">
     <img src="/icons/folder.svg" alt="Materiales">
     <a href="/admin/materiales/index.php">Materiales</a>
-    <p>Biblioteca (PDF, videos, enlaces) por curso/semana.</p>
+    <p>Biblioteca (PDF, videos, enlaces).</p>
   </div>
 
   <div class="item">
     <img src="/icons/megaphone.svg" alt="Avisos">
     <a href="/admin/avisos/index.php">Avisos & Mensajería</a>
     <p>Comunicados por rol/curso; historial de envíos.</p>
-  </div>
-
-  <div class="item">
-    <img src="/icons/help.svg" alt="Soporte">
-    <a href="/admin/tickets/index.php">Soporte / Tickets</a>
-    <p>Reportes de problemas; estados y seguimiento.</p>
   </div>
 
   <!-- Evaluación -->
@@ -94,27 +82,21 @@
 
   <div class="item">
     <img src="/icons/exam.svg" alt="Exámenes">
-    <a href="/admin/examenes/index.php">Exámenes & Banco</a>
-    <p>Bancos de preguntas, versiones y seguridad.</p>
+    <a href="/admin/examenes/index.php">Exámenes</a>
+    <p>evaluaciones, examenes, pruebas.</p>
   </div>
 
   <div class="item">
     <img src="/icons/grades.svg" alt="Calificaciones">
-    <a href="/admin/calificaciones/index.php">Calificaciones & Actas</a>
-    <p>Registros por periodo, exportar a Excel/PDF.</p>
+    <a href="/admin/calificaciones/index.php">Calificaciones</a>
+    <p>Registros.</p>
   </div>
 
   <!-- Analítica y configuración -->
   <div class="item">
     <img src="/icons/chart.svg" alt="Reportes">
-    <a href="/admin/reportes/index.php">Reportes & Analítica</a>
-    <p>Asistencia, rendimiento, participación (filtros).</p>
-  </div>
-
-  <div class="item">
-    <img src="/icons/shield.svg" alt="Auditoría">
-    <a href="/admin/auditoria/index.php">Auditoría</a>
-    <p>Registro de acciones, IPs y dispositivos.</p>
+    <a href="/admin/reportes/index.php">Reportes</a>
+    <p>Asistencia, rendimiento, participación.</p>
   </div>
 
   <div class="item">
@@ -135,3 +117,4 @@
 <footer>
   Actividad Reciente: hoy se registraron 3 usuarios, 1 curso nuevo y 5 entregas.
 </footer>
+
