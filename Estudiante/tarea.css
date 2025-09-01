@@ -1,0 +1,151 @@
+header {
+  background-color: #6b0014;
+  color: white;
+  padding: 40px 20px;
+  size: 2cm;
+  top: 0cm;
+
+
+}
+
+#titulo{
+    background-color: rgba(88, 88, 88, 0.548);
+    position: absolute;
+    top: 6cm;
+    width: 25cm;
+    right: 20cm;
+    border-bottom: solid 5px black;
+}
+#instrucciones{
+    background-color: rgba(161, 161, 161, 0.418);
+    position:absolute;
+    width: 17cm;
+    padding: 4cm;
+    right: 20cm;
+    top: 7cm;
+}
+
+.uno { 
+  position: absolute;
+  border-radius: 20px;
+  padding: 25px;
+  right: 21cm;
+  top: 14cm;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+}
+
+.dos { 
+  position: absolute;
+  border-radius: 20px;
+  padding: 25px;
+  right: 23cm;
+  top: 14cm;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/724/724933.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+}
+
+.tres { 
+  position: absolute;
+  border-radius: 20px;
+  padding: 25px;
+  right: 25cm;
+  top: 14cm;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+}
+
+.cuatro { 
+  position: absolute;
+  border-radius: 20px;
+  padding: 25px;
+  right: 27cm;
+  top: 14cm;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7e/Dropbox_Icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+}
+
+.cinco { 
+  position: absolute;
+  border-radius: 20px;
+  padding: 25px;
+  right: 29cm;
+  top: 14cm;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Microsoft_OneDrive_logo.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+}
+body{
+  background-color: #6b001467;
+}
+div{
+  background-color: #6b0014;
+  position: absolute;
+  left: 33cm;
+  width: 617px;
+  height: 20cm;
+  top: 1cm;
+}
+
+.formulario {
+  position: absolute;
+  top: 4cm;
+  left: 34cm;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2cm;
+  width: 12cm;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  color: white;
+  font-family: sans-serif;
+}
+
+.formulario label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.formulario select,
+.formulario input[type="date"],
+.formulario button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formulario button {
+  background-color: #6b0014;
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+}
+
+.formulario button:hover {
+  background-color: white;
+  color: #6b0014;
+}
