@@ -1,0 +1,137 @@
+/* Estilos generales del body: fondo claro, letra legible y sin margen */
+body { 
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e7a8a8;
+  color: #333;
+}
+
+/* Encabezado rojo con logo y nombre del cole */
+.header {
+  background-color: #6b0014;
+  color: white;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor que junta el logo y el nombre */
+.logo-nombre {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Tamaño del logo */
+.logo {
+  height: 50px;
+}
+
+/* Estilo para el nombre del colegio */
+.nombre-colegio {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Caja blanca donde va el formulario */
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Título del formulario */
+h1 {
+  font-size: 22px;
+  margin-bottom: 30px;
+  color: #a52a2a;
+  text-align: center;
+}
+
+/* Etiquetas del formulario */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #a52a2a;
+}
+
+/* Inputs y selects con estilo suave */
+input, select {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Botón para enviar el formulario */
+input[type="submit"] {
+  background-color: #a52a2a;
+  color: white;
+  border: none;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+input[type="submit"]:hover {
+  background-color: #6b0014;
+}
+
+/* Botón de volver al login */
+.boton {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: #a52a2a;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+/* Efecto del botón de volver al pasar el mouse */
+.boton:hover {
+  background-color: #6b0014;
+}
+
+/* Estilos para que todo se vea bien en celulares */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .nombre-colegio {
+    font-size: 20px;
+  }
+
+  .container {
+    margin: 20px 10px;
+    padding: 25px 20px;
+  }
+
+  input, select {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,95 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdf9f9;
+  padding: 20px;
+  margin: 0;
+  overflow-x: hidden;
+  color: #2e0f13;
+}
+
+/* Encabezado de esta página (solo el título grande centrado) */
+.titulo-seccion {
+  text-align: center;
+  padding: 20px;
+  background-color: #6b0014;
+  color: white;
+  border-radius: 8px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Contenedor principal: columna centrada tipo “noticias” */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 800px;
+  margin: 40px auto;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Tarjeta de cada comentario (mismo look que tus tarjetas rosadas) */
+.comentario {
+  background-color: #fff5f7;
+  border: 1px solid #ffdde0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(107, 0, 20, 0.1);
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp .6s forwards;
+}
+
+/* alterna un poco el delay para efecto de subida */
+.comentario:nth-child(even) { animation-delay: .2s; }
+.comentario:nth-child(odd)  { animation-delay: .4s; }
+
+/* Título de cada tarjeta */
+.comentario h2 {
+  font-size: 1.6em;
+  color: #6b0014;
+  margin: 0 0 10px;
+  transition: transform .3s ease;
+}
+.comentario h2:hover { transform: translateY(-6px); }
+
+/* Texto del comentario (respeta saltos con nl2br desde PHP) */
+.comentario p {
+  font-size: 1em;
+  color: #2e0f13;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Pie/nota si lo usas después */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+  font-size: .9em;
+  background-color: #4b0010;
+  color: white;
+  border-top: 1px solid #800020;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Adaptación tablet */
+@media (max-width: 768px) {
+  .titulo-seccion h1 { font-size: 1.6em; }
+  main { margin: 24px auto; gap: 24px; }
+}
+
+/* Adaptación móvil */
+@media (max-width: 480px) {
+  main { padding: 0 10px; }
+}

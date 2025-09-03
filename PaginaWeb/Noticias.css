@@ -1,0 +1,195 @@
+/* Estilo general del body */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdf9f9;
+  padding: 20px;
+  margin: 0;
+  overflow-x: hidden;
+  color: #2e0f13;
+}
+
+/* Encabezado con fondo oscuro, texto blanco y animación */
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #6b0014;
+  color: white;
+  border-radius: 8px;
+  animation: fadeIn 2s ease-in-out;
+  position: center;
+}
+
+/* Contenedor del logo + nombre */
+.logo-nombre {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+/* Logo redondo */
+.logo {
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Título principal del sitio */
+h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+/* Menú de navegación horizontal con scroll lateral si hay muchas noticias */
+nav ul {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 10px;
+  margin: 0;
+  scroll-snap-type: x mandatory;
+}
+
+/* Cada ítem del menú */
+nav ul li {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+/* Enlaces del menú */
+nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Efecto al pasar el mouse sobre los enlaces */
+nav a:hover {
+  color: #ffcdd0;
+  transform: scale(1.05);
+}
+
+/* Contenedor de las secciones (noticias) */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 800px;
+  margin: 40px auto;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Cada sección de noticia */
+section {
+  background-color: #fff5f7;
+  border: 1px solid #ffdde0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(107, 0, 20, 0.1);
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 0.6s forwards;
+}
+
+/* Animación alterna para dar efecto de subida */
+section:nth-child(even) {
+  animation-delay: 0.3s;
+}
+section:nth-child(odd) {
+  animation-delay: 0.6s;
+}
+
+/* Título de cada noticia */
+section h2 {
+  font-size: 1.8em;
+  color: #6b0014;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+section h2:hover {
+  transform: translateY(-10px);
+}
+
+/* Imagen de cada noticia */
+section img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+section img:hover {
+  transform: scale(1.1);
+}
+
+/* Descripción de la noticia */
+section p {
+  font-size: 1em;
+  color: #2e0f13;
+  transition: opacity 0.3s ease;
+}
+section p:hover {
+  opacity: 0.7;
+}
+
+/* Pie de página, si lo usás después */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+  font-size: 0.9em;
+  background-color: #4b0010;
+  color: white;
+  border-top: 1px solid #800020;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Scroll suave al hacer clic en el menú */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Adaptación para tabletas */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .logo-nombre {
+    flex-direction: column;
+  }
+}
+
+/* Adaptación para celulares */
+@media (max-width: 480px) {
+  main {
+    padding: 0 10px;
+  }
+
+  section img {
+    max-width: 100%;
+  }
+}

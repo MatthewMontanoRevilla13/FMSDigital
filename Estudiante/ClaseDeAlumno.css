@@ -1,0 +1,213 @@
+/* Estilos generales (letra, colores de fondo, etc.) */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: #fdfcfa; 
+  color: #2b2b2b;
+}
+
+/* ===== Header ===== */
+header {
+  background-color: #6b0014;
+  color: white;
+  padding: 12px 20px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.logo-colegio {
+  width: clamp(44px, 7vw, 68px);
+  height: clamp(44px, 7vw, 68px);
+  object-fit: contain;
+}
+
+.nombre-usuario {
+  font-weight: bold;
+  font-size: clamp(14px, 2.2vw, 18px);
+  white-space: nowrap;
+}
+
+/* Menú lateral de navegación */
+nav {
+  background-color: #fbeaec; 
+  padding-top: 20px;
+  width: 200px;
+  height: 100vh;
+}
+
+/* Links del menú lateral */
+nav a {
+  display: block;
+  padding: 12px 20px;
+  color: #6b0014;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Efecto al pasar por encima de los links */
+nav a:hover {
+  background-color: #f5c6cb; 
+}
+
+/* Área principal de contenido */
+main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Secciones del contenido (tarjetas, anuncios, etc.) */
+.section {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(107, 0, 20, 0.3); 
+}
+
+/* bienvenida con imagen */
+.bienvenida {
+  background-image: url("/1r Sprint-FMSDigital/Maquetacion/imagenes/fondo de la pagina de clases.png");
+  background-size: 450px;
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  padding-left: 20px;
+  color: white;
+  font-weight: bold;
+  background-color: #8c1b15;
+}
+
+/* Textos específicos de la bienvenida */
+.bienvenida-texto h2,
+.bienvenida-texto p {
+  color: white;
+}
+
+/* Cuadro de anuncios */
+.anuncio {
+  background-color: #8b0020;
+  border-left: 5px solid #bf3d5e; 
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 10px;
+  color: white;
+}
+
+/* Título de cada sección */
+h2 {
+  margin-top: 0;
+  color: #6b0014; 
+}
+
+/* Contenedor general (menú y contenido) */
+.container {
+  display: flex;
+}
+
+/* Botones para filtrar tareas */
+.tareas {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.estado {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Colores para cada estado de tarea */
+.no-entregadas {
+  background-color: #fde6e6; 
+  color: #a10000; 
+}
+
+.por-entregar {
+  background-color: #fff7e6; 
+  color: #a67500; 
+}
+
+.calificadas {
+  background-color: #edf3f7; 
+  color: #334e68; 
+}
+
+/* Lista de tareas asignadas */
+.lista-tareas {
+  background-color: #f8f4f4; 
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tarea {
+  background-color: #fffafa;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #4a2c2a;
+  border-left: 4px solid #d98e8e; 
+}
+
+/* Versión responsive para móviles */
+@media (max-width: 768px) {
+  .header-content {
+    gap: 10px;
+  }
+
+  .logo-colegio {
+    width: 50px;
+    max-height: 60px;
+  }
+
+  .nombre-usuario {
+    font-size: 16px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  nav {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+
+  nav a {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  main {
+    padding: 20px;
+  }
+}
+.comentario {
+  background-color: #f1f1f1;
+  border-left: 4px solid #6b0014;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+.comentario form {
+  display: inline-block;
+  margin-right: 10px;
+}
