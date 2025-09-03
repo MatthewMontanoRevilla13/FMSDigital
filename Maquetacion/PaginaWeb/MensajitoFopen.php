@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opiniones y sugerencias</title>
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/MensajitoFopen.css" />
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/PaginaWeb/MensajitoFopen.css" />
 </head>
 <body>
   <?php include '../header.php'; ?>

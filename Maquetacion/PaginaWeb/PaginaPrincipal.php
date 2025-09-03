@@ -6,7 +6,7 @@
   <title>Plataforma Escolar</title>
 
   <!-- Conexión con el CSS -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/PaginaPrincipal.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.css">
     <style>
     .formulario-opinion{
   background-color:#4b0010;
@@ -37,21 +37,21 @@ background-color: rgb(224, 224, 224);
   <div class="carrusel">
   <div class="imagenes">
     <!-- Lote 1 -->
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela1.JPEG" alt="Foto 1">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela2.JPEG" alt="Foto 2">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela3.JPEG" alt="Foto 3">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela4.JPEG" alt="Foto 4">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela5.JPEG" alt="Foto 5">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela6.JPEG" alt="Foto 6">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela7.JPEG" alt="Foto 7">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela1.JPEG" alt="Foto 1">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela2.JPEG" alt="Foto 2">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela3.JPEG" alt="Foto 3">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela4.JPEG" alt="Foto 4">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela5.JPEG" alt="Foto 5">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela6.JPEG" alt="Foto 6">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela7.JPEG" alt="Foto 7">
     <!-- Lote 2 (igual al 1) -->
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela1.JPEG" alt="Foto 1 repetida">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela2.JPEG" alt="Foto 2 repetida">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela3.JPEG" alt="Foto 3 repetida">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela4.JPEG" alt="Foto 4 repetida">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela5.JPEG" alt="Foto 5 repetida">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela6.JPEG" alt="Foto 6 repetida">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/escuela7.JPEG" alt="Foto 7 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela1.JPEG" alt="Foto 1 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela2.JPEG" alt="Foto 2 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela3.JPEG" alt="Foto 3 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela4.JPEG" alt="Foto 4 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela5.JPEG" alt="Foto 5 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela6.JPEG" alt="Foto 6 repetida">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/escuela7.JPEG" alt="Foto 7 repetida">
   </div>
 </div>
 
@@ -79,9 +79,9 @@ background-color: rgb(224, 224, 224);
 
   <div class="section">
     <h3>Documentos</h3>
-    <p><a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/documentos/PLAN DE CONVIVENCIA PACIFICA Y ARMONICA (2) (1).pdf" target="_blank" rel="noopener">plan de CONVIVENCIA</a></p>
-    <p><a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/documentos/REGLAMENTO INTERNO JULIO MÉNDEZ actualizado (2).pdf" target="_blank" rel="noopener">reglamento academico</a></p>
-    <p><a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/documentos/PSP 2025 JULIO MENDEZ (4).pdf" target="_blank" rel="noopener">PSP ANUAL</a></p>
+    <p><a href="/FMSDIGITAL/Maquetacion/PaginaWeb/documentos/PLAN DE CONVIVENCIA PACIFICA Y ARMONICA (2) (1).pdf" target="_blank" rel="noopener">plan de CONVIVENCIA</a></p>
+    <p><a href="/FMSDIGITAL/Maquetacion/PaginaWeb/documentos/REGLAMENTO INTERNO JULIO MÉNDEZ actualizado (2).pdf" target="_blank" rel="noopener">reglamento academico</a></p>
+    <p><a href="/FMSDIGITAL/Maquetacion/PaginaWeb/documentos/PSP 2025 JULIO MENDEZ (4).pdf" target="_blank" rel="noopener">PSP ANUAL</a></p>
   </div>
 </div>
 <div class="formulario-opinion">

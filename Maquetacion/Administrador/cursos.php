@@ -29,7 +29,7 @@ $cursos = $pdo->query($sql)->fetchAll();
 <body>
   <header>
     <h1>Panel · Cursos</h1>
-    <img class="logo-colegio" src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="logo">
+    <img class="logo-colegio" src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="logo">
   </header>
 
   <div class="menu-top">
@@ -39,7 +39,7 @@ $cursos = $pdo->query($sql)->fetchAll();
   <main class="grid-container">
     <?php foreach ($cursos as $c): ?>
       <div class="item">
-        <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/clases.png" alt="">
+        <img src="/FMSDIGITAL/Maquetacion/imagenes/clases.png" alt="">
         <a href="admin_estudiantes.php?clase_id=<?= urlencode($c['id_clase']) ?>">
           <?= htmlspecialchars($c['nombreClase']) ?>
         </a>

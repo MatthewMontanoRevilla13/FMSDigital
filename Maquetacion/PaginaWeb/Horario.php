@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Horarios Gestión 2025</title>
   <!-- Conectamos el archivo CSS que da estilo a la página -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/horario.css" />
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/PaginaWeb/horario.css" />
 </head>
 <body>
     <!-- Incluir el header desde header.php -->

@@ -80,15 +80,15 @@ header nav a:hover {
 <body>
 <header>
   <div class="logo-nombre">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="Logo del colegio" class="logo">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo del colegio" class="logo">
     <h1>Julio Méndez</h1>
   </div>
   <nav>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/Pagina_Web/pagina_principal.php">Inicio</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/Pagina_Web/noticias.php">Noticias</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/Pagina_Web/galeria.php">Galería</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/Pagina_Web/Horario.php">Horarios</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/Pagina_Web/contacto.php">Contacto</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/cuentas_de_usuario/formulario_login.php">Iniciar sesión</a>
+    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/pagina_principal.php">Inicio</a>
+    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/noticias.php">Noticias</a>
+    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/galeria.php">Galería</a>
+    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Horario.php">Horarios</a>
+    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/contacto.php">Contacto</a>
+    <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php">Iniciar sesión</a>
   </nav>
 </header>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrador</title>
   <!-- Archivo CSS para estilos-->
-  <link rel="stylesheet" href="FMSDIGITAL/Maquetacion/Administrador/admin.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Administrador/admin.css">
 </head>
 <body>
   <!-- header con logo y nombre del colegio -->

@@ -38,7 +38,7 @@ $alumnos = $alumnos->fetchAll();
 <body>
   <header>
     <h1>Clase: <?= htmlspecialchars($clase['nombreClase']) ?></h1>
-    <img class="logo-colegio" src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="logo">
+    <img class="logo-colegio" src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="logo">
   </header>
 
   <div class="menu-top">
