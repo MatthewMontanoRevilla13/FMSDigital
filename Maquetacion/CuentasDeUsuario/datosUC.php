@@ -40,13 +40,13 @@
 
         // Si todo sale bien, lo mandamos a la clase
         if (mysqli_query($conexion, $unirrr)) {
-            header('Location:/1r Sprint-FMSDigital/Maquetacion/Estudiante/ClaseDeAlumno.php');
+            header('Location:/FMSDIGITAL/Maquetacion/Estudiante/ClaseDeAlumno.php');
         } else {
             echo "Error al unirse a la clase: " . mysqli_error($conexion);
         }
     } else {
         // Si no encontró el código, le avisa y lo regresa al panel
-        echo "<script>alert('El código ingresado no existe'); window.location.href = '/1r Sprint-FMSDigital/Maquetacion/Estudiante/PanelDeEstudiante.php';</script>";
+        echo "<script>alert('El código ingresado no existe'); window.location.href = '/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.php';</script>";
     }
 ?>
 </body>

@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Editar Usuario</title>
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/EditarUsuario.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/EditarUsuario.css">
 </head>
 <body>
 
   <!-- Encabezado con logo y nombre del cole -->
   <div class="header">
     <div class="logo-nombre">
-      <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
       <span class="nombre-colegio">Julio Mendez</span>
     </div>
   </div>
@@ -21,7 +21,7 @@
     <h1>Modificar Datos de Usuario</h1>
 
     <!-- Formulario que envía los datos a modificar.php -->
-    <form action="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/modificar.php" method="post">
+    <form action="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/modificar.php" method="post">
 
       <!-- Campo para ingresar el CI del usuario -->
       <label for="ci">CI del usuario a modificar</label>

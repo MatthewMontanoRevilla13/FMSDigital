@@ -40,7 +40,7 @@
         // Si el usuario está bloqueado, se lo avisa y se lo manda de vuelta al login
         if (!empty($fila['Bloqueado'])) {
             echo "<script>alert('Tu cuenta está bloqueada. Contacta con el administrador.');</script>";
-            echo "<script>window.location.href = '/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
+            echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
             exit;
         }
 
@@ -52,18 +52,18 @@
 
         // Según su rol, lo mandamos a su panel correspondiente
         if ($fila['Rol'] === 'Estudiante') {
-            header('Location:/1r Sprint-FMSDigital/Maquetacion/Estudiante/PanelDeEstudiante.php');
+            header('Location:/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.php');
         } elseif ($fila['Rol'] === 'Profesor') {
-            header('Location:/1r Sprint-FMSDigital/Maquetacion/Profesor/PanelPrincipalDeProfesor.php');
+            header('Location:/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.php');
         } else {
             // Si por algún motivo el rol no es válido
             echo "<script>alert('Rol desconocido. Contacta al administrador.');</script>";
-            echo "<script>window.location.href = '/1r Sprint-FMSDigital/Maquetacion/cuentasDeUsuario/FormularioLogin.php';</script>";
+            echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/cuentasDeUsuario/FormularioLogin.php';</script>";
         }
         exit;
     } else {
         // Si no se encontró el usuario, lo mandamos de nuevo al login
-        header('Location:/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/FormularioLogin.php');
+        header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php');
     }
 ?>
 

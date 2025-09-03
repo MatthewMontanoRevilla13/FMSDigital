@@ -13,7 +13,7 @@
     // Cierra o elimina la sesión actual
     session_destroy();
     // Redirige a la página principal después de cerrar sesión
-    header("Location:/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/PaginaPrincipal.php");
+    header("Location:/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php");
     ?>
 </body>
 </html>

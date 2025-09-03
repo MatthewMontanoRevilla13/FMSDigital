@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/FormularioRegistro.css">
+    <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioRegistro.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
@@ -16,7 +16,7 @@
   <!-- Parte superior con logo y nombre del cole -->
   <div class="header">
     <div class="logo-nombre">
-      <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
       <span class="nombre-colegio">Zentry - Julio Mendez</span>
     </div>
   </div>
@@ -24,7 +24,7 @@
   <!-- Contenedor del formulario de registro -->
   <div class="container">
     <h1>REGISTRO</h1>
-    <form action="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/datosR.php" method="post" id="registro">
+    <form action="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/datosR.php" method="post" id="registro">
         <label>Tus nombres: </label>
         <input type="text" name="Nombres"><br>
 

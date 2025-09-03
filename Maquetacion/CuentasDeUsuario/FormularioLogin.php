@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario Login</title>
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/FormularioLogin.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
@@ -14,7 +14,7 @@
   <!-- Parte de arriba con el logo y el nombre del cole -->
   <div class="header">
     <div class="logo-nombre">
-      <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
       <span class="nombre-colegio">Julio Mendez</span>
     </div>
   </div>
@@ -24,7 +24,7 @@
     <h1>Inicio de Sesión</h1>
 
     <!-- Formulario que envía usuario y contraseña a datosL.php -->
-    <form action="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/datosL.php" method="post" id="login">
+    <form action="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/datosL.php" method="post" id="login">
       <label for="Usuario">Tu cédula de identidad:</label>
       <input type="text" name="Usuario" required>
 

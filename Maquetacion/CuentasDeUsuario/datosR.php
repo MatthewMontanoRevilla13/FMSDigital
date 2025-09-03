@@ -49,7 +49,7 @@
         
         // Si también se guarda bien, lo mandamos al login
         if (mysqli_query($conexion, $sqlInfo)) {
-            header('Location:/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/FormularioLogin.php');   
+            header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php');   
         } else {
             echo "Error al guardar los datos: " . mysqli_error($conexion);
         }

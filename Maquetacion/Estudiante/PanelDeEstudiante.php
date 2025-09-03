@@ -7,7 +7,7 @@
   <title>Panel del Estudiante</title>
 
   <!-- CSS y librerías para validación -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/Estudiante/PanelDeEstudiante.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
@@ -23,12 +23,12 @@
     <a href="#">Calendario</a>
     <a href="#">Mis cursos</a>
     <button onclick="mostrarFormulario()">Unirse a clases</button>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/cerrarL.php">Cerrar Sesion</a>
+    <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/cerrarL.php">Cerrar Sesion</a>
   </div>
 
   <!-- Formulario para unirse a una clase con código -->
   <div class="formulario-clase" id="formulario">
-    <form action="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/datosUC.php" method="post" id="unirseclase">
+    <form action="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/datosUC.php" method="post" id="unirseclase">
       <p><label for="Codigo">Ingresa el código de clase por favor</label></p>
       <input type="text" placeholder="Código de clase" required name="Codigo"><br>
       <button type="submit">Unirse</button>
@@ -56,8 +56,8 @@
 
     if (mysqli_num_rows($resultado) > 0) {
         while ($fila = mysqli_fetch_assoc($resultado)) {
-            echo "<div class='clase' onclick=\"window.location.href='/1r Sprint-FMSDigital/Maquetacion/Estudiante/ClaseDeAlumno.php?id_clase=" . $fila['id_clase'] . "'\" style='cursor:pointer;'>";
-            echo "<img src='/1r Sprint-FMSDigital/Maquetacion/imagenes/imagen historia.png'/>";
+            echo "<div class='clase' onclick=\"window.location.href='/FMSDIGITAL/Maquetacion/Estudiante/ClaseDeAlumno.php?id_clase=" . $fila['id_clase'] . "'\" style='cursor:pointer;'>";
+            echo "<img src='/FMSDIGITAL/Maquetacion/imagenes/imagen historia.png'/>";
             echo "<span>" . $fila['nombreClase'] . "<br>" . $fila['nomProfe'] . "</span>";
             echo "</div>";
         }

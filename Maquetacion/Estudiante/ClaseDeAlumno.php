@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clase de Alumno</title>
   <!-- CSS -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/Estudiante/ClaseDeAlumno.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Estudiante/ClaseDeAlumno.css">
 </head>
 <body>
 
 <header>
   <div class="header-content">
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="Logo del Colegio" class="logo-colegio">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo del Colegio" class="logo-colegio">
     <span class="nombre-usuario">Julio Mendez</span>
   </div>
 </header>
@@ -29,7 +29,7 @@
       <!-- Sección bienvenida -->
       <section class="section" id="tablero">
           <h2>Tablon de Publicaciones</h2>
-        <form action="/1r Sprint-FMSDigital/Maquetacion/Estudiante/Ccomentario.php" method="POST">
+        <form action="/FMSDIGITAL/Maquetacion/Estudiante/Ccomentario.php" method="POST">
             <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
             <textarea name="contenido" rows="3" cols="60" placeholder="Escribe algo para tu clase..." required></textarea><br>
             <button type="submit">Publicar</button>
