@@ -6,7 +6,7 @@
   <title>Editar Clase</title>
 
   <!-- Conectamos el archivo CSS para que tenga diseño -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/cuentasDeUsuario/EditarUsuario.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/cuentasDeUsuario/EditarUsuario.css">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
     <h1>Modificar Nombre de Clase</h1>
 
     <!-- Formulario para enviar los datos al archivo PHP que hará el cambio en la BD -->
-    <form action="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/modificarC.php" method="post">
+    <form action="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/modificarC.php" method="post">
 
       <!-- Campo donde se pone el código de la clase que se quiere cambiar -->
       <label for="codigo">Código de la Clase a modificar</label>

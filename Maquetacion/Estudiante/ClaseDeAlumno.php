@@ -24,7 +24,6 @@
     <a href="#trabajo">Trabajo de clase</a>
     <a href="#materiales">Materiales</a>
   </nav>
-
     <div class="main">
       <!-- Sección bienvenida -->
       <section class="section" id="tablero">
@@ -57,14 +56,14 @@
             }
              echo "<p>{$fila['contenido']}</p>";
             if ($_SESSION['usu'] === $fila['Usuario']) {
-             echo "<form action='E_comentario.php' method='POST' style='display:inline;'>
+             echo "<form action='Ecomentario.php' method='POST' style='display:inline;'>
                     <input type='hidden' name='id' value='{$fila['id']}'>
                     <textarea name='nuevo_texto' rows='3' cols='60' placeholder='Escribe algo para tu clase...' required></textarea><br>
                     <button type='submit'>Editar</button>
                 </form>";
             }
                 if ($_SESSION['rol'] === 'Profesor') {
-             echo "<form action='D_comentario.php' method='POST' style='display:inline;'>
+             echo "<form action='Dcomentario.php' method='POST' style='display:inline;'>
                     <input type='hidden' name='id' value='{$fila['id']}'>
                     <button type='submit'>Eliminar</button>
                 </form>";
@@ -74,6 +73,7 @@
           }
        ?>
       </section>
+        </div>
       <!-- Anuncios importantes -->
       <section class="section" id="anuncios">
         <h2>Anuncios</h2>
@@ -111,13 +111,16 @@
           </div>
         </div>
       </section>
-
+          
       <!-- Materiales de clase -->
+       
+    <div>
       <section class="section" id="materiales">
         <h2>Materiales</h2>
         <p>Consulta y descarga los materiales proporcionados.</p>
       </section>
     </main
   </div>
+  
 </body>
 </html>

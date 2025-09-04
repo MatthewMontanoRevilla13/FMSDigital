@@ -38,6 +38,7 @@
   <!-- Clases a las que el estudiante está inscrito -->
   <div class="contenedor-clases">
     <?php
+    session_start();
     $conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
 
     if (!$conexion) {
