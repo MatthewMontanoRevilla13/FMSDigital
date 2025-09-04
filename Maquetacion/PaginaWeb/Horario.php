@@ -6,6 +6,12 @@
   <title>Horarios Gestión 2025</title>
   <!-- Conectamos el archivo CSS que da estilo a la página -->
   <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/PaginaWeb/horario.css" />
+  <style>
+    .pie{
+      position: relative;
+      top:12.3cm;
+    }
+  </style>
 </head>
 <body>
     <!-- Incluir el header desde header.php -->
@@ -47,6 +53,9 @@
     </div>
   </section>
  <!-- Footer -->
-  <?php include '../footer.php'; ?>
+  <div class="pie">
+      <?php include '../footer.php'; ?>
+  </div>
+
 </body>
 </html>
