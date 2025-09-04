@@ -7,7 +7,7 @@
 </head>
 <body>
     <?php
-    // Guardamos lo que se escribió en el formulaghfhgfhhhgfhgrio
+    // Guardamos lo que se escribió en el formulario
     $usu = $_POST['Usuario'];
     $clave = $_POST['Contraseña'];
 
