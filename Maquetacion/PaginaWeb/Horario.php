@@ -17,13 +17,13 @@
 
     <!-- Botones con los nombres de los cursos -->
     <div class="botonera">
-      <a class="btn" href="#">Primero A</a>
-      <a class="btn" href="#">Segundo A</a>
-      <a class="btn" href="#">Tercero A</a>
-      <a class="btn" href="#">Tercero B</a>
-      <a class="btn" href="#">Cuarto A</a>
-      <a class="btn" href="#">Quinto A</a>
-      <a class="btn" href="#">Sexto A</a>
+      <a class="btn" href="HPrimero.php">Primero A</a>
+      <a class="btn" href="HSegundo.php">Segundo A</a>
+      <a class="btn" href="HTerceroA.php">Tercero A</a>
+      <a class="btn" href="HTerceroB.php">Tercero B</a>
+      <a class="btn" href="HCuarto.php">Cuarto A</a>
+      <a class="btn" href="HQuinto.php">Quinto A</a>
+      <a class="btn" href="HSexto.php|">Sexto A</a>
     </div>
   </section>
 
@@ -33,17 +33,17 @@
 
     <!-- Botones con los cursos de secundaria -->
     <div class="botonera">
-      <a class="btn" href="#">Primero A</a>
-      <a class="btn" href="#">Segundo A</a>
-      <a class="btn" href="#">Segundo B</a>
-      <a class="btn" href="#">Segundo C</a>
-      <a class="btn" href="#">Tercero A</a>
-      <a class="btn" href="#">Tercero B</a>
-      <a class="btn" href="#">Cuarto A</a>
-      <a class="btn" href="#">Quinto A</a>
-      <a class="btn" href="#">Quinto B</a>
-      <a class="btn" href="#">Sexto A</a>
-      <a class="btn" href="#">Sexto B</a>
+      <a class="btn" href="HPrimeroS.php">Primero A</a>
+      <a class="btn" href="HSegundoAS.php">Segundo A</a>
+      <a class="btn" href="HSegundoBS.php">Segundo B</a>
+      <a class="btn" href="HSegundoCS.php">Segundo C</a>
+      <a class="btn" href="HTerceroAS.php">Tercero A</a>
+      <a class="btn" href="HTerceroBS.php">Tercero B</a>
+      <a class="btn" href="HCuartoS.php">Cuarto A</a>
+      <a class="btn" href="HQuintoAS.php">Quinto A</a>
+      <a class="btn" href="HQuintoBS.php">Quinto B</a>
+      <a class="btn" href="HSextoAS.php">Sexto A</a>
+      <a class="btn" href="HSextoBs.php">Sexto B</a>
     </div>
   </section>
  <!-- Footer -->
