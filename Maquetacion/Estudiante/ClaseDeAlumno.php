@@ -73,7 +73,6 @@
           }
        ?>
       </section>
-        </div>
       <!-- Anuncios importantes -->
       <section class="section" id="anuncios">
         <h2>Anuncios</h2>
