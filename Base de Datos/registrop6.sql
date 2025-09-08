@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-08-2025 a las 02:53:10
+-- Tiempo de generación: 08-09-2025 a las 21:22:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -87,7 +87,8 @@ CREATE TABLE `cuenta` (
 INSERT INTO `cuenta` (`Usuario`, `Contraseña`, `Rol`, `Bloqueado`) VALUES
 (1234321, '123321', 'Estudiante', NULL),
 (9416161, '811I202219', 'Estudiante', ''),
-(9416306, 'zzzsoyway', 'Profesor', '');
+(9416306, 'zzzsoyway', 'Profesor', ''),
+(12650435, 'DOCTOPS23', 'Administrador', NULL);
 
 -- --------------------------------------------------------
 
@@ -132,7 +133,8 @@ CREATE TABLE `informacion` (
 INSERT INTO `informacion` (`CI`, `Nombres`, `Apellidos`, `Direccion`, `Nacimiento`, `Telefono`, `Curso`, `Rude`, `Cuenta_Usuario`) VALUES
 (1234321, 'wdawdaw', 'dwadadad', 'Av. Circunvalación', '1111-11-11', '85932413', '6to B ', 2147483647, 1234321),
 (9416161, 'Jose Fabian', 'Zambrana Urquizu', 'Av. Circunvalación', '2007-11-19', '79734643', '6to B ', 2147483647, 9416161),
-(9416306, 'MAMANI QUISPE', 'HERMANA WANKA', 'Av. TUPRIMA', '1997-11-11', '85932413', '', 0, 9416306);
+(9416306, 'MAMANI QUISPE', 'HERMANA WANKA', 'Av. TUPRIMA', '1997-11-11', '85932413', '', 0, 9416306),
+(12650435, 'Matthew', 'Montaño Revilla', 'Av. Circunvalación ', '2007-11-11', '73793090', '6to B', 0, 12650435);
 
 --
 -- Índices para tablas volcadas
