@@ -51,16 +51,20 @@
         $_SESSION['apes'] = $fila['Apellidos'];
 
         // Según su rol, lo mandamos a su panel correspondiente
-        if ($fila['Rol'] === 'Estudiante') {
+        if($fila['Rol'] === 'Administrador'){
+            header('Location:/FMSDIGITAL/Maquetacion/Administrador/admin.php');
+        }else{
+            if ($fila['Rol'] === 'Estudiante') {
             header('Location:/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.php');
-        } elseif ($fila['Rol'] === 'Profesor') {
+            } elseif ($fila['Rol'] === 'Profesor') {
             header('Location:/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.php');
-        } else {
-            // Si por algún motivo el rol no es válido
-            echo "<script>alert('Rol desconocido. Contacta al administrador.');</script>";
-            echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/cuentasDeUsuario/FormularioLogin.php';</script>";
-        }
+          } else {
+             // Si por algún motivo el rol no es válido
+             echo "<script>alert('Rol desconocido. Contacta al administrador.');</script>";
+             echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/cuentasDeUsuario/FormularioLogin.php';</script>";
+          }
         exit;
+    }
     } else {
         // Si no se encontró el usuario, lo mandamos de nuevo al login
         header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php');
