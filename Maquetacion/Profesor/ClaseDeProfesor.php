@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Panel del Profesor</title>
   <!-- Aquí conectamos el CSS -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/profesor/ClaseDeProfesor.css" />
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/profesor/ClaseDeProfesor.css" />
 </head>
 <body>
   <!-- Cabecera arriba con el logo y nombre del colegio -->
@@ -31,7 +31,7 @@
       <h2>Tablón de Publicaciones</h2>
 
       <!-- Formulario para que el profe publique un comentario -->
-      <form action="/1r Sprint-FMSDigital/Maquetacion/Estudiante/Ccomentario.php" method="POST">
+      <form action="/FMSDIGITAL/Maquetacion/Estudiante/Ccomentario.php" method="POST">
         <!-- Este input guarda el ID de la clase -->
         <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
         <textarea name="contenido" rows="3" cols="60" placeholder="Escribe algo para tu clase..." required></textarea><br>
@@ -78,7 +78,7 @@
 
         // Si el comentario es del usuario actual, puede editarlo
         if ($_SESSION['usu'] === $fila['Usuario']) {
-          echo "<form action='E_comentario.php' method='POST' style='display:inline;'>
+          echo "<form action='Ecomentario.php' method='POST' style='display:inline;'>
                   <input type='hidden' name='id' value='{$fila['id']}'>
                   <textarea name='nuevo_texto' rows='3' cols='60' placeholder='Escribe algo para tu clase...' required></textarea><br>
                   <button type='submit'>Editar</button>
@@ -87,7 +87,7 @@
 
         // Si el usuario es profe, puede eliminar cualquier comentario
         if ($_SESSION['rol'] === 'Profesor') {
-          echo "<form action='D_comentario.php' method='POST' style='display:inline;'>
+          echo "<form action='Dcomentario.php' method='POST' style='display:inline;'>
                   <input type='hidden' name='id' value='{$fila['id']}'>
                   <input type='hidden' name='id_clase' value='$id_clase'>
                   <button type='submit'>Eliminar</button>

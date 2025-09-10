@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel del Profesor</title>
-  <!-- Estilos del panel principal y del formulario para crear clases -->
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/Profesor/PanelPrincipalDeProfesor.css">
-  <link rel="stylesheet" href="/1r Sprint-FMSDigital/Maquetacion/Profesor/FormularioCrearClase.css">
-  
+  <title>Panel del Profesor</title>  
   <!-- Librerías para validaciones con jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+  
+  <!-- Estilos del panel principal y del formulario para crear clases -->
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.css">
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Profesor/FormularioCrearClase.css">
+  
+
 </head>
 <body>
   <!-- CABECERA CON LOGO Y NOMBRE DEL PROFESOR -->
   <header>
     <div class="logo-nombre">
-      <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/logo.png" alt="Logo del colegio" class="logo">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo del colegio" class="logo">
       <div class="titulo-colegio">JULIO MENDEZ</div>
     </div>
 
@@ -30,20 +32,20 @@
 
     <!-- Menú principal -->
     <nav>
-      <a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
-      <a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/Noticias.php">Noticias</a>
-      <a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/Galeria.php">Galería</a>
+      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
+      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Noticias.php">Noticias</a>
+      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Galeria.php">Galería</a>
       <a href="#">Documentos</a>
-      <a href="/1r Sprint-FMSDigital/Maquetacion/PaginaWeb/Contacto.php">Contacto</a>
+      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Contacto.php">Contacto</a>
     </nav>
   </header>
 
   <!-- Menú secundario debajo del header -->
   <div class="menu-secundario">
     <a href="#">Calendario</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/Profesor/FormularioEditarClase.php">Editar cursos</a>
+    <a href="/FMSDIGITAL/Maquetacion/Profesor/FormularioEditarClase.php">Editar cursos</a>
     <a href="#" id="mostrarFormulario">Crear una clase</a>
-    <a href="/1r Sprint-FMSDigital/Maquetacion/CuentasDeUsuario/cerrarL.php">Cerrar Sesion</a>
+    <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/cerrarL.php">Cerrar Sesion</a>
   </div>
 
   <!-- MOSTRAR TODAS LAS CLASES DEL PROFESOR -->
@@ -65,7 +67,7 @@
     if (mysqli_num_rows($resultado) > 0) {
         while ($fila = mysqli_fetch_assoc($resultado)) {
             echo "<div class='clase' onclick=\"window.location.href='ClaseDeProfesor.php?id_clase=" . $fila['id_clase'] . "'\" style='cursor:pointer;'>";
-            echo "<img src='/1r Sprint-FMSDigital/Maquetacion/imagenes/imagen fisica.png'/>";
+            echo "<img src='/FMSDIGITAL/Maquetacion/imagenes/imagen fisica.png'/>";
             echo "<span>" . $fila['nombreClase'] . "</span>";
             echo "</div>";
         }
@@ -78,7 +80,7 @@
   <!-- FORMULARIO PARA CREAR UNA CLASE (OCULTO AL INICIO) -->
   <div id="formularioCrearClase" style="display:none; padding: 20px; border: 2px solid #ccc; margin: 20px; background-color: #f9f9f9;">
     <h2>CREA TU CLASE</h2>
-    <form action="/1r Sprint-FMSDigital/Maquetacion/Profesor/DatosCrearClase.php" method="post" id="CrearClase">
+    <form action="/FMSDIGITAL/Maquetacion/Profesor/DatosCrearClase.php" method="post" id="CrearClase">
       <label>Nombre de su clase:</label>
       <input type="text" name="nombreClase"><br>
       <label>Codigo de clase:</label>

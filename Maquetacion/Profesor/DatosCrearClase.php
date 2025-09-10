@@ -24,7 +24,7 @@ if ($_SESSION['rol'] === 'Profesor') {
 
     // Si se ejecuta bien el INSERT, redirige al panel del profesor
     if (mysqli_query($conexion, $sql)) {
-        header('Location:/1r Sprint-FMSDigital/Maquetacion/Profesor/ClaseDeProfesor.php');
+        header('Location:/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.php');
         exit;
     } else {
         // Si algo falla al guardar, se muestra un mensaje de error
