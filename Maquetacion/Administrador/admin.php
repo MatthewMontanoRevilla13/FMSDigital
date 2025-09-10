@@ -38,7 +38,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
     <!-- Personas -->
     <div class="item">
       <img src="/icons/users.svg" alt="Usuarios">
-      <a href="/admin/usuarios/index.php">Usuarios</a>
+      <a href="/FMSDIGITAL/Maquetacion/Administrador/usuarios.php">Usuarios</a>
       <p>ABM, roles, restablecer contraseñas, importación CSV.</p>
     </div>
 
@@ -63,7 +63,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
 
     <div class="item">
       <img src="/icons/help.svg" alt="Soporte">
-      <a href="/Maquetacion/PaginaWeb/MensajitoFopen.php">Soporte / Tickets</a>
+      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/MensajitoFopen.php">Soporte / Tickets</a>
       <p>Reportes de problemas; estados y seguimiento.</p>
     </div>
 
