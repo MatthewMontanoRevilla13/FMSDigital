@@ -1,13 +1,21 @@
 <?php
-// SIN RESTRICCIÓN DE ROL
+// --- Solo ADMIN ---
+session_start();
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
+  http_response_code(403);
+  echo "Acceso restringido: solo Administrador.";
+  exit;
+}
 
-// Conexión PDO
-$pdo = new PDO("mysql:host=127.0.0.1;dbname=registrop6;charset=utf8","root","",[
-  PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
-]);
+// --- Conexión mysqli (tu formato) ---
+$conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
+if (!$conexion) {
+  echo "Error en la conexion" . mysqli_error($conexion);
+  die();
+}
+mysqli_set_charset($conexion, "utf8");
 
-// Cursos + conteo de estudiantes
+// Cursos + conteo de estudiantes (misma consulta que usabas con PDO)
 $sql = "
   SELECT  c.id_clase, c.nombreClase, c.nomProfe, c.codigoClase,
           COUNT(cu.Usuario) AS total_estudiantes
@@ -17,7 +25,8 @@ $sql = "
   GROUP BY c.id_clase, c.nombreClase, c.nomProfe, c.codigoClase
   ORDER BY c.id_clase DESC
 ";
-$cursos = $pdo->query($sql)->fetchAll();
+$res = mysqli_query($conexion, $sql);
+$cursos = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 ?>
 <!doctype html>
 <html lang="es">
@@ -40,7 +49,7 @@ $cursos = $pdo->query($sql)->fetchAll();
     <?php foreach ($cursos as $c): ?>
       <div class="item">
         <img src="/FMSDIGITAL/Maquetacion/imagenes/clases.png" alt="">
-        <a href="admin_estudiantes.php?clase_id=<?= urlencode($c['id_clase']) ?>">
+        <a href="Estudiantes.php?clase_id=<?= urlencode($c['id_clase']) ?>">
           <?= htmlspecialchars($c['nombreClase']) ?>
         </a>
         <p>Profe: <b><?= htmlspecialchars($c['nomProfe']) ?></b></p>

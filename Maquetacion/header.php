@@ -84,7 +84,7 @@ header nav a:hover {
     <h1>Julio Méndez</h1>
   </div>
   <nav>
-    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/pagina_principal.php">Inicio</a>
+    <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
     <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/noticias.php">Noticias</a>
     <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/galeria.php">Galería</a>
     <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Horario.php">Horarios</a>

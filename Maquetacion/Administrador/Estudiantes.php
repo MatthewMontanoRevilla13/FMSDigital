@@ -1,20 +1,34 @@
 <?php
-// SIN RESTRICCIÓN DE ROL
+// --- Solo ADMIN ---
+session_start();
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
+  http_response_code(403);
+  echo "Acceso restringido: solo Administrador.";
+  exit;
+}
 
-$pdo = new PDO("mysql:host=127.0.0.1;dbname=registrop6;charset=utf8","root","",[
-  PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
-]);
+// --- Conexión mysqli ---
+$conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
+if (!$conexion) {
+  echo "Error en la conexion" . mysqli_error($conexion);
+  die();
+}
+mysqli_set_charset($conexion, "utf8");
 
+// --- Parámetros ---
 $claseId = isset($_GET['clase_id']) ? (int)$_GET['clase_id'] : 0;
 if ($claseId <= 0) { die("Clase inválida."); }
 
-// Info de la clase
-$st = $pdo->prepare("SELECT id_clase, nombreClase, nomProfe, codigoClase FROM clase WHERE id_clase=?");
-$st->execute([$claseId]);
-$clase = $st->fetch() ?: die("Clase no encontrada.");
+// --- Info de la clase ---
+$st = mysqli_prepare($conexion, "SELECT id_clase, nombreClase, nomProfe, codigoClase FROM clase WHERE id_clase=?");
+mysqli_stmt_bind_param($st, "i", $claseId);
+mysqli_stmt_execute($st);
+$claseRes = mysqli_stmt_get_result($st);
+$clase = mysqli_fetch_assoc($claseRes);
+if (!$clase) { die("Clase no encontrada."); }
+mysqli_stmt_close($st);
 
-// Estudiantes inscritos (solo Rol=Estudiante)
+// --- Estudiantes inscritos (solo Rol=Estudiante) ---
 $sql = "
   SELECT cu.Usuario, cu.Rol, cu.Bloqueado,
          i.Nombres, i.Apellidos, i.Curso, i.Telefono
@@ -24,9 +38,12 @@ $sql = "
   WHERE chc.Clase_id_clase = ? AND cu.Rol = 'Estudiante'
   ORDER BY i.Apellidos, i.Nombres
 ";
-$alumnos = $pdo->prepare($sql);
-$alumnos->execute([$claseId]);
-$alumnos = $alumnos->fetchAll();
+$st2 = mysqli_prepare($conexion, $sql);
+mysqli_stmt_bind_param($st2, "i", $claseId);
+mysqli_stmt_execute($st2);
+$alumnosRes = mysqli_stmt_get_result($st2);
+$alumnos = $alumnosRes ? mysqli_fetch_all($alumnosRes, MYSQLI_ASSOC) : [];
+mysqli_stmt_close($st2);
 ?>
 <!doctype html>
 <html lang="es">
