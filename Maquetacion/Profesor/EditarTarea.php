@@ -10,12 +10,12 @@ if ($_SESSION['rol'] !== 'Profesor') {
 }
 
 $id_tarea = $_POST['id_tarea'];
-$nuevo_titulo = $_POST['titulo'];
-$nueva_descripcion = $_POST['descripcion'];
-$nuevo_tema = $_POST['tema'];
+$nuevo_titulo = $_POST['Titulo'];
+$nueva_descripcion = $_POST['Descripcion'];
+$nuevo_tema = $_POST['Tema'];
 
 $sql = "UPDATE Tarea 
-        SET titulo='$nuevo_titulo', descripcion='$nueva_descripcion', tema='$nuevo_tema'
+        SET Titulo='$nuevo_titulo', Descripcion='$nueva_descripcion', Tema='$nuevo_tema'
         WHERE id=$id_tarea";
 
 if (mysqli_query($conexion, $sql)) {
