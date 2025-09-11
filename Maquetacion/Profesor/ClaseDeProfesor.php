@@ -103,7 +103,7 @@
   <h2>Gestión de Tareas</h2>
 
   <!-- Crear tarea -->
-  <form action="crear_tarea.php" method="POST">
+  <form action="CrearTarea.php" method="POST">
       <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
       <input type="text" name="titulo" placeholder="Título de la tarea" required><br>
       <textarea name="descripcion" placeholder="Descripción" required></textarea><br>
@@ -117,17 +117,17 @@
   $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
   while ($t = mysqli_fetch_assoc($tareas)) {
       echo "<div class='tarea'>
-              <strong>{$t['titulo']}</strong><br>
-              <p>{$t['descripcion']}</p>
-              <form action='editar_tarea.php' method='POST' style='display:inline;'>
-                  <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+              <strong>{$t['Titulo']}</strong><br>
+              <p>{$t['Descripcion']}</p>
+              <form action='EditarTarea.php' method='POST' style='display:inline;'>
+                  <input type='hidden' name='id_tarea' value='{$t['id']}'>
                   <button type='submit'>Editar</button>
               </form>
-              <form action='eliminar_tarea.php' method='POST' style='display:inline;'>
-                  <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+              <form action='EliminarTarea.php' method='POST' style='display:inline;'>
+                  <input type='hidden' name='id_tarea' value='{$t['id']}'>
                   <button type='submit'>Eliminar</button>
               </form>
-              <a href='ver_entregas.php?id_tarea={$t['id_tarea']}'>Ver Entregas</a>
+              <a href='VerEntregas.php?id_tarea={$t['id']}'>Ver Entregas</a>
             </div><hr>";
   }
   ?>

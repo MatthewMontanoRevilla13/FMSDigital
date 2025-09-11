@@ -105,23 +105,23 @@
   $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
   while ($t = mysqli_fetch_assoc($tareas)) {
       echo "<div class='tarea'>
-              <strong>{$t['titulo']}</strong><br>
-              <p>{$t['descripcion']}</p>";
+              <strong>{$t['Titulo']}</strong><br>
+              <p>{$t['Descripcion']}</p>";
 
       // Ver si ya entregó
-      $entrega = mysqli_query($conexion, "SELECT * FROM Entrega WHERE id_tarea={$t['id_tarea']} AND cuenta_usuario='$usuario'");
+      $entrega = mysqli_query($conexion, "SELECT * FROM Entrega WHERE Tarea_id={$t['id']} AND cuenta_usuario='$usuario'");
       if (mysqli_num_rows($entrega) > 0) {
           $row = mysqli_fetch_assoc($entrega);
-          echo "<p><strong>Tu entrega:</strong> {$fila['contenido']}</p>";
-          echo "<p><strong>Nota:</strong> " . ($fila['nota'] ?? "Pendiente") . "</p>";
-          echo "<form action='editar_entrega.php' method='POST'>
+          echo "<p><strong>Tu entrega:</strong> {$fila['Contenido']}</p>";
+          echo "<p><strong>Nota:</strong> " . ($fila['Nota'] ?? "Pendiente") . "</p>";
+          echo "<form action='EditarEntrega.php' method='POST'>
                   <input type='hidden' name='id_entrega' value='{$fila['id_entrega']}'>
                   <textarea name='contenido'>{$fila['contenido']}</textarea>
                   <button type='submit'>Editar Entrega</button>
                 </form>";
       } else {
-          echo "<form action='subir_entrega.php' method='POST'>
-                  <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+          echo "<form action='SubirEntrega.php' method='POST'>
+                  <input type='hidden' name='id_tarea' value='{$t['id']}'>
                   <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
                   <button type='submit'>Subir Tarea</button>
                 </form>";
