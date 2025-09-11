@@ -96,20 +96,42 @@
 
         <!-- Lista con tareas específicas -->
         <div class="lista-tareas">
-          <div class="tarea">
-            <strong>Tareita pendiente quien sabe cual</strong><br>
-            <span>Fecha de entrega: 25 de junio</span>
-          </div>
-          <div class="tarea">
-            <strong>Otra tareita pendiente quien sabe cual</strong><br>
-            <span>Fecha de entrega: 25 de junio</span>
-          </div>
-          <div class="tarea">
-            <strong>Otra tarea más pendiente, un descansito por favor...</strong><br>
-            <span>Fecha de entrega: 25 de junio</span>
-          </div>
-        </div>
-      </section>
+ <section class="section" id="tareas">
+  <h2>Mis Tareas</h2>
+  <?php
+  $id_clase = $_GET['id_clase'];
+  $usuario = $_SESSION['usu'];
+
+  $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
+  while ($t = mysqli_fetch_assoc($tareas)) {
+      echo "<div class='tarea'>
+              <strong>{$t['titulo']}</strong><br>
+              <p>{$t['descripcion']}</p>";
+
+      // Ver si ya entregó
+      $entrega = mysqli_query($conexion, "SELECT * FROM Entrega WHERE id_tarea={$t['id_tarea']} AND cuenta_usuario='$usuario'");
+      if (mysqli_num_rows($entrega) > 0) {
+          $row = mysqli_fetch_assoc($entrega);
+          echo "<p><strong>Tu entrega:</strong> {$fila['contenido']}</p>";
+          echo "<p><strong>Nota:</strong> " . ($fila['nota'] ?? "Pendiente") . "</p>";
+          echo "<form action='editar_entrega.php' method='POST'>
+                  <input type='hidden' name='id_entrega' value='{$fila['id_entrega']}'>
+                  <textarea name='contenido'>{$fila['contenido']}</textarea>
+                  <button type='submit'>Editar Entrega</button>
+                </form>";
+      } else {
+          echo "<form action='subir_entrega.php' method='POST'>
+                  <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+                  <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
+                  <button type='submit'>Subir Tarea</button>
+                </form>";
+      }
+
+      echo "</div><hr>";
+  }
+  ?>
+</section>
+
           
       <!-- Materiales de clase -->
        

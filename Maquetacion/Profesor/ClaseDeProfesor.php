@@ -99,6 +99,40 @@
       ?>
     </section>
 
+    <section class="section" id="tareas">
+  <h2>Gestión de Tareas</h2>
+
+  <!-- Crear tarea -->
+  <form action="crear_tarea.php" method="POST">
+      <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
+      <input type="text" name="titulo" placeholder="Título de la tarea" required><br>
+      <textarea name="descripcion" placeholder="Descripción" required></textarea><br>
+      <input type="text" name="tema" placeholder="Tema (opcional)"><br>
+      <button type="submit">Crear Tarea</button>
+  </form>
+
+  <h3>Lista de Tareas</h3>
+  <?php
+  $id_clase = $_GET['id_clase'];
+  $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
+  while ($t = mysqli_fetch_assoc($tareas)) {
+      echo "<div class='tarea'>
+              <strong>{$t['titulo']}</strong><br>
+              <p>{$t['descripcion']}</p>
+              <form action='editar_tarea.php' method='POST' style='display:inline;'>
+                  <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+                  <button type='submit'>Editar</button>
+              </form>
+              <form action='eliminar_tarea.php' method='POST' style='display:inline;'>
+                  <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+                  <button type='submit'>Eliminar</button>
+              </form>
+              <a href='ver_entregas.php?id_tarea={$t['id_tarea']}'>Ver Entregas</a>
+            </div><hr>";
+  }
+  ?>
+</section>
+
     <!-- Anuncios del profesor a los alumnos -->
     <section class="section" id="anuncios">
       <h2>Publicar Anuncios</h2>
