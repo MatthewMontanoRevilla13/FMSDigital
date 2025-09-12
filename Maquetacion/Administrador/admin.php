@@ -85,13 +85,6 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
       <a href="/admin/calificaciones/index.php">Calificaciones & Actas</a>
       <p>Registros por periodo, exportar a Excel/PDF.</p>
     </div>
-
-    <div class="item">
-      <img src="/icons/settings.svg" alt="Configuración">
-      <a href="/admin/configuracion/index.php">Configuración</a>
-      <p>Periodos, backups, logo/colores, integraciones.</p>
-    </div>
-
     <!-- Cerrar sesión -->
    <div class="item">
   <img src="/icons/logout.svg" alt="Cerrar sesión">
