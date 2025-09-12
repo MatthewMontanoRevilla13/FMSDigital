@@ -114,17 +114,18 @@ while ($t = mysqli_fetch_assoc($tareas)) {
         $fila = mysqli_fetch_assoc($entrega);
         echo "<p><strong>Tu entrega:</strong> {$fila['contenido']}</p>";
         echo "<p><strong>Nota:</strong> " . ($fila['nota'] ?? "Pendiente") . "</p>";
-        echo "<form action='EditarEntrega.php' method='POST'>
-                <input type='hidden' name='id_entrega' value='{$fila['id']}'>
-                <textarea name='contenido'>{$fila['contenido']}</textarea>
-                <button type='submit'>Editar Entrega</button>
-              </form>";
+        echo "<form action='../Profesor/EditarEntrega.php' method='POST'>
+    <input type='hidden' name='id_entrega' value='{$fila['id']}'>
+    <input type='hidden' name='id_tarea' value='{$fila['Tarea_id']}'>
+    <textarea name='contenido'>{$fila['contenido']}</textarea>
+    <button type='submit'>Editar Entrega</button>
+</form>";
     } else {
-        echo "<form action='/FMSDigital/Maquetacion/Profesor/SubirEntrega.php' method='POST'>
-                <input type='hidden' name='id_tarea' value='{$t['id']}'>
-                <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
-                <button type='submit'>Subir Tarea</button>
-              </form>";
+        echo "<form action='../Profesor/SubirEntrega.php' method='POST'>
+    <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
+    <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
+    <button type='submit'>Subir Tarea</button>
+</form>";
     }
 
     echo "</div><hr>";

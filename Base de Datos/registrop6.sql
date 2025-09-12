@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-09-2025 a las 21:22:30
+-- Tiempo de generación: 12-09-2025 a las 05:48:41
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `clase` (
 
 INSERT INTO `clase` (`id_clase`, `nomProfe`, `nombreClase`, `codigoClase`, `Cuenta_Usuario`) VALUES
 (4, 'MAMANI QUISPE HERMANA WANKA', 'Biologiazzz', '772918I', 9416306),
-(5, 'MAMANI QUISPE HERMANA WANKA', 'Matematicazzz', '72110o', 9416306);
+(5, 'MAMANI QUISPE HERMANA WANKA', 'Matematicazzz', '72110o', 9416306),
+(6, '', '', '', 9416306);
 
 -- --------------------------------------------------------
 
@@ -64,7 +65,7 @@ CREATE TABLE `comentario` (
 
 INSERT INTO `comentario` (`id`, `contenido`, `fechaEdi`, `Clase_id_clase`, `Cuenta_Usuario`) VALUES
 (1, 'jsq', '2025-08-03 19:21:15', 4, 9416161),
-(2, 'hola', '0000-00-00 00:00:00', 4, 9416161),
+(2, 'holaa', '2025-09-03 22:02:24', 4, 9416161),
 (3, 'wdad', '2025-08-03 19:56:41', 4, 9416306);
 
 -- --------------------------------------------------------
@@ -87,8 +88,7 @@ CREATE TABLE `cuenta` (
 INSERT INTO `cuenta` (`Usuario`, `Contraseña`, `Rol`, `Bloqueado`) VALUES
 (1234321, '123321', 'Estudiante', NULL),
 (9416161, '811I202219', 'Estudiante', ''),
-(9416306, 'zzzsoyway', 'Profesor', ''),
-(12650435, 'DOCTOPS23', 'Administrador', NULL);
+(9416306, 'zzzsoyway', 'Profesor', '');
 
 -- --------------------------------------------------------
 
@@ -107,6 +107,31 @@ CREATE TABLE `cuenta_has_clase` (
 
 INSERT INTO `cuenta_has_clase` (`Cuenta_Usuario`, `Clase_id_clase`) VALUES
 (9416161, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entrega`
+--
+
+CREATE TABLE `entrega` (
+  `Nota` int(11) DEFAULT NULL,
+  `FechaEntrega` datetime DEFAULT NULL,
+  `Tarea_id` int(11) NOT NULL,
+  `Cuenta_Usuario` int(11) NOT NULL,
+  `contenido` varchar(500) NOT NULL,
+  `Archivo` varchar(500) NOT NULL,
+  `id_entrega` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `entrega`
+--
+
+INSERT INTO `entrega` (`Nota`, `FechaEntrega`, `Tarea_id`, `Cuenta_Usuario`, `contenido`, `Archivo`, `id_entrega`) VALUES
+(NULL, '2025-09-11 21:44:43', 6, 9416161, 'wadd', '', 1),
+(NULL, '2025-09-11 21:44:48', 6, 9416161, 'wadd', '', 2),
+(NULL, '2025-09-11 21:44:51', 6, 9416161, 'wadd', '', 3);
 
 -- --------------------------------------------------------
 
@@ -133,8 +158,29 @@ CREATE TABLE `informacion` (
 INSERT INTO `informacion` (`CI`, `Nombres`, `Apellidos`, `Direccion`, `Nacimiento`, `Telefono`, `Curso`, `Rude`, `Cuenta_Usuario`) VALUES
 (1234321, 'wdawdaw', 'dwadadad', 'Av. Circunvalación', '1111-11-11', '85932413', '6to B ', 2147483647, 1234321),
 (9416161, 'Jose Fabian', 'Zambrana Urquizu', 'Av. Circunvalación', '2007-11-19', '79734643', '6to B ', 2147483647, 9416161),
-(9416306, 'MAMANI QUISPE', 'HERMANA WANKA', 'Av. TUPRIMA', '1997-11-11', '85932413', '', 0, 9416306),
-(12650435, 'Matthew', 'Montaño Revilla', 'Av. Circunvalación ', '2007-11-11', '73793090', '6to B', 0, 12650435);
+(9416306, 'MAMANI QUISPE', 'HERMANA WANKA', 'Av. TUPRIMA', '1997-11-11', '85932413', '', 0, 9416306);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea`
+--
+
+CREATE TABLE `tarea` (
+  `id` int(11) NOT NULL,
+  `Titulo` varchar(90) DEFAULT NULL,
+  `Descripcion` varchar(90) DEFAULT NULL,
+  `Tema` varchar(90) DEFAULT NULL,
+  `Nota` int(11) DEFAULT NULL,
+  `Clase_id_clase` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `tarea`
+--
+
+INSERT INTO `tarea` (`id`, `Titulo`, `Descripcion`, `Tema`, `Nota`, `Clase_id_clase`) VALUES
+(6, 'MATEMATICAS', 'ENTREGA UNA COSA LOL', ':V', NULL, 4);
 
 --
 -- Índices para tablas volcadas
@@ -173,12 +219,27 @@ ALTER TABLE `cuenta_has_clase`
   ADD KEY `fk_Cuenta_has_Clase_Cuenta1_idx` (`Cuenta_Usuario`);
 
 --
+-- Indices de la tabla `entrega`
+--
+ALTER TABLE `entrega`
+  ADD PRIMARY KEY (`id_entrega`),
+  ADD KEY `fk_Entrega_Tarea1_idx` (`Tarea_id`),
+  ADD KEY `fk_Entrega_Cuenta1_idx` (`Cuenta_Usuario`);
+
+--
 -- Indices de la tabla `informacion`
 --
 ALTER TABLE `informacion`
   ADD PRIMARY KEY (`CI`),
   ADD UNIQUE KEY `CI_UNIQUE` (`CI`),
   ADD KEY `fk_Informacion_Cuenta_idx` (`Cuenta_Usuario`);
+
+--
+-- Indices de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_Tarea_Clase1_idx` (`Clase_id_clase`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -188,13 +249,25 @@ ALTER TABLE `informacion`
 -- AUTO_INCREMENT de la tabla `clase`
 --
 ALTER TABLE `clase`
-  MODIFY `id_clase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_clase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `entrega`
+--
+ALTER TABLE `entrega`
+  MODIFY `id_entrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -221,10 +294,23 @@ ALTER TABLE `cuenta_has_clase`
   ADD CONSTRAINT `fk_Cuenta_has_Clase_Cuenta1` FOREIGN KEY (`Cuenta_Usuario`) REFERENCES `cuenta` (`Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `entrega`
+--
+ALTER TABLE `entrega`
+  ADD CONSTRAINT `fk_Entrega_Cuenta1` FOREIGN KEY (`Cuenta_Usuario`) REFERENCES `cuenta` (`Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Entrega_Tarea1` FOREIGN KEY (`Tarea_id`) REFERENCES `tarea` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `informacion`
 --
 ALTER TABLE `informacion`
   ADD CONSTRAINT `fk_Informacion_Cuenta` FOREIGN KEY (`Cuenta_Usuario`) REFERENCES `cuenta` (`Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  ADD CONSTRAINT `fk_Tarea_Clase1` FOREIGN KEY (`Clase_id_clase`) REFERENCES `clase` (`id_clase`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
