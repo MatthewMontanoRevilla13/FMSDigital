@@ -10,9 +10,9 @@ if ($_SESSION['rol'] !== 'Profesor') {
 }
 
 $id_tarea = $_POST['id_tarea'];
-$nuevo_titulo = $_POST['Titulo'];
-$nueva_descripcion = $_POST['Descripcion'];
-$nuevo_tema = $_POST['Tema'];
+$nuevo_titulo = $_POST['titulo'];
+$nueva_descripcion = $_POST['descripcion'];
+$nuevo_tema = $_POST['tema'];
 
 $sql = "UPDATE Tarea 
         SET Titulo='$nuevo_titulo', Descripcion='$nueva_descripcion', Tema='$nuevo_tema'
