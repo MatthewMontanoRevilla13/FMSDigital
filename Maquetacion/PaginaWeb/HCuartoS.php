@@ -7,7 +7,7 @@
 </head>
 <body>
       <?php include '../header.php'; ?>
-    <img src="/1r Sprint-FMSDigital/Maquetacion/imagenes/HCuartoS.png">
+    <img src="/FMSDIGITAL/Maquetacion/imagenes/HCuartoS.png">
         <?php include '../footer.php'; ?>
 </body>
 </html>
