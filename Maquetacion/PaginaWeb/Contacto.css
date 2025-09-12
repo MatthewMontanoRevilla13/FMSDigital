@@ -35,19 +35,30 @@ header {
   font-weight: bold;
 }
 
-/* Menú de navegación dentro del header */
+/* ====== NAV IGUAL QUE EN PÁGINA PRINCIPAL ====== */
+nav {
+  display: flex;              /* clave: menú horizontal */
+  flex-wrap: wrap;
+  justify-content: center;    /* centrado como en principal */
+  gap: 25px;
+  margin-top: 10px;
+  padding: 10px 0;
+}
+
+/* Enlaces del menú */
 nav a {
-  margin-left: 20px;
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 16px; /* 1em aprox */
+  transition: color 0.3s ease;
+  margin: 0; /* anulamos márgenes laterales antiguos */
 }
 
-/* Subrayado cuando el mouse pasa o cuando está activo */
+/* Hover / activo */
 nav a:hover,
 nav a.activo {
-  text-decoration: underline;
+  text-decoration: underline; /* misma idea que principal */
 }
 
 /* Contenedor principal con dos columnas: info y mapa */
@@ -94,23 +105,35 @@ h2 {
 }
 
 /* Lista sin viñetas visibles */
-ul {
-  padding-left: 20px;
-}
+ul { padding-left: 20px; }
 
 /* Elementos de la lista */
-li {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
+li { font-size: 16px; margin-bottom: 8px; }
 
 /* Párrafos normales */
-p {
-  font-size: 16px;
-}
+p { font-size: 16px; }
 
-/* Ajustes para pantallas medianas o tablets */
+/* ====== TABLET ====== */
 @media (max-width: 1024px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* igual que en principal: scroll horizontal si hace falta */
+  nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px 0;
+    gap: 15px;
+  }
+
+  nav a { flex-shrink: 0; }
+
   main.contenido-doble {
     flex-direction: column;
     align-items: center;
@@ -127,31 +150,8 @@ p {
   }
 }
 
-/* Ajustes para celulares */
-@media (max-width: 600px) {
-  nav {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  nav a {
-    margin-left: 0;
-    font-size: 14px;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo {
-    height: 50px;
-  }
-
-  .nombre-colegio {
-    font-size: 1.2em;
-  }
+@media (max-width: 480px) {
+  .logo { height: 50px; }
+  .nombre-colegio { font-size: 1.2em; }
+  nav a { font-size: 0.9em; }
 }
