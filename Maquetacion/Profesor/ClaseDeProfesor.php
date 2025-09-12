@@ -116,20 +116,26 @@
   $id_clase = $_GET['id_clase'];
   $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
   while ($t = mysqli_fetch_assoc($tareas)) {
-      echo "<div class='tarea'>
-              <strong>{$t['Titulo']}</strong><br>
-              <p>{$t['Descripcion']}</p>
-              <form action='EditarTarea.php' method='POST' style='display:inline;'>
-                  <input type='hidden' name='id_tarea' value='{$t['id']}'>
-                  <button type='submit'>Editar</button>
-              </form>
-              <form action='EliminarTarea.php' method='POST' style='display:inline;'>
-                  <input type='hidden' name='id_tarea' value='{$t['id']}'>
-                  <button type='submit'>Eliminar</button>
-              </form>
-              <a href='VerEntregas.php?id_tarea={$t['id']}'>Ver Entregas</a>
-            </div><hr>";
-  }
+    echo "<div class='tarea'>
+            <strong>{$t['Titulo']}</strong><br>
+            <p>{$t['Descripcion']}</p>
+            <form action='EditarTarea.php' method='POST'>
+                <input type='hidden' name='id_tarea' value='{$t['id']}'>
+                <label>Título:</label>
+                <input type='text' name='titulo' value='{$t['Titulo']}' required><br>
+                <label>Descripción:</label>
+                <textarea name='descripcion' required>{$t['Descripcion']}</textarea><br>
+                <label>Tema:</label>
+                <input type='text' name='tema' value='{$t['Tema']}' required><br>
+                <button type='submit'>Actualizar Tarea</button>
+            </form>
+            <form action='EliminarTarea.php' method='POST' style='display:inline;'>
+                <input type='hidden' name='id_tarea' value='{$t['id']}'>
+                <button type='submit'>Eliminar</button>
+            </form>
+            <a href='VerEntregas.php?id_tarea={$t['id']}'>Ver Entregas</a>
+          </div><hr>";
+}
   ?>
 </section>
 

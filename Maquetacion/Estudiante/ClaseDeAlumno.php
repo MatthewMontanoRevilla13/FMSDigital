@@ -99,37 +99,37 @@
  <section class="section" id="tareas">
   <h2>Mis Tareas</h2>
   <?php
-  $id_clase = $_GET['id_clase'];
-  $usuario = $_SESSION['usu'];
+$id_clase = $_GET['id_clase'];
+$usuario = $_SESSION['usu'];
 
-  $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
-  while ($t = mysqli_fetch_assoc($tareas)) {
-      echo "<div class='tarea'>
-              <strong>{$t['Titulo']}</strong><br>
-              <p>{$t['Descripcion']}</p>";
+$tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
+while ($t = mysqli_fetch_assoc($tareas)) {
+    echo "<div class='tarea'>
+            <strong>{$t['Titulo']}</strong><br>
+            <p>{$t['Descripcion']}</p>";
 
-      // Ver si ya entregó
-      $entrega = mysqli_query($conexion, "SELECT * FROM Entrega WHERE Tarea_id={$t['id']} AND cuenta_usuario='$usuario'");
-      if (mysqli_num_rows($entrega) > 0) {
-          $row = mysqli_fetch_assoc($entrega);
-          echo "<p><strong>Tu entrega:</strong> {$fila['Contenido']}</p>";
-          echo "<p><strong>Nota:</strong> " . ($fila['Nota'] ?? "Pendiente") . "</p>";
-          echo "<form action='EditarEntrega.php' method='POST'>
-                  <input type='hidden' name='id_entrega' value='{$fila['id_entrega']}'>
-                  <textarea name='contenido'>{$fila['contenido']}</textarea>
-                  <button type='submit'>Editar Entrega</button>
-                </form>";
-      } else {
-          echo "<form action='SubirEntrega.php' method='POST'>
-                  <input type='hidden' name='id_tarea' value='{$t['id']}'>
-                  <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
-                  <button type='submit'>Subir Tarea</button>
-                </form>";
-      }
+    // Ver si ya entregó
+    $entrega = mysqli_query($conexion, "SELECT * FROM Entrega WHERE Tarea_id={$t['id']} AND Cuenta_Usuario='$usuario'");
+    if (mysqli_num_rows($entrega) > 0) {
+        $fila = mysqli_fetch_assoc($entrega);
+        echo "<p><strong>Tu entrega:</strong> {$fila['contenido']}</p>";
+        echo "<p><strong>Nota:</strong> " . ($fila['nota'] ?? "Pendiente") . "</p>";
+        echo "<form action='EditarEntrega.php' method='POST'>
+                <input type='hidden' name='id_entrega' value='{$fila['id']}'>
+                <textarea name='contenido'>{$fila['contenido']}</textarea>
+                <button type='submit'>Editar Entrega</button>
+              </form>";
+    } else {
+        echo "<form action='/FMSDigital/Maquetacion/Profesor/SubirEntrega.php' method='POST'>
+                <input type='hidden' name='id_tarea' value='{$t['id']}'>
+                <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
+                <button type='submit'>Subir Tarea</button>
+              </form>";
+    }
 
-      echo "</div><hr>";
-  }
-  ?>
+    echo "</div><hr>";
+}
+?>
 </section>
 
           
