@@ -264,7 +264,7 @@ if ($id_clase > 0) {
                 </div>
                 <div class="actions">
                   <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/EditarTarea.php?id_tarea=<?php echo intval($t['id']); ?>">Editar</a>
-                  <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/CalificarEntrega.php?id_tarea=<?php echo intval($t['id']); ?>">Calificar</a>
+                  <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/VerEntregas.php?id_tarea=<?php echo intval($t['id']); ?>">Calificar</a>
                   <a class="btn btn-danger" href="/FMSDIGITAL/Maquetacion/Profesor/EliminarTarea.php?id_tarea=<?php echo intval($t['id']); ?>" onclick="return confirm('¿Eliminar esta tarea?')">Eliminar</a>
                 </div>
               </div>

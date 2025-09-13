@@ -28,11 +28,15 @@
       <!-- Sección bienvenida -->
       <section class="section" id="tablero">
           <h2>Tablon de Publicaciones</h2>
-        <form action="/FMSDIGITAL/Maquetacion/Estudiante/Ccomentario.php" method="POST">
-            <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
-            <textarea name="contenido" rows="3" cols="60" placeholder="Escribe algo para tu clase..." required></textarea><br>
-            <button type="submit">Publicar</button>
-        </form>
+        <form action="/FMSDIGITAL/Maquetacion/Estudiante/Ccomentario.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
+    <textarea name="contenido" rows="3" cols="60" placeholder="Escribe algo para tu clase..." required></textarea><br>
+    
+    <label>Adjuntar archivo:</label>
+    <input type="file" name="fileUpload"><br><br>
+    
+    <button type="submit">Publicar</button>
+</form>
        <?php
        session_start();
        $id_clase = $_GET['id_clase'];
@@ -55,6 +59,18 @@
              echo "<small>Última edición: {$fila['fechaEdi']}</small><br>";
             }
              echo "<p>{$fila['contenido']}</p>";
+ if (!empty($fila['archivo'])) {
+    $rutaArchivo = "/FMSDIGITAL/Maquetacion/media/comentarios/" . $fila['archivo'];
+    $ext = strtolower(pathinfo($fila['archivo'], PATHINFO_EXTENSION));
+
+    if (in_array($ext, ["jpg","jpeg","png","gif","webp"])) {
+        echo "<img src='$rutaArchivo' alt='Adjunto' width='200'><br>";
+    } elseif ($ext === "pdf") {
+        echo "<embed src='$rutaArchivo' type='application/pdf' width='400' height='300'><br>";
+    } else {
+        echo "<a href='$rutaArchivo' download>📥 Descargar archivo</a><br>";
+    }
+}
             if ($_SESSION['usu'] === $fila['Usuario']) {
              echo "<form action='Ecomentario.php' method='POST' style='display:inline;'>
                     <input type='hidden' name='id' value='{$fila['id']}'>
@@ -110,25 +126,23 @@ while ($t = mysqli_fetch_assoc($tareas)) {
 
     // Ver si ya entregó
     $entrega = mysqli_query($conexion, "SELECT * FROM Entrega WHERE Tarea_id={$t['id']} AND Cuenta_Usuario='$usuario'");
-    if (mysqli_num_rows($entrega) > 0) {
-        $fila = mysqli_fetch_assoc($entrega);
-        echo "<p><strong>Tu entrega:</strong> {$fila['contenido']}</p>";
-        echo "<p><strong>Nota:</strong> " . ($fila['nota'] ?? "Pendiente") . "</p>";
-        echo "<form action='../Profesor/EditarEntrega.php' method='POST'>
-    <input type='hidden' name='id_entrega' value='{$fila['id']}'>
+if (mysqli_num_rows($entrega) > 0) {
+    $fila = mysqli_fetch_assoc($entrega);
+    echo "<p><strong>Tu entrega:</strong> {$fila['contenido']}</p>";
+    echo "<p><strong>Nota:</strong> " . ($fila['Nota'] ?? "Pendiente") . "</p>";
+echo "<form action='../Profesor/EditarEntrega.php' method='POST'>
+    <input type='hidden' name='id_entrega' value='{$fila['id_entrega']}'>
     <input type='hidden' name='id_tarea' value='{$fila['Tarea_id']}'>
     <textarea name='contenido'>{$fila['contenido']}</textarea>
     <button type='submit'>Editar Entrega</button>
 </form>";
-    } else {
-        echo "<form action='../Profesor/SubirEntrega.php' method='POST'>
-    <input type='hidden' name='id_tarea' value='{$t['id_tarea']}'>
-    <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
-    <button type='submit'>Subir Tarea</button>
-</form>";
-    }
-
-    echo "</div><hr>";
+} else {
+    echo "<form action='../Profesor/SubirEntrega.php' method='POST'>
+        <input type='hidden' name='id_tarea' value='{$t['id']}'>   
+        <textarea name='contenido' placeholder='Escribe tu tarea aquí...' required></textarea>
+        <button type='submit'>Subir Tarea</button>
+    </form>";
+}
 }
 ?>
 </section>
