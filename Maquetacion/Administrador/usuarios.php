@@ -124,49 +124,206 @@ if ($usuarios) {
   <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Administrador/admin.css">
 
   <style>
-    .menu-top {
-        position: relative; 
-        left: 25cm;
-    }
-    .card{
-        background:#fff;
-        padding:18px;
-        border-radius:10px;
-        box-shadow:0 2px 6px rgba(0,0,0,.1);
-        margin:20px auto;
-        max-width:1100px
-    }
-    table{
-        width:100%;
-        border-collapse:collapse
-    }
-    th,td{
-        border:1px solid #e5e5e5;
-        padding:10px;
-        text-align:left
-    }
-    th{
-        background:#f8f8f8
-    }
-    .search{
-        margin: 0 auto 10px; 
-        display:flex;
-        gap:8px;
-        max-width:1100px}
-    .btn{
-        background:#6b0014;
-        color:#fff;
-        border:0;
-        border-radius:8px;
-        padding:8px 14px;
-        cursor:pointer;
-        text-decoration:none;
-        display:inline-block}
-    .input{
-        flex:1;
-        padding:8px;
-        border:1px solid #ddd;
-        border-radius:6px}
+    /* ====== ESTILOS BASE ====== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff7f8;
+  color: #2b2b2b;
+  font-size: 18px; /* base más grande */
+}
+
+/* HEADER */
+header {
+  background-color: #6b0014;
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+  letter-spacing: 1px;
+}
+
+/* MENÚ SUPERIOR */
+.menu-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.menu-top a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1em;
+  padding: 8px 12px;
+  transition: color 0.3s ease;
+}
+
+.menu-top a:hover,
+.menu-top a.active {
+  text-decoration: underline;
+}
+
+/* TARJETAS / CONTENEDOR */
+.card {
+  margin: 20px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  max-width: 100%;
+  overflow-x: auto;
+  font-size: 1.05em;
+}
+
+/* TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th, td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 1.05em;
+}
+
+th {
+  background-color: #f4e1e4;
+  color: #6b0014;
+  font-weight: bold;
+}
+
+/* BOTONES */
+.btn {
+  display: inline-block;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 12px 20px;
+  background-color: #6b0014;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #990033;
+}
+
+/* INPUTS */
+.input {
+  font-size: 1em;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* SECCIÓN DE BÚSQUEDA */
+.search {
+  position: relative;
+  right: 7cm;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 20px;
+}
+
+/* ====== MEDIA QUERIES ====== */
+
+@media (max-width: 1400px) {
+  .menu-top {
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+
+@media (max-width: 992px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .card {
+    margin: 16px;
+    max-width: 100%;
+  }
+
+  .search {
+    padding: 0 16px;
+    max-width: 100%;
+  }
+
+  th, td {
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 720px;
+  }
+
+  .menu-top {
+    justify-content: center;
+    gap: 12px;
+    padding: 6px 0;
+  }
+}
+
+/* <=576px (celular) */
+@media (max-width: 576px) {
+  th, td {
+    font-size: 15px;
+  }
+
+  .btn {
+    padding: 12px;
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 400px) {
+  table {
+    min-width: 600px;
+  }
+}
+
   </style>
 </head>
 <body>
