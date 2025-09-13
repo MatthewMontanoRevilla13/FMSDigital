@@ -1,188 +1,329 @@
+<?php
+// ===== Sesión =====
+session_start();
+$nombreProfesor = isset($_SESSION['nom']) ? ($_SESSION['nom']." ".$_SESSION['apes']) : "Profesor/a";
+$usuario        = isset($_SESSION['usu']) ? intval($_SESSION['usu']) : null;
+
+// ===== Parámetro de clase =====
+$id_clase = isset($_GET['id_clase']) ? intval($_GET['id_clase']) : 0;
+
+// ===== Conexión BD =====
+$conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
+if (!$conexion) { die("Error en la conexión: " . mysqli_connect_error()); }
+
+// ===== Info de la clase =====
+$clase = null;
+if ($id_clase > 0) {
+  $sql = "SELECT id_clase, nombreClase, codigoClase FROM clase WHERE id_clase = ?";
+  $stmt = mysqli_prepare($conexion, $sql);
+  mysqli_stmt_bind_param($stmt, "i", $id_clase);
+  mysqli_stmt_execute($stmt);
+  $res = mysqli_stmt_get_result($stmt);
+  $clase = mysqli_fetch_assoc($res);
+  mysqli_stmt_close($stmt);
+}
+
+// ===== Manejo de formularios (POST) =====
+$alerta = null;
+
+// Crear Publicación (comentario)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'crear_anuncio') {
+  if (!$usuario || $id_clase <= 0) {
+    $alerta = ["type" => "error", "msg" => "Sesión o clase no válidas."];
+  } else {
+    $contenido = trim($_POST['contenido'] ?? "");
+    if ($contenido === "" || mb_strlen($contenido) > 500) {
+      $alerta = ["type" => "error", "msg" => "El contenido es requerido (máx. 500 caracteres)."];
+    } else {
+      $sql = "INSERT INTO comentario (contenido, fechaEdi, Clase_id_clase, Cuenta_Usuario)
+              VALUES (?, NOW(), ?, ?)";
+      $stmt = mysqli_prepare($conexion, $sql);
+      mysqli_stmt_bind_param($stmt, "sii", $contenido, $id_clase, $usuario);
+      if (mysqli_stmt_execute($stmt)) {
+        $alerta = ["type" => "success", "msg" => "Anuncio publicado correctamente."];
+      } else {
+        $alerta = ["type" => "error", "msg" => "Error al publicar anuncio: ".mysqli_error($conexion)];
+      }
+      mysqli_stmt_close($stmt);
+    }
+  }
+}
+
+// Crear Tarea
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'crear_tarea') {
+  if ($id_clase <= 0) {
+    $alerta = ["type" => "error", "msg" => "Clase no válida."];
+  } else {
+    $titulo      = trim($_POST['titulo'] ?? "");
+    $tema        = trim($_POST['tema'] ?? "");
+    $descripcion = trim($_POST['descripcion'] ?? "");
+
+    // La tabla tarea tiene longitudes 90 para Titulo/Descripcion/Tema
+    if ($titulo === "" || mb_strlen($titulo) > 90) {
+      $alerta = ["type" => "error", "msg" => "El título es requerido (máx. 90 caracteres)."];
+    } elseif ($descripcion === "" || mb_strlen($descripcion) > 90) {
+      $alerta = ["type" => "error", "msg" => "La descripción es requerida (máx. 90 caracteres)."];
+    } elseif (mb_strlen($tema) > 90) {
+      $alerta = ["type" => "error", "msg" => "El tema no puede superar 90 caracteres."];
+    } else {
+      $sql = "INSERT INTO tarea (Titulo, Descripcion, Tema, Clase_id_clase)
+              VALUES (?, ?, ?, ?)";
+      $stmt = mysqli_prepare($conexion, $sql);
+      mysqli_stmt_bind_param($stmt, "sssi", $titulo, $descripcion, $tema, $id_clase);
+      if (mysqli_stmt_execute($stmt)) {
+        $alerta = ["type" => "success", "msg" => "Tarea creada correctamente."];
+      } else {
+        $alerta = ["type" => "error", "msg" => "Error al crear tarea: ".mysqli_error($conexion)];
+      }
+      mysqli_stmt_close($stmt);
+    }
+  }
+}
+
+// ===== Listados recientes (para la vista) =====
+$anuncios = [];
+$tareas   = [];
+
+if ($id_clase > 0) {
+  // Últimos 5 anuncios (comentario)
+  $sql = "SELECT id, contenido, fechaPub
+          FROM comentario
+          WHERE Clase_id_clase = ?
+          ORDER BY id DESC
+          LIMIT 5";
+  $stmt = mysqli_prepare($conexion, $sql);
+  mysqli_stmt_bind_param($stmt, "i", $id_clase);
+  mysqli_stmt_execute($stmt);
+  $res = mysqli_stmt_get_result($stmt);
+  while ($row = mysqli_fetch_assoc($res)) { $anuncios[] = $row; }
+  mysqli_stmt_close($stmt);
+
+  // Últimas 5 tareas
+  $sql = "SELECT id, Titulo, Descripcion, Tema
+          FROM tarea
+          WHERE Clase_id_clase = ?
+          ORDER BY id DESC
+          LIMIT 5";
+  $stmt = mysqli_prepare($conexion, $sql);
+  mysqli_stmt_bind_param($stmt, "i", $id_clase);
+  mysqli_stmt_execute($stmt);
+  $res = mysqli_stmt_get_result($stmt);
+  while ($row = mysqli_fetch_assoc($res)) { $tareas[] = $row; }
+  mysqli_stmt_close($stmt);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel del Profesor</title>
-  <!-- Aquí conectamos el CSS -->
-  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/profesor/ClaseDeProfesor.css" />
+  <title>Clase del Profesor</title>
+
+  <!-- Librerías (validación opcional si quieres) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+
+  <!-- Estilos (gama vino/rosado) -->
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.css"/>
 </head>
 <body>
-  <!-- Cabecera arriba con el logo y nombre del colegio -->
-  <!-- Header -->
-  <?php include '../header.php'; ?>
 
-  <!-- Menú lateral para navegar rápido por secciones del panel -->
-  <div class="sidebar">
-    <a href="#inicio">Inicio</a>
-    <a href="#anuncios">Anuncios</a>
-    <a href="#materiales">Materiales</a>
-    <a href="#tareas">Tareas</a>
-    <a href="#calificaciones">Calificaciones</a>
-    <a href="#expedientes">Expedientes</a>
-    <a href="#configuracion">Configuración</a>
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">NOMBRE DEL COLEGIO</div>
+      <nav class="topnav">
+        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
+        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Noticias.php">Noticias</a>
+        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Galeria.php">Galería</a>
+        <a href="#">Documentos</a>
+        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Contacto.php">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <span class="menu-title">Clase</span>
+      <nav class="sidenav">
+        <a class="active" href="#"><span class="icon"></span> Resumen</a>
+        <a href="/FMSDIGITAL/Maquetacion/Profesor/tareas.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Tareas</a>
+        <a href="/FMSDIGITAL/Maquetacion/Profesor/materiales.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Materiales</a>
+        <a href="/FMSDIGITAL/Maquetacion/Profesor/anuncios.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Anuncios</a>
+        <a href="/FMSDIGITAL/Maquetacion/Profesor/calificaciones.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Calificaciones</a>
+        <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/cerrarL.php"><span class="icon"></span> Cerrar Sesión</a>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="content">
+      <!-- HERO -->
+      <section class="hero">
+        <div>
+          <h1><?php echo $clase ? htmlspecialchars($clase['nombreClase']) : "Clase"; ?></h1>
+          <p>
+            Profesor: <?php echo htmlspecialchars($nombreProfesor); ?>
+            <?php if ($clase && !empty($clase['codigoClase'])): ?>
+              • Código: <?php echo htmlspecialchars($clase['codigoClase']); ?>
+            <?php endif; ?>
+          </p>
+        </div>
+        <div class="hero-ill" aria-hidden="true"></div>
+      </section>
+
+      <!-- ALERTAS -->
+      <?php if ($alerta): ?>
+        <div class="alert <?php echo $alerta['type']==='success'?'alert-success':'alert-error'; ?>">
+          <?php echo htmlspecialchars($alerta['msg']); ?>
+        </div>
+      <?php endif; ?>
+
+      <!-- ACCIONES RÁPIDAS -->
+    
+      <!-- FORM: PUBLICAR ANUNCIO -->
+      <section id="form-anuncio" class="card">
+        <h2>Publicar anuncio</h2>
+        <form class="form" id="FormAnuncio" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="accion" value="crear_anuncio"/>
+          <div class="form-group">
+            <label>Contenido (máx. 500)</label>
+            <textarea name="contenido" placeholder="Escribe el mensaje para tu clase..."></textarea>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn">Publicar</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('FormAnuncio').reset()">Limpiar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- FORM: CREAR TAREA -->
+      <section id="form-tarea" class="card">
+        <h2>Crear tarea</h2>
+        <form class="form" id="FormTarea" method="post">
+          <input type="hidden" name="accion" value="crear_tarea"/>
+          <div class="form-grid task-form">
+            <div class="form-group">
+              <label>Título (máx. 90)</label>
+              <input type="text" name="titulo" placeholder="Ej. MATEMÁTICAS - Problemas 1"/>
+            </div>
+            <div class="form-group">
+              <label>Tema (opcional, máx. 90)</label>
+              <input type="text" name="tema" placeholder="Unidad 1 / Álgebra"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Descripción (máx. 90)</label>
+            <input type="text" name="descripcion" placeholder="Ej. Entrega hasta el viernes. Resolver 1-10."/>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn">Crear tarea</button>
+            <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/tareas.php?id_clase=<?php echo $id_clase; ?>">Ver todas</a>
+          </div>
+        </form>
+      </section>
+
+      <!-- RECIENTES: ANUNCIOS -->
+      <section class="card">
+        <h2>Anuncios recientes</h2>
+        <?php if (empty($anuncios)): ?>
+          <div class="empty">Aún no publicaste anuncios para esta clase.</div>
+        <?php else: ?>
+          <div class="list">
+            <?php foreach ($anuncios as $a): ?>
+              <div class="list-item">
+                <span><?php echo htmlspecialchars($a['contenido']); ?></span>
+                <div class="actions">
+                  <!-- Puedes crear AnuncioEditar.php si lo manejas aparte -->
+                  <span class="pill">#<?php echo intval($a['id']); ?></span>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+      </section>
+
+      <!-- RECIENTES: TAREAS -->
+      <section class="card">
+        <h2>Tareas recientes</h2>
+        <?php if (empty($tareas)): ?>
+          <div class="empty">Aún no creaste tareas para esta clase.</div>
+        <?php else: ?>
+          <div class="task-list">
+            <?php foreach ($tareas as $t): ?>
+              <div class="task-item">
+                <div class="info">
+                  <div class="title"><?php echo htmlspecialchars($t['Titulo']); ?></div>
+                  <div class="meta">
+                    <?php if (!empty($t['Tema'])): ?><span class="pill"><?php echo htmlspecialchars($t['Tema']); ?></span><?php endif; ?>
+                    <span class="pill">#<?php echo intval($t['id']); ?></span>
+                  </div>
+                  <?php if (!empty($t['Descripcion'])): ?>
+                    <p><?php echo htmlspecialchars($t['Descripcion']); ?></p>
+                  <?php endif; ?>
+                </div>
+                <div class="actions">
+                  <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/EditarTarea.php?id_tarea=<?php echo intval($t['id']); ?>">Editar</a>
+                  <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/CalificarEntrega.php?id_tarea=<?php echo intval($t['id']); ?>">Calificar</a>
+                  <a class="btn btn-danger" href="/FMSDIGITAL/Maquetacion/Profesor/EliminarTarea.php?id_tarea=<?php echo intval($t['id']); ?>" onclick="return confirm('¿Eliminar esta tarea?')">Eliminar</a>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+      </section>
+
+      <!-- INFO CLASE -->
+      <section class="card">
+        <h2>Información de la clase</h2>
+        <div class="class-info">
+          <img src="/FMSDIGITAL/Maquetacion/imagenes/imagen fisica.png" alt="Imagen de la clase"/>
+          <div>
+            <p><strong>Nombre:</strong> <?php echo $clase ? htmlspecialchars($clase['nombreClase']) : "—"; ?></p>
+            <p><strong>Código:</strong> <?php echo $clase ? htmlspecialchars($clase['codigoClase']) : "—"; ?></p>
+            <p><strong>Profesor:</strong> <?php echo htmlspecialchars($nombreProfesor); ?></p>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <!-- Parte principal donde está todo lo que el profe usa -->
-  <div class="main">
-
-    <!-- Sección donde se publican comentarios en clase -->
-    <section class="section" id="tablero">
-      <h2>Tablón de Publicaciones</h2>
-
-      <!-- Formulario para que el profe publique un comentario -->
-      <form action="/FMSDIGITAL/Maquetacion/Estudiante/Ccomentario.php" method="POST">
-        <!-- Este input guarda el ID de la clase -->
-        <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
-        <textarea name="contenido" rows="3" cols="60" placeholder="Escribe algo para tu clase..." required></textarea><br>
-        <button type="submit">Publicar</button>
-      </form>
-
-      <?php
-      // Iniciamos la sesión para saber quién está conectado
-      session_start();
-
-      // Obtenemos el ID de la clase desde la URL
-      $id_clase = $_GET['id_clase'];
-
-      // Conectamos a la base de datos
-      $conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
-
-      // Si falla la conexión, mostramos un mensaje
-      if (!$conexion) {
-        echo "Error en la conexión: " . mysqli_connect_error();
-        exit;
-      }
-
-      // Buscamos los comentarios de la clase y los mostramos
-      $query = "SELECT co.id, co.contenido, co.fechaPub, co.fechaEdi, cu.Usuario
-        FROM Comentario co JOIN Cuenta cu ON co.Cuenta_Usuario = cu.Usuario
-        WHERE co.Clase_id_clase = $id_clase
-        ORDER BY co.fechaPub DESC";
-
-      $comentarios = mysqli_query($conexion, $query);
-
-      // Recorremos todos los comentarios uno por uno
-      while ($fila = mysqli_fetch_assoc($comentarios)) {
-        echo "<div class='comentario'>";
-        echo "<strong>{$fila['Usuario']}</strong><br>";
-        echo "<small>Publicado el: {$fila['fechaPub']}</small><br>";
-
-        // Si el comentario fue editado, también mostramos esa fecha
-        if (!empty($fila['fechaEdi'])) {
-          echo "<small>Última edición: {$fila['fechaEdi']}</small><br>";
+  <script>
+    // Scroll suave a formularios
+    document.querySelectorAll('a[href^="#form-"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+          e.preventDefault();
+          window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
         }
+      });
+    });
 
-        // Mostramos el contenido del comentario
-        echo "<p>{$fila['contenido']}</p>";
-
-        // Si el comentario es del usuario actual, puede editarlo
-        if ($_SESSION['usu'] === $fila['Usuario']) {
-          echo "<form action='Ecomentario.php' method='POST' style='display:inline;'>
-                  <input type='hidden' name='id' value='{$fila['id']}'>
-                  <textarea name='nuevo_texto' rows='3' cols='60' placeholder='Escribe algo para tu clase...' required></textarea><br>
-                  <button type='submit'>Editar</button>
-              </form>";
-        }
-
-        // Si el usuario es profe, puede eliminar cualquier comentario
-        if ($_SESSION['rol'] === 'Profesor') {
-          echo "<form action='Dcomentario.php' method='POST' style='display:inline;'>
-                  <input type='hidden' name='id' value='{$fila['id']}'>
-                  <input type='hidden' name='id_clase' value='$id_clase'>
-                  <button type='submit'>Eliminar</button>
-              </form>";
-        }
-
-        echo "</div><hr>";
-      }
-      ?>
-    </section>
-
-    <section class="section" id="tareas">
-  <h2>Gestión de Tareas</h2>
-
-  <!-- Crear tarea -->
-  <form action="CrearTarea.php" method="POST">
-      <input type="hidden" name="id_clase" value="<?php echo $_GET['id_clase']; ?>">
-      <input type="text" name="titulo" placeholder="Título de la tarea" required><br>
-      <textarea name="descripcion" placeholder="Descripción" required></textarea><br>
-      <input type="text" name="tema" placeholder="Tema (opcional)"><br>
-      <button type="submit">Crear Tarea</button>
-  </form>
-
-  <h3>Lista de Tareas</h3>
-  <?php
-  $id_clase = $_GET['id_clase'];
-  $tareas = mysqli_query($conexion, "SELECT * FROM Tarea WHERE Clase_id_clase=$id_clase");
-  while ($t = mysqli_fetch_assoc($tareas)) {
-    echo "<div class='tarea'>
-            <strong>{$t['Titulo']}</strong><br>
-            <p>{$t['Descripcion']}</p>
-            <form action='EditarTarea.php' method='POST'>
-                <input type='hidden' name='id_tarea' value='{$t['id']}'>
-                <label>Título:</label>
-                <input type='text' name='titulo' value='{$t['Titulo']}' required><br>
-                <label>Descripción:</label>
-                <textarea name='descripcion' required>{$t['Descripcion']}</textarea><br>
-                <label>Tema:</label>
-                <input type='text' name='tema' value='{$t['Tema']}' required><br>
-                <button type='submit'>Actualizar Tarea</button>
-            </form>
-            <form action='EliminarTarea.php' method='POST' style='display:inline;'>
-                <input type='hidden' name='id_tarea' value='{$t['id']}'>
-                <button type='submit'>Eliminar</button>
-            </form>
-            <a href='VerEntregas.php?id_tarea={$t['id']}'>Ver Entregas</a>
-          </div><hr>";
-}
-  ?>
-</section>
-
-    <!-- Anuncios del profesor a los alumnos -->
-    <section class="section" id="anuncios">
-      <h2>Publicar Anuncios</h2>
-      <p>Escriba mensajes para mantener informados a sus alumnos.</p>
-      <a href="#" class="btn">Crear Anuncio</a>
-    </section>
-
-    <!-- Materiales que el profesor puede compartir -->
-    <section class="section" id="materiales">
-      <h2>Subir Materiales</h2>
-      <p>Comparta archivos, enlaces o recursos con los estudiantes.</p>
-      <a href="#" class="btn">Subir Material</a>
-    </section>
-
-    <!-- Tareas asignadas por el profesor -->
-    <section class="section" id="tareas">
-      <h2>Gestionar Tareas</h2>
-      <p>Asigne nuevas tareas y revise las entregas de los estudiantes.</p>
-      <a href="#" class="btn">Crear Tarea</a>
-      <a href="#" class="btn">Ver Entregas</a>
-    </section>
-
-    <!-- Ver o editar notas -->
-    <section class="section" id="calificaciones">
-      <h2>Calificaciones</h2>
-      <p>Revise y edite las notas de los alumnos.</p>
-      <a href="#" class="btn">Ver Calificaciones</a>
-    </section>
-
-    <!-- Información del estudiante -->
-    <section class="section" id="expedientes">
-      <h2>Expediente de Estudiantes</h2>
-      <p>Consulte los historiales académicos y comportamentales.</p>
-      <a href="#" class="btn">Ver Expedientes</a>
-    </section>
-
-    <!-- Configuración del perfil del profe o de la clase -->
-    <section class="section" id="configuracion">
-      <h2>Configuración</h2>
-      <p>Actualice su perfil o los parámetros de la clase.</p>
-      <a href="#" class="btn">Editar Configuración</a>
-    </section>
-  </div>
-  <!-- Footer -->
-  <?php include '../footer.php'; ?>
+    // Validación rápida (opcional)
+    $(function(){
+      $("#FormAnuncio").validate({
+        rules:{ contenido:{ required:true, maxlength:500, minlength:3 } },
+        messages:{
+          contenido:{ required:"Escribe el anuncio", maxlength:"Máx. 500 caracteres", minlength:"Mínimo 3" }
+        },
+        submitHandler:function(form){ form.submit(); }
+      });
+      $("#FormTarea").validate({
+        rules:{
+          titulo:{ required:true, maxlength:90, minlength:3 },
+          tema:{ maxlength:90 },
+          descripcion:{ required:true, maxlength:90, minlength:3 }
+        },
+        messages:{
+          titulo:{ required:"Ingresa un título", maxlength:"Máx. 90", minlength:"Mínimo 3" },
+          tema:{ maxlength:"Máx. 90" },
+          descripcion:{ required:"Ingresa la descripción", maxlength:"Máx. 90", minlength:"Mínimo 3" }
+        },
+        submitHandler:function(form){ form.submit(); }
+      });
+    });
+  </script>
 </body>
 </html>
