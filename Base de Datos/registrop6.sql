@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-09-2025 a las 05:48:41
+-- Tiempo de generación: 13-09-2025 a las 05:52:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -56,17 +56,24 @@ CREATE TABLE `comentario` (
   `fechaPub` datetime GENERATED ALWAYS AS (current_timestamp()) VIRTUAL,
   `fechaEdi` datetime NOT NULL,
   `Clase_id_clase` int(11) NOT NULL,
-  `Cuenta_Usuario` int(11) NOT NULL
+  `Cuenta_Usuario` int(11) NOT NULL,
+  `archivo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `comentario`
 --
 
-INSERT INTO `comentario` (`id`, `contenido`, `fechaEdi`, `Clase_id_clase`, `Cuenta_Usuario`) VALUES
-(1, 'jsq', '2025-08-03 19:21:15', 4, 9416161),
-(2, 'holaa', '2025-09-03 22:02:24', 4, 9416161),
-(3, 'wdad', '2025-08-03 19:56:41', 4, 9416306);
+INSERT INTO `comentario` (`id`, `contenido`, `fechaEdi`, `Clase_id_clase`, `Cuenta_Usuario`, `archivo`) VALUES
+(1, 'jsq', '2025-08-03 19:21:15', 4, 9416161, ''),
+(2, 'holaa', '2025-09-03 22:02:24', 4, 9416161, ''),
+(3, 'wdad', '2025-08-03 19:56:41', 4, 9416306, ''),
+(6, 'waddad', '2025-09-12 22:49:08', 4, 9416306, ''),
+(7, 'wad', '2025-09-12 23:46:38', 4, 9416161, 'C4_U9416161_1757735096.pdf'),
+(8, 'ad', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735212.png'),
+(9, 'awdwa', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735326.png'),
+(10, 'awda', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735361.png'),
+(11, 'awdadd', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735465.pdf');
 
 -- --------------------------------------------------------
 
@@ -129,7 +136,7 @@ CREATE TABLE `entrega` (
 --
 
 INSERT INTO `entrega` (`Nota`, `FechaEntrega`, `Tarea_id`, `Cuenta_Usuario`, `contenido`, `Archivo`, `id_entrega`) VALUES
-(NULL, '2025-09-11 21:44:43', 6, 9416161, 'wadd', '', 1),
+(22, '2025-09-11 21:44:43', 6, 9416161, 'wadd', '', 1),
 (NULL, '2025-09-11 21:44:48', 6, 9416161, 'wadd', '', 2),
 (NULL, '2025-09-11 21:44:51', 6, 9416161, 'wadd', '', 3);
 
@@ -255,7 +262,7 @@ ALTER TABLE `clase`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `entrega`
