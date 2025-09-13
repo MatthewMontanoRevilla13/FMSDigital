@@ -36,6 +36,120 @@ $cursos = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
+  <style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff7f8; /* rosita claro */
+  color: #2b2b2b;
+}
+
+header {
+  background: #6b0014;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.logo-colegio {
+  height: 40px;
+}
+
+/* Menú superior */
+.menu-top {
+  text-align: center;
+  padding: 10px;
+  background: #fdf9f9;
+}
+.menu-top a {
+  text-decoration: none;
+  color: #6b0014;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+/* ===== GRID DE CURSOS ===== */
+.grid-container {
+  display: grid;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 15px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.item {
+  background: #fff;
+  border: 1px solid #ffdde0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+}
+
+.item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.item a {
+  display: block;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #6b0014;
+  margin: 8px 0;
+}
+
+.item p {
+  margin: 4px 0;
+  font-size: 0.95em;
+}
+
+/* Botón "Ver estudiantes" */
+.item p:last-of-type a {
+  display: inline-block;
+  background: #a30c2c;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.item p:last-of-type a:hover {
+  background: #7a0820;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet: máximo 2 columnas */
+@media (max-width: 900px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Celular: 1 curso debajo del otro (legible) */
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  header h1 { font-size: 1.2em; }
+  .item a { font-size: 1em; }
+}
+  </style>
   <header>
     <h1>Panel · Cursos</h1>
     <img class="logo-colegio" src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="logo">
