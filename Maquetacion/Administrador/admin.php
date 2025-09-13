@@ -44,7 +44,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
 
     <div class="item">
       <img src="/icons/timetable.svg" alt="Horarios">
-      <a href="/admin/horarios/index.php">Horarios & Aulas</a>
+      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Horario.php">Horarios & Aulas</a>
       <p>Planificar por paralelo, exportar PDF.</p>
     </div>
 
@@ -70,7 +70,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
     <!-- Evaluación -->
     <div class="item">
       <img src="/icons/tasks.svg" alt="Tareas">
-      <a href="/admin/tareas/index.php">Tareas & Entregas</a>
+      <a href="/FMSDIGITAL/Maquetacion/Administrador/tareas.php">Tareas & Entregas</a>
       <p>Calendario, plazos y control de retrasos.</p>
     </div>
 
