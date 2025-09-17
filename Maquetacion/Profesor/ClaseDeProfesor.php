@@ -1,4 +1,4 @@
-<?phpfsdfs
+<?php
 // ===== Sesión =====
 session_start();
 $nombreProfesor = isset($_SESSION['nom']) ? ($_SESSION['nom']." ".$_SESSION['apes']) : "Profesor/a";
