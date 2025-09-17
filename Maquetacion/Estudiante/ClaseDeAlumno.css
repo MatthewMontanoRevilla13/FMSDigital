@@ -1,213 +1,269 @@
-/* Estilos generales (letra, colores de fondo, etc.) */
+
 body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  background-color: #fdfcfa; 
-  color: #2b2b2b;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #3a0b14;               /* texto principal (vino oscuro legible) */
+  background: #fff9fa;          /* rosado muy claro de fondo */
+  line-height: 1.45;
 }
 
-/* ===== Header ===== */
+/* Enlaces (sin subrayado, heredan color) */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Botones (cursor mano) */
+button {
+  cursor: pointer;
+}
+
+/* Imágenes responsivas dentro de su contenedor */
+img {
+  max-width: 100%;
+  display: block;
+}
+
 header {
-  background-color: #6b0014;
-  color: white;
-  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(90deg, #8b0020, #6b0014);
+  color: #ffffff;
+  padding: 12px 16px;
+  box-shadow: 0 4px 14px rgba(107, 0, 20, 0.25);
 }
 
+/* Contenido interno del header (logo + nombre del usuario) */
 .header-content {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 12px;
 }
 
+/* Logo del colegio */
 .logo-colegio {
-  width: clamp(44px, 7vw, 68px);
-  height: clamp(44px, 7vw, 68px);
+  width: 42px;
+  height: 42px;
   object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
 }
 
+/* Nombre del usuario (negrita para jerarquía visual) */
 .nombre-usuario {
-  font-weight: bold;
-  font-size: clamp(14px, 2.2vw, 18px);
-  white-space: nowrap;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
-/* Menú lateral de navegación */
-nav {
-  background-color: #fbeaec; 
-  padding-top: 20px;
-  width: 200px;
-  height: 100vh;
-}
-
-/* Links del menú lateral */
-nav a {
-  display: block;
-  padding: 12px 20px;
-  color: #6b0014;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* Efecto al pasar por encima de los links */
-nav a:hover {
-  background-color: #f5c6cb; 
-}
-
-/* Área principal de contenido */
-main {
-  flex: 1;
-  padding: 30px;
-}
-
-/* Secciones del contenido (tarjetas, anuncios, etc.) */
-.section {
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 25px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 6px rgba(107, 0, 20, 0.3); 
-}
-
-/* bienvenida con imagen */
-.bienvenida {
-  background-image: url("/FMSDIGITAL/Maquetacion/imagenes/fondo de la pagina de clases.png");
-  background-size: 450px;
-  background-position: right;
-  background-repeat: no-repeat;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  padding-left: 20px;
-  color: white;
-  font-weight: bold;
-  background-color: #8c1b15;
-}
-
-/* Textos específicos de la bienvenida */
-.bienvenida-texto h2,
-.bienvenida-texto p {
-  color: white;
-}
-
-/* Cuadro de anuncios */
-.anuncio {
-  background-color: #8b0020;
-  border-left: 5px solid #bf3d5e; 
-  padding: 15px;
-  border-radius: 6px;
-  margin-top: 10px;
-  color: white;
-}
-
-/* Título de cada sección */
-h2 {
-  margin-top: 0;
-  color: #6b0014; 
-}
-
-/* Contenedor general (menú y contenido) */
 .container {
-  display: flex;
+  max-width: 1200px;
+  margin: 18px auto;
+  padding: 0 16px 32px;
 }
 
-/* Botones para filtrar tareas */
-.tareas {
-  margin-bottom: 15px;
+.container > nav {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
-.estado {
-  padding: 8px 16px;
+/* Botones/enlaces de navegación (chips) */
+.container > nav a {
+  padding: 10px 14px;
+  background: #fbeaec;               /* rosado pastel */
+  border: 1px solid #f3d7dc;         /* borde suave */
+  border-radius: 10px;
+  font-weight: 600;
+  transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
+  box-shadow: 0 2px 10px rgba(139, 0, 32, 0.06);
+}
+
+.container > nav a:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(139, 0, 32, 0.12);
+}
+
+.section {
+  background: #ffffff;
+  border: 1px solid #f3d7dc;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 28px rgba(139, 0, 32, 0.08);
+}
+
+/* Título de sección */
+.section h2 {
+  font-size: 1.35rem;
+  color: #6b0014;
+  margin-bottom: 10px;
+}
+
+/* Separadores dentro de una sección (cuando uses <hr>) */
+.section hr {
   border: none;
+  border-top: 1px solid #f3d7dc;
+  margin: 12px 0;
+}
+
+form {
+  display: grid;
+  gap: 10px;   /* respiración entre campos */
+}
+
+/* Campos de texto y archivos */
+textarea,
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #efd0d5;
   border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
+  background: #ffffff;
+  outline: none;
+  font-size: 0.98rem;
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
 
-/* Colores para cada estado de tarea */
-.no-entregadas {
-  background-color: #fde6e6; 
-  color: #a10000; 
+/* Enfoque de campos (resalta sin exagerar) */
+textarea:focus,
+input[type="text"]:focus,
+input[type="file"]:focus {
+  border-color: #d69aa5;
+  box-shadow: 0 0 0 3px rgba(214, 154, 165, 0.25);
 }
 
-.por-entregar {
-  background-color: #fff7e6; 
-  color: #a67500; 
-}
-
-.calificadas {
-  background-color: #edf3f7; 
-  color: #334e68; 
-}
-
-/* Lista de tareas asignadas */
-.lista-tareas {
-  background-color: #f8f4f4; 
-  border-radius: 10px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.tarea {
-  background-color: #fffafa;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 15px;
-  color: #4a2c2a;
-  border-left: 4px solid #d98e8e; 
-}
-
-/* Versión responsive para móviles */
-@media (max-width: 768px) {
-  .header-content {
-    gap: 10px;
-  }
-
-  .logo-colegio {
-    width: 50px;
-    max-height: 60px;
-  }
-
-  .nombre-usuario {
-    font-size: 16px;
-  }
-
-  .container {
-    flex-direction: column;
-  }
-
-  nav {
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 10px 0;
-  }
-
-  nav a {
-    padding: 10px 16px;
-    font-size: 14px;
-  }
-
-  main {
-    padding: 20px;
-  }
-}
-.comentario {
-  background-color: #f1f1f1;
-  border-left: 4px solid #6b0014;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-}
-.comentario form {
+/* Botones generales (sólidos) */
+button,
+.section a.btn,
+.container > nav a.btn {
   display: inline-block;
-  margin-right: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #6b0014;
+  background: #6b0014;          /* vino principal */
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+}
+
+/* Hover de botones sólidos */
+button:hover,
+.section a.btn:hover,
+.container > nav a.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(107, 0, 20, 0.25);
+  background: #8b0020;          /* vino un poco más brillante */
+}
+
+/* Botón ghost (borde, fondo blanco) */
+button.btn-ghost,
+a.btn-ghost {
+  background: #ffffff;
+  color: #6b0014;
+  border: 1px solid #f3d7dc;
+}
+
+button.btn-ghost:hover,
+a.btn-ghost:hover {
+  background: #fff7f8;
+  box-shadow: 0 6px 14px rgba(139, 0, 32, 0.12);
+}
+
+
+.comentario {
+  border: 1px solid #f3d7dc;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 12px 0;
+  background: #ffffff;
+}
+
+/* Autor del comentario */
+.comentario strong {
+  color: #6b0014;
+}
+
+/* Fechas (publicado / editado) */
+.comentario small {
+  color: #74565d;
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 0.85rem;
+}
+
+/* Texto del comentario */
+.comentario p {
+  margin-top: 6px;
+}
+
+/* Formularios en línea dentro del comentario (editar/eliminar) */
+.comentario form {
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.comentario textarea {
+  min-height: 90px;
+}
+
+.lista-tareas .tarea {
+  border: 1px solid #f3d7dc;
+  border-radius: 12px;
+  padding: 12px;
+  background: #ffffff;
+  margin: 12px 0;
+  display: grid;
+  gap: 8px;
+}
+
+/* Título de la tarea */
+.lista-tareas .tarea strong {
+  font-size: 1.05rem;
+  color: #6b0014;
+}
+
+/* Descripción de la tarea */
+.lista-tareas .tarea p {
+  color: #402229;
+}
+
+/* Formularios de entrega / edición */
+.lista-tareas .tarea form {
+  margin-top: 6px;
+}
+
+.anuncio {
+  border: 1px dashed #d69aa5;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff7f8;
+  margin: 10px 0;
+}
+
+.muted { color: #6e5960; font-size: 0.95rem; }
+.center { text-align: center; }
+.right  { text-align: right;  }
+
+@media (max-width: 640px) {
+  header { padding: 10px 12px; }
+  .logo-colegio { width: 36px; height: 36px; }
+  .container { padding: 0 12px 24px; }
+  .section { padding: 14px; border-radius: 12px; }
+  .container > nav a { padding: 9px 12px; border-radius: 9px; }
+  textarea { min-height: 120px; }
+}
+
+/* Tablets (641px – 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container { padding: 0 16px 28px; }
+}
+
+/* Escritorio grande (>= 1201px) */
+@media (min-width: 1201px) {
+  .section { padding: 18px; }
 }

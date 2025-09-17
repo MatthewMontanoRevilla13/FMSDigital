@@ -150,7 +150,7 @@ if ($id_clase > 0) {
         <a class="active" href="#"><span class="icon"></span> Resumen</a>
         <a href="/FMSDIGITAL/Maquetacion/Profesor/tareas.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Tareas</a>
         <a href="/FMSDIGITAL/Maquetacion/Profesor/materiales.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Materiales</a>
-        <a href="/FMSDIGITAL/Maquetacion/Profesor/ListaEstudiantes.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Lista de estudiantes</a>
+       <a href="/FMSDIGITAL/Maquetacion/Profesor/ListaEstudiantes.php?id_clase=<?php echo $id_clase; ?>">Lista de estudiantes</a>
         <a href="/FMSDIGITAL/Maquetacion/Profesor/calificaciones.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Calificaciones</a>
         <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/cerrarL.php"><span class="icon"></span> Cerrar Sesión</a>
       </nav>
