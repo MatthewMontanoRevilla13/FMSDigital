@@ -27,7 +27,7 @@ if ($id_clase > 0) {
 $alerta = null;
 
 // Crear Publicación (comentario)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'crear_anuncio') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'crear_anuncio') {
   if (!$usuario || $id_clase <= 0) {
     $alerta = ["type" => "error", "msg" => "Sesión o clase no válidas."];
   } else {
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 }
 
 // Crear Tarea
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'crear_tarea') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'crear_tarea') {
   if ($id_clase <= 0) {
     $alerta = ["type" => "error", "msg" => "Clase no válida."];
   } else {
@@ -58,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
     $tema        = trim($_POST['tema'] ?? "");
     $descripcion = trim($_POST['descripcion'] ?? "");
 
-    // La tabla tarea tiene longitudes 90 para Titulo/Descripcion/Tema
     if ($titulo === "" || mb_strlen($titulo) > 90) {
       $alerta = ["type" => "error", "msg" => "El título es requerido (máx. 90 caracteres)."];
     } elseif ($descripcion === "" || mb_strlen($descripcion) > 90) {
@@ -85,7 +84,7 @@ $anuncios = [];
 $tareas   = [];
 
 if ($id_clase > 0) {
-  // Últimos 5 anuncios (comentario)
+  // Últimos 5 anuncios
   $sql = "SELECT id, contenido, fechaPub
           FROM comentario
           WHERE Clase_id_clase = ?
@@ -119,25 +118,40 @@ if ($id_clase > 0) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clase del Profesor</title>
 
-  <!-- Librerías (validación opcional si quieres) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+  <!-- Estilos locales -->
+  <link rel="stylesheet" href="ClaseDeProfesor.css"/>
 
-  <!-- Estilos (gama vino/rosado) -->
-  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.css"/>
+  <!-- jQuery + jQuery Validate (CDN) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+
+  <!-- Estilos de error y avisos -->
+  <style>
+    label.error { color:#b00020; font-size:.9rem; margin-top:6px; display:block; }
+    input.error, textarea.error, select.error { border:1px solid #b00020 !important; background:#fff5f6; }
+    .alert { margin:12px 0; padding:10px 12px; border-radius:10px; }
+    .alert-success { background:#e9f7ef; border:1px solid #a5d6a7; color:#1b5e20; }
+    .alert-error { background:#ffebee; border:1px solid #ef9a9a; color:#b71c1c; }
+    .pill { padding:4px 8px; border-radius:999px; background:#fbeaec; border:1px solid #efd0d5; font-size:.85rem; }
+    .empty { color:#6e5960; }
+    .task-item, .list-item { display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; }
+    .task-item .title { font-weight:700; color:#6b0014; }
+    .task-item .meta { display:flex; gap:8px; flex-wrap:wrap; }
+  </style>
 </head>
 <body>
 
-  <!-- TOPBAR -->
+  <!-- TOPBAR simple -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">NOMBRE DEL COLEGIO</div>
       <nav class="topnav">
-        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
-        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Noticias.php">Noticias</a>
-        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Galeria.php">Galería</a>
+        <a href="#">Inicio</a>
+        <a href="#">Noticias</a>
+        <a href="#">Galería</a>
         <a href="#">Documentos</a>
-        <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Contacto.php">Contacto</a>
+        <a href="#">Contacto</a>
       </nav>
     </div>
   </header>
@@ -148,11 +162,10 @@ if ($id_clase > 0) {
       <span class="menu-title">Clase</span>
       <nav class="sidenav">
         <a class="active" href="#"><span class="icon"></span> Resumen</a>
-        <a href="/FMSDIGITAL/Maquetacion/Profesor/tareas.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Tareas</a>
-        <a href="/FMSDIGITAL/Maquetacion/Profesor/materiales.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Materiales</a>
-       <a href="/FMSDIGITAL/Maquetacion/Profesor/ListaEstudiantes.php?id_clase=<?php echo $id_clase; ?>">Lista de estudiantes</a>
-        <a href="/FMSDIGITAL/Maquetacion/Profesor/calificaciones.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Calificaciones</a>
-        <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/cerrarL.php"><span class="icon"></span> Cerrar Sesión</a>
+        <a href="tareas.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Tareas</a>
+        <a href="ListaEstudiantes.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Lista de estudiantes</a>
+        <a href="calificaciones.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Calificaciones</a>
+        <a href="cerrarL.php"><span class="icon"></span> Cerrar Sesión</a>
       </nav>
     </aside>
 
@@ -179,16 +192,14 @@ if ($id_clase > 0) {
         </div>
       <?php endif; ?>
 
-      <!-- ACCIONES RÁPIDAS -->
-    
       <!-- FORM: PUBLICAR ANUNCIO -->
       <section id="form-anuncio" class="card">
         <h2>Publicar anuncio</h2>
-        <form class="form" id="FormAnuncio" method="post" enctype="multipart/form-data">
+        <form class="form js-validate" id="FormAnuncio" method="post" enctype="multipart/form-data" novalidate>
           <input type="hidden" name="accion" value="crear_anuncio"/>
           <div class="form-group">
-            <label>Contenido (máx. 500)</label>
-            <textarea name="contenido" placeholder="Escribe el mensaje para tu clase..."></textarea>
+            <label for="contenido">Contenido (máx. 500)</label>
+            <textarea id="contenido" name="contenido" placeholder="Escribe el mensaje para tu clase..."></textarea>
           </div>
           <div class="actions">
             <button type="submit" class="btn">Publicar</button>
@@ -200,25 +211,25 @@ if ($id_clase > 0) {
       <!-- FORM: CREAR TAREA -->
       <section id="form-tarea" class="card">
         <h2>Crear tarea</h2>
-        <form class="form" id="FormTarea" method="post">
+        <form class="form js-validate" id="FormTarea" method="post" novalidate>
           <input type="hidden" name="accion" value="crear_tarea"/>
           <div class="form-grid task-form">
             <div class="form-group">
-              <label>Título (máx. 90)</label>
-              <input type="text" name="titulo" placeholder="Ej. MATEMÁTICAS - Problemas 1"/>
+              <label for="titulo">Título (máx. 90)</label>
+              <input type="text" id="titulo" name="titulo" placeholder="Ej. MATEMÁTICAS - Problemas 1"/>
             </div>
             <div class="form-group">
-              <label>Tema (opcional, máx. 90)</label>
-              <input type="text" name="tema" placeholder="Unidad 1 / Álgebra"/>
+              <label for="tema">Tema (opcional, máx. 90)</label>
+              <input type="text" id="tema" name="tema" placeholder="Unidad 1 / Álgebra"/>
             </div>
           </div>
           <div class="form-group">
-            <label>Descripción (máx. 90)</label>
-            <input type="text" name="descripcion" placeholder="Ej. Entrega hasta el viernes. Resolver 1-10."/>
+            <label for="descripcion">Descripción (máx. 90)</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ej. Entrega hasta el viernes. Resolver 1-10."/>
           </div>
           <div class="actions">
             <button type="submit" class="btn">Crear tarea</button>
-            <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/tareas.php?id_clase=<?php echo $id_clase; ?>">Ver todas</a>
+            <a class="btn btn-ghost" href="tareas.php?id_clase=<?php echo $id_clase; ?>">Ver todas</a>
           </div>
         </form>
       </section>
@@ -234,7 +245,6 @@ if ($id_clase > 0) {
               <div class="list-item">
                 <span><?php echo htmlspecialchars($a['contenido']); ?></span>
                 <div class="actions">
-                  <!-- Puedes crear AnuncioEditar.php si lo manejas aparte -->
                   <span class="pill">#<?php echo intval($a['id']); ?></span>
                 </div>
               </div>
@@ -263,9 +273,9 @@ if ($id_clase > 0) {
                   <?php endif; ?>
                 </div>
                 <div class="actions">
-                  <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/EditarTarea.php?id_tarea=<?php echo intval($t['id']); ?>">Editar</a>
-                  <a class="btn btn-ghost" href="/FMSDIGITAL/Maquetacion/Profesor/VerEntregas.php?id_tarea=<?php echo intval($t['id']); ?>">Calificar</a>
-                  <a class="btn btn-danger" href="/FMSDIGITAL/Maquetacion/Profesor/EliminarTarea.php?id_tarea=<?php echo intval($t['id']); ?>" onclick="return confirm('¿Eliminar esta tarea?')">Eliminar</a>
+                  <a class="btn btn-ghost" href="EditarTarea.php?id_tarea=<?php echo intval($t['id']); ?>">Editar</a>
+                  <a class="btn btn-ghost" href="VerEntregas.php?id_tarea=<?php echo intval($t['id']); ?>">Calificar</a>
+                  <a class="btn btn-danger" href="EliminarTarea.php?id_tarea=<?php echo intval($t['id']); ?>" onclick="return confirm('¿Eliminar esta tarea?')">Eliminar</a>
                 </div>
               </div>
             <?php endforeach; ?>
@@ -277,7 +287,7 @@ if ($id_clase > 0) {
       <section class="card">
         <h2>Información de la clase</h2>
         <div class="class-info">
-          <img src="/FMSDIGITAL/Maquetacion/imagenes/imagen fisica.png" alt="Imagen de la clase"/>
+          <img src="imagenes/imagen-fisica.png" alt="Imagen de la clase"/>
           <div>
             <p><strong>Nombre:</strong> <?php echo $clase ? htmlspecialchars($clase['nombreClase']) : "—"; ?></p>
             <p><strong>Código:</strong> <?php echo $clase ? htmlspecialchars($clase['codigoClase']) : "—"; ?></p>
@@ -288,40 +298,70 @@ if ($id_clase > 0) {
     </main>
   </div>
 
+  <!-- Validación jQuery Validate -->
   <script>
-    // Scroll suave a formularios
-    document.querySelectorAll('a[href^="#form-"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if (el) {
-          e.preventDefault();
-          window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-        }
-      });
+    // Si en el futuro agregas <input type="file" name="archivo">:
+    jQuery.validator.addMethod("filesize", function (value, element, param) {
+      if (this.optional(element) || !element.files || !element.files.length) return true;
+      return element.files[0].size <= param;
+    }, "El archivo es demasiado grande.");
+
+    // Mensajes ES rápidos
+    jQuery.extend(jQuery.validator.messages, {
+      required: "Este campo es obligatorio.",
+      email: "Por favor, escribe un correo válido.",
+      url: "Por favor, escribe una URL válida.",
+      dateISO: "Usa el formato AAAA-MM-DD.",
+      number: "Escribe un número válido.",
+      digits: "Solo dígitos.",
+      equalTo: "Valores no coinciden.",
+      maxlength: jQuery.validator.format("Máximo {0} caracteres."),
+      minlength: jQuery.validator.format("Mínimo {0} caracteres."),
+      range: jQuery.validator.format("Entre {0} y {1}."),
+      max: jQuery.validator.format("≤ {0}."),
+      min: jQuery.validator.format("≥ {0}.")
     });
 
-    // Validación rápida (opcional)
     $(function(){
+      // ANUNCIO
       $("#FormAnuncio").validate({
-        rules:{ contenido:{ required:true, maxlength:500, minlength:3 } },
-        messages:{
-          contenido:{ required:"Escribe el anuncio", maxlength:"Máx. 500 caracteres", minlength:"Mínimo 3" }
-        },
-        submitHandler:function(form){ form.submit(); }
-      });
-      $("#FormTarea").validate({
+        ignore: [],
         rules:{
-          titulo:{ required:true, maxlength:90, minlength:3 },
-          tema:{ maxlength:90 },
-          descripcion:{ required:true, maxlength:90, minlength:3 }
+          contenido:{ required:true, minlength:3, maxlength:500 }
+          // archivo: { extension:"pdf|png|jpg|jpeg|gif", filesize: 10*1024*1024 } // si agregas file
         },
         messages:{
-          titulo:{ required:"Ingresa un título", maxlength:"Máx. 90", minlength:"Mínimo 3" },
-          tema:{ maxlength:"Máx. 90" },
-          descripcion:{ required:"Ingresa la descripción", maxlength:"Máx. 90", minlength:"Mínimo 3" }
+          contenido:{
+            required:"Escribe el anuncio",
+            minlength:"Mínimo 3 caracteres",
+            maxlength:"Máximo 500 caracteres"
+          }
         },
-        submitHandler:function(form){ form.submit(); }
+        submitHandler:function(form){
+          const $btn = $(form).find("[type='submit']");
+          $btn.prop("disabled", true).text("Publicando...");
+          form.submit();
+        }
+      });
+
+      // TAREA
+      $("#FormTarea").validate({
+        ignore: [],
+        rules:{
+          titulo:{ required:true, minlength:3, maxlength:90 },
+          tema:{ maxlength:90 },
+          descripcion:{ required:true, minlength:3, maxlength:90 }
+        },
+        messages:{
+          titulo:{ required:"Ingresa un título", minlength:"Mínimo 3", maxlength:"Máx. 90" },
+          tema:{ maxlength:"Máx. 90" },
+          descripcion:{ required:"Ingresa la descripción", minlength:"Mínimo 3", maxlength:"Máx. 90" }
+        },
+        submitHandler:function(form){
+          const $btn = $(form).find("[type='submit']");
+          $btn.prop("disabled", true).text("Creando...");
+          form.submit();
+        }
       });
     });
   </script>
