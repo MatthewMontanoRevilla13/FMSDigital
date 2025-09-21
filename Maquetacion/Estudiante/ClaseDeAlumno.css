@@ -1,28 +1,17 @@
-
+/* ===== Base ===== */
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #3a0b14;               /* texto principal (vino oscuro legible) */
-  background: #fff9fa;          /* rosado muy claro de fondo */
+  color: #3a0b14;
+  background: #fff9fa;
   line-height: 1.45;
+  margin: 0;
 }
 
-/* Enlaces (sin subrayado, heredan color) */
-a {
-  text-decoration: none;
-  color: inherit;
-}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; }
 
-/* Botones (cursor mano) */
-button {
-  cursor: pointer;
-}
-
-/* Imágenes responsivas dentro de su contenedor */
-img {
-  max-width: 100%;
-  display: block;
-}
-
+/* ===== Topbar ===== */
 header {
   position: sticky;
   top: 0;
@@ -33,7 +22,6 @@ header {
   box-shadow: 0 4px 14px rgba(107, 0, 20, 0.25);
 }
 
-/* Contenido interno del header (logo + nombre del usuario) */
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -42,7 +30,6 @@ header {
   gap: 12px;
 }
 
-/* Logo del colegio */
 .logo-colegio {
   width: 42px;
   height: 42px;
@@ -50,14 +37,11 @@ header {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
 }
 
-/* Nombre del usuario (negrita para jerarquía visual) */
-.nombre-usuario {
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
+.nombre-usuario { font-weight: 700; letter-spacing: .3px; }
 
+/* ===== Contenedor ===== */
 .container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 18px auto;
   padding: 0 16px 32px;
 }
@@ -69,23 +53,23 @@ header {
   margin-bottom: 16px;
 }
 
-/* Botones/enlaces de navegación (chips) */
+/* chips/botón fantasma */
 .container > nav a {
   padding: 10px 14px;
-  background: #fbeaec;               /* rosado pastel */
-  border: 1px solid #f3d7dc;         /* borde suave */
+  background: #fbeaec;
+  border: 1px solid #f3d7dc;
   border-radius: 10px;
   font-weight: 600;
-  transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
+  transition: transform .08s, background .2s, box-shadow .2s;
   box-shadow: 0 2px 10px rgba(139, 0, 32, 0.06);
 }
-
 .container > nav a:hover {
   background: #ffffff;
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(139, 0, 32, 0.12);
 }
 
+/* ===== Cards / Section ===== */
 .section {
   background: #ffffff;
   border: 1px solid #f3d7dc;
@@ -94,27 +78,19 @@ header {
   margin-bottom: 14px;
   box-shadow: 0 8px 28px rgba(139, 0, 32, 0.08);
 }
-
-/* Título de sección */
 .section h2 {
   font-size: 1.35rem;
   color: #6b0014;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
-
-/* Separadores dentro de una sección (cuando uses <hr>) */
 .section hr {
   border: none;
   border-top: 1px solid #f3d7dc;
   margin: 12px 0;
 }
 
-form {
-  display: grid;
-  gap: 10px;   /* respiración entre campos */
-}
-
-/* Campos de texto y archivos */
+/* ===== Form ===== */
+form { display: grid; gap: 10px; }
 textarea,
 input[type="text"],
 input[type="file"] {
@@ -125,10 +101,8 @@ input[type="file"] {
   background: #ffffff;
   outline: none;
   font-size: 0.98rem;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  transition: border-color .15s, box-shadow .15s;
 }
-
-/* Enfoque de campos (resalta sin exagerar) */
 textarea:focus,
 input[type="text"]:focus,
 input[type="file"]:focus {
@@ -136,45 +110,54 @@ input[type="file"]:focus {
   box-shadow: 0 0 0 3px rgba(214, 154, 165, 0.25);
 }
 
-/* Botones generales (sólidos) */
-button,
+/* ===== Botones ===== */
+.btn,
 .section a.btn,
 .container > nav a.btn {
   display: inline-block;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #6b0014;
-  background: #6b0014;          /* vino principal */
+  background: #6b0014;
   color: #ffffff;
   font-weight: 700;
-  letter-spacing: 0.2px;
-  transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+  letter-spacing: .2px;
+  transition: transform .08s, box-shadow .2s, background .2s;
 }
-
-/* Hover de botones sólidos */
-button:hover,
+.btn:hover,
 .section a.btn:hover,
 .container > nav a.btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(107, 0, 20, 0.25);
-  background: #8b0020;          /* vino un poco más brillante */
+  background: #8b0020;
 }
-
-/* Botón ghost (borde, fondo blanco) */
-button.btn-ghost,
+.btn-ghost,
 a.btn-ghost {
   background: #ffffff;
   color: #6b0014;
   border: 1px solid #f3d7dc;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
 }
-
-button.btn-ghost:hover,
+.btn-ghost:hover,
 a.btn-ghost:hover {
   background: #fff7f8;
   box-shadow: 0 6px 14px rgba(139, 0, 32, 0.12);
 }
 
+/* ===== Mensajes / bloques ===== */
+.anuncio {
+  border: 1px dashed #d69aa5;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff7f8;
+  margin: 10px 0;
+}
+.muted { color: #6e5960; font-size: .95rem; }
+.right { text-align: right; }
 
+/* ===== Comentarios ===== */
 .comentario {
   border: 1px solid #f3d7dc;
   border-radius: 12px;
@@ -182,35 +165,16 @@ a.btn-ghost:hover {
   margin: 12px 0;
   background: #ffffff;
 }
-
-/* Autor del comentario */
-.comentario strong {
-  color: #6b0014;
-}
-
-/* Fechas (publicado / editado) */
+.comentario strong { color: #6b0014; }
 .comentario small {
   color: #74565d;
   display: inline-block;
   margin-right: 8px;
-  font-size: 0.85rem;
+  font-size: .85rem;
 }
+.comentario p { margin-top: 6px; }
 
-/* Texto del comentario */
-.comentario p {
-  margin-top: 6px;
-}
-
-/* Formularios en línea dentro del comentario (editar/eliminar) */
-.comentario form {
-  margin-top: 8px;
-  gap: 8px;
-}
-
-.comentario textarea {
-  min-height: 90px;
-}
-
+/* ===== Listado de tareas ===== */
 .lista-tareas .tarea {
   border: 1px solid #f3d7dc;
   border-radius: 12px;
@@ -220,35 +184,13 @@ a.btn-ghost:hover {
   display: grid;
   gap: 8px;
 }
-
-/* Título de la tarea */
 .lista-tareas .tarea strong {
   font-size: 1.05rem;
   color: #6b0014;
 }
+.lista-tareas .tarea p { color: #402229; }
 
-/* Descripción de la tarea */
-.lista-tareas .tarea p {
-  color: #402229;
-}
-
-/* Formularios de entrega / edición */
-.lista-tareas .tarea form {
-  margin-top: 6px;
-}
-
-.anuncio {
-  border: 1px dashed #d69aa5;
-  border-radius: 12px;
-  padding: 12px;
-  background: #fff7f8;
-  margin: 10px 0;
-}
-
-.muted { color: #6e5960; font-size: 0.95rem; }
-.center { text-align: center; }
-.right  { text-align: right;  }
-
+/* ===== Responsive ===== */
 @media (max-width: 640px) {
   header { padding: 10px 12px; }
   .logo-colegio { width: 36px; height: 36px; }
@@ -257,13 +199,6 @@ a.btn-ghost:hover {
   .container > nav a { padding: 9px 12px; border-radius: 9px; }
   textarea { min-height: 120px; }
 }
-
-/* Tablets (641px – 1024px) */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .container { padding: 0 16px 28px; }
-}
-
-/* Escritorio grande (>= 1201px) */
 @media (min-width: 1201px) {
   .section { padding: 18px; }
 }
