@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-09-2025 a las 05:52:45
+-- Tiempo de generación: 24-09-2025 a las 19:07:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -73,7 +73,8 @@ INSERT INTO `comentario` (`id`, `contenido`, `fechaEdi`, `Clase_id_clase`, `Cuen
 (8, 'ad', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735212.png'),
 (9, 'awdwa', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735326.png'),
 (10, 'awda', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735361.png'),
-(11, 'awdadd', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735465.pdf');
+(11, 'awdadd', '0000-00-00 00:00:00', 4, 9416161, 'C4_U9416161_1757735465.pdf'),
+(12, 'hfghfhg', '2025-09-24 12:53:25', 5, 9416306, '');
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,9 @@ CREATE TABLE `cuenta_has_clase` (
 --
 
 INSERT INTO `cuenta_has_clase` (`Cuenta_Usuario`, `Clase_id_clase`) VALUES
-(9416161, 4);
+(1234321, 5),
+(9416161, 4),
+(9416306, 4);
 
 -- --------------------------------------------------------
 
@@ -128,17 +131,19 @@ CREATE TABLE `entrega` (
   `Cuenta_Usuario` int(11) NOT NULL,
   `contenido` varchar(500) NOT NULL,
   `Archivo` varchar(500) NOT NULL,
-  `id_entrega` int(11) NOT NULL
+  `id_entrega` int(11) NOT NULL,
+  `Comentario` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `entrega`
 --
 
-INSERT INTO `entrega` (`Nota`, `FechaEntrega`, `Tarea_id`, `Cuenta_Usuario`, `contenido`, `Archivo`, `id_entrega`) VALUES
-(22, '2025-09-11 21:44:43', 6, 9416161, 'wadd', '', 1),
-(NULL, '2025-09-11 21:44:48', 6, 9416161, 'wadd', '', 2),
-(NULL, '2025-09-11 21:44:51', 6, 9416161, 'wadd', '', 3);
+INSERT INTO `entrega` (`Nota`, `FechaEntrega`, `Tarea_id`, `Cuenta_Usuario`, `contenido`, `Archivo`, `id_entrega`, `Comentario`) VALUES
+(22, '2025-09-11 21:44:43', 6, 9416161, 'wadd', '', 1, NULL),
+(NULL, '2025-09-11 21:44:48', 6, 9416161, 'wadd', '', 2, NULL),
+(NULL, '2025-09-11 21:44:51', 6, 9416161, 'wadd', '', 3, NULL),
+(NULL, NULL, 6, 9416306, '', 'E_4_U9416306_1758733448.png', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -179,15 +184,18 @@ CREATE TABLE `tarea` (
   `Descripcion` varchar(90) DEFAULT NULL,
   `Tema` varchar(90) DEFAULT NULL,
   `Nota` int(11) DEFAULT NULL,
-  `Clase_id_clase` int(11) NOT NULL
+  `Clase_id_clase` int(11) NOT NULL,
+  `FechaLimite` date DEFAULT NULL,
+  `Archivo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `tarea`
 --
 
-INSERT INTO `tarea` (`id`, `Titulo`, `Descripcion`, `Tema`, `Nota`, `Clase_id_clase`) VALUES
-(6, 'MATEMATICAS', 'ENTREGA UNA COSA LOL', ':V', NULL, 4);
+INSERT INTO `tarea` (`id`, `Titulo`, `Descripcion`, `Tema`, `Nota`, `Clase_id_clase`, `FechaLimite`, `Archivo`) VALUES
+(6, 'MATEMATICAS', 'ENTREGA UNA COSA LOL', ':V', NULL, 4, '2025-09-18', 'T_4_1758733350_c1300a31.png'),
+(7, 'udaujhsbd', 'asdasd', 'dasda', NULL, 4, '2025-09-25', 'T_4_1758733407_80a8d16d.png');
 
 --
 -- Índices para tablas volcadas
@@ -262,19 +270,19 @@ ALTER TABLE `clase`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `entrega`
 --
 ALTER TABLE `entrega`
-  MODIFY `id_entrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_entrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tarea`
 --
 ALTER TABLE `tarea`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
