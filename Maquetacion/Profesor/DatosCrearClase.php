@@ -37,7 +37,7 @@ if (!empty($errores)) {
 
 // ====== Generar código si no llega o es muy corto ======
 function generarCodigo($len = 6) {
-  $chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; // sin O/I/0/1
+  $chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; 
   $s = '';
   for ($i = 0; $i < $len; $i++) { $s .= $chars[random_int(0, strlen($chars) - 1)]; }
   return $s;
@@ -56,8 +56,7 @@ while (true) {
   }
 }
 
-// ====== Insert ======
-// NOTA: Mantengo tu estilo: sin prepare, sin escape; ya validamos mínimo arriba.
+
 $nombreClase_sql = $nombreClase;
 $nomProfe_sql    = $nombreCompleto;
 

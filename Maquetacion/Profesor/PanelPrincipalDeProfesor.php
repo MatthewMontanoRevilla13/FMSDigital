@@ -26,7 +26,7 @@
     <div class="nombre-alumno">
       <?php
       session_start(); // iniciamos sesión
-      echo $_SESSION['nom'] . " " . $_SESSION['apes']; // mostramos nombre y apellidos
+      echo $_SESSION['nom'] . " " . $_SESSION['apes']; 
       ?>
     </div>
   
