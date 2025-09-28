@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+$rol = $_SESSION['rol'] ?? null;
 $nombreProfesor = isset($_SESSION['nom']) ? ($_SESSION['nom']." ".$_SESSION['apes']) : "Profesor/a";
 
 $id_clase = isset($_GET['id_clase']) ? intval($_GET['id_clase']) : 0;
@@ -8,6 +10,24 @@ $q        = isset($_GET['q']) ? trim($_GET['q']) : "";
 // Conexión
 $cn = mysqli_connect("localhost", "root", "", "RegistroP6");
 if (!$cn) { die("Error en la conexión: " . mysqli_connect_error()); }
+
+// ----- Enlaces dinámicos según ROL -----
+/*
+ linkVolverClase: link directo a la vista de la clase (según rol)
+ linkMisClases:   link al panel/listado de clases del rol
+*/
+if ($rol === 'Profesor') {
+  $linkVolverClase = "/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.php?id_clase=".$id_clase;
+  $linkMisClases   = "/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.php";
+} elseif ($rol === 'Estudiante') {
+  // Ajusta si tu ruta de clase de alumno es distinta
+  $linkVolverClase = "/FMSDIGITAL/Maquetacion/Estudiante/ClaseDeAlumno.php?id_clase=".$id_clase;
+  $linkMisClases   = "/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.php";
+} else {
+  // Invitado u otros roles: manda al inicio
+  $linkVolverClase = "/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php";
+  $linkMisClases   = "/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php";
+}
 
 // Info de la clase (para encabezado)
 $clase = null;
@@ -84,7 +104,10 @@ if ($id_clase > 0) {
     <div class="topbar-inner">
       <div class="brand">NOMBRE DEL COLEGIO</div>
       <nav class="topnav">
-        <a class="btn-link" href="/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.php?id_clase=<?php echo $id_clase; ?>">Volver a la Clase</a>
+        <!-- Volver a la clase (según rol) -->
+        <a class="btn-link" href="<?php echo htmlspecialchars($linkVolverClase); ?>">Volver a la clase</a>
+        <!-- Volver a mis clases (según rol) -->
+        <a class="btn-link" href="<?php echo htmlspecialchars($linkMisClases); ?>">Volver a mis clases</a>
       </nav>
     </div>
   </header>
@@ -160,7 +183,10 @@ if ($id_clase > 0) {
       </section>
 
       <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.php?id_clase=<?php echo $id_clase; ?>">← Volver a la clase</a>
+        <!-- Volver a la clase (según rol) -->
+        <a class="btn" href="<?php echo htmlspecialchars($linkVolverClase); ?>">← Volver a la clase</a>
+        <!-- Volver a mis clases (según rol) -->
+        <a class="btn" href="<?php echo htmlspecialchars($linkMisClases); ?>">Volver a mis clases</a>
       </div>
     </main>
   </div>
