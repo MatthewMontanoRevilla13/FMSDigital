@@ -1,38 +1,75 @@
 <?php
-session_start(); // Inicia la sesión para poder usar $_SESSION
-
-// Verificamos que el usuario sea profesor antes de seguir
-if ($_SESSION['rol'] === 'Profesor') {
-
-    $usuario = $_SESSION['usu']; // Guardamos el nombre de usuario actual
-    $conexion = mysqli_connect("localhost", "root", "", "RegistroP6"); // Conectamos a la base de datos
-
-    // Si falla la conexión, mostramos un error y detenemos todo
-    if (!$conexion) {
-        echo "Error en la conexion: " . mysqli_connect_error();
-        die();
-    }
-
-    // Obtenemos los datos enviados por el formulario
-    $nomC = $_POST['nombreClase'];     // Nombre de la clase
-    $codigoC = $_POST['codigoClase'];  // Código único de la clase
-    $nomP = $_POST['nomProfe'];        // Nombre del profesor (escrito)
-
-    // Creamos el query SQL para insertar una nueva clase en la tabla "Clase"
-    $sql = "INSERT INTO Clase (codigoClase, nombreClase, nomProfe, Cuenta_Usuario)
-            VALUES ('$codigoC', '$nomC', '$nomP', '$usuario')";
-
-    // Si se ejecuta bien el INSERT, redirige al panel del profesor
-    if (mysqli_query($conexion, $sql)) {
-        header('Location:/FMSDIGITAL/Maquetacion/Profesor/ClaseDeProfesor.php');
-        exit;
-    } else {
-        // Si algo falla al guardar, se muestra un mensaje de error
-        echo "Error al crear tu clase: " . mysqli_error($conexion);
-    }
-
-} else {
-    // Si alguien intenta entrar sin ser profesor
-    echo "No tienes permiso para crear clases.";
+// --- SOLO PROFESOR ---
+session_start();
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Profesor') {
+  header("Location: /FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php");
+  exit;
 }
-?>
+
+// Conexión (simple)
+$conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
+if (!$conexion) { echo "Error en la conexion".mysqli_error($conexion); die(); }
+mysqli_set_charset($conexion, "utf8");
+
+// Solo POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  header("Location: FormularioCrearClase.php");
+  exit;
+}
+
+// ====== Captura ======
+$nombreCompleto = isset($_POST['nombreCompleto']) ? trim($_POST['nombreCompleto']) : '';
+$nombreClase    = isset($_POST['nombreClase'])    ? trim($_POST['nombreClase'])    : '';
+$codigoClase    = isset($_POST['codigoClase'])    ? trim($_POST['codigoClase'])    : '';
+$cuentaUser     = isset($_SESSION['usu']) ? intval($_SESSION['usu']) : 0;
+
+// ====== Validación mínima (server) ======
+$errores = [];
+if ($nombreCompleto === '' || strlen($nombreCompleto) < 5) { $errores[] = "Nombre completo inválido."; }
+if ($nombreClase === '' || strlen($nombreClase) < 3)         { $errores[] = "Nombre de clase inválido."; }
+if ($cuentaUser <= 0)                                        { $errores[] = "Sesión inválida."; }
+
+if (!empty($errores)) {
+  $msg = urlencode(implode(' ', $errores));
+  header("Location: FormularioCrearClase.php?error=$msg");
+  exit;
+}
+
+// ====== Generar código si no llega o es muy corto ======
+function generarCodigo($len = 6) {
+  $chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; // sin O/I/0/1
+  $s = '';
+  for ($i = 0; $i < $len; $i++) { $s .= $chars[random_int(0, strlen($chars) - 1)]; }
+  return $s;
+}
+if ($codigoClase === '' || strlen($codigoClase) < 4) {
+  $codigoClase = generarCodigo(6);
+}
+
+// ====== Asegurar UNICO ======
+while (true) {
+  $res = mysqli_query($conexion, "SELECT 1 FROM clase WHERE codigoClase='$codigoClase' LIMIT 1");
+  if ($res && mysqli_num_rows($res) > 0) {
+    $codigoClase = generarCodigo(6);
+  } else {
+    break;
+  }
+}
+
+// ====== Insert ======
+// NOTA: Mantengo tu estilo: sin prepare, sin escape; ya validamos mínimo arriba.
+$nombreClase_sql = $nombreClase;
+$nomProfe_sql    = $nombreCompleto;
+
+$sql = "INSERT INTO clase (nombreClase, codigoClase, nomProfe, Cuenta_Usuario)
+        VALUES ('$nombreClase_sql', '$codigoClase', '$nomProfe_sql', $cuentaUser)";
+
+if (!mysqli_query($conexion, $sql)) {
+  $msg = urlencode("No se pudo crear la clase: ".mysqli_error($conexion));
+  header("Location: FormularioCrearClase.php?error=$msg");
+  exit;
+}
+
+// OK
+header("Location: PanelPrincipalDeProfesor.php?ok=1");
+exit;
