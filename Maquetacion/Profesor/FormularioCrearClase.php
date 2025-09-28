@@ -6,7 +6,6 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Profesor') {
   exit;
 }
 
-// Prefill del nombre completo desde la sesión (editable)
 $prefillNombre = trim(
   (isset($_SESSION['nom']) ? $_SESSION['nom'] : '') . ' ' .
   (isset($_SESSION['apes']) ? $_SESSION['apes'] : '')
@@ -52,7 +51,6 @@ $prefillNombre = trim(
 
       <label for="codigoClase">Código de clase (opcional)</label>
       <input type="text" id="codigoClase" name="codigoClase" placeholder="Ej: ABC123" />
-      <!-- Si lo dejas vacío, el servidor genera uno único -->
 
       <button type="submit" class="btn">Crear clase</button>
     </form>
