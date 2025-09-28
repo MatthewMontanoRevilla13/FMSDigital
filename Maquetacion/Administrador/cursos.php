@@ -154,7 +154,8 @@ header h1 {
     <h1>Panel · Cursos</h1>
     <img class="logo-colegio" src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="logo">
   </header>
-
+<main class="admin-main">
+  <button onclick="window.history.back()" class="btn-volver">⬅ Volver atrás</button>
   <div class="menu-top">
     <a href="cursos.php">Cursos</a>
   </div>

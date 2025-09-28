@@ -119,6 +119,20 @@ footer {
   font-size: 14px;
   max-width: 90%;
 }
+/* admin.css */
+.btn-volver{
+  background:#6b0014;
+  color:#fff;
+  padding:8px 16px;
+  border:none;
+  border-radius:6px;
+  font-weight:700;
+  cursor:pointer;
+  margin:10px 0 18px;
+  transition:background .3s;
+}
+.btn-volver:hover{ background:#a6192e; }
+
 
 /* Adaptación del diseño a pantallas más pequeñas */
 @media (max-width: 768px) {

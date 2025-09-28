@@ -29,15 +29,7 @@
       echo $_SESSION['nom'] . " " . $_SESSION['apes']; // mostramos nombre y apellidos
       ?>
     </div>
-
-    <!-- Menú principal -->
-    <nav>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Noticias.php">Noticias</a>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Galeria.php">Galería</a>
-      <a href="#">Documentos</a>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Contacto.php">Contacto</a>
-    </nav>
+  
   </header>
 
   <!-- Menú secundario debajo del header -->
