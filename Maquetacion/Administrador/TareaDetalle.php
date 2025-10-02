@@ -1,5 +1,5 @@
 <?php
-// --- Solo ADMIN ---
+// ===================== SOLO ADMIN =====================
 session_start();
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
   http_response_code(403);
@@ -7,68 +7,73 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
   exit;
 }
 
-/* === CONEXIÓN MYSQLI (tu bloque) === */
+// ===================== CONEXIÓN MYSQLI =====================
 $conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
 if (!$conexion) {
   echo "Error en la conexion" . mysqli_error($conexion);
   die();
 }
+mysqli_set_charset($conexion, "utf8");
 
-$tareaId = isset($_GET['tarea']) ? (int)$_GET['tarea'] : 0;
+// ===================== PARAMETROS =====================
+$idTarea = isset($_GET['tarea']) ? (int)$_GET['tarea'] : 0;
 
-/* Guardar nota (opcional) */
+// ===================== GUARDAR NOTA (POST) =====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_entrega'], $_POST['nota'])) {
   $idEntrega = (int)$_POST['id_entrega'];
-  $notaStr = trim($_POST['nota']);
-  if ($notaStr === '') {
-    // Nota NULL
-    $stmtU = mysqli_prepare($conexion, "UPDATE entrega SET Nota=NULL WHERE id_entrega=? AND Tarea_id=?");
-    mysqli_stmt_bind_param($stmtU, "ii", $idEntrega, $tareaId);
+  $notaTexto = trim($_POST['nota']);
+
+  if ($notaTexto === '') {
+    // Dejar nota en NULL
+    $sqlUpdate = "UPDATE entrega SET Nota = NULL WHERE id_entrega = $idEntrega AND Tarea_id = $idTarea";
   } else {
-    $nota = (int)$notaStr;
-    if ($nota < 0) $nota = 0;
+    $nota = (int)$notaTexto;
+    if ($nota < 0)   $nota = 0;
     if ($nota > 100) $nota = 100;
-    $stmtU = mysqli_prepare($conexion, "UPDATE entrega SET Nota=? WHERE id_entrega=? AND Tarea_id=?");
-    mysqli_stmt_bind_param($stmtU, "iii", $nota, $idEntrega, $tareaId);
+    $sqlUpdate = "UPDATE entrega SET Nota = $nota WHERE id_entrega = $idEntrega AND Tarea_id = $idTarea";
   }
-  if (isset($stmtU)) {
-    mysqli_stmt_execute($stmtU);
-    mysqli_stmt_close($stmtU);
-  }
-  header("Location: admin_tarea_detalle.php?tarea=".$tareaId);
+
+  mysqli_query($conexion, $sqlUpdate);
+  header("Location: admin_tarea_detalle.php?tarea=" . $idTarea);
   exit;
 }
 
-/* Tarea + clase */
-$tarea = null;
-$stmt = mysqli_prepare($conexion, "
-  SELECT t.id, t.Titulo, t.Descripcion, t.Tema, t.Clase_id_clase,
-         c.nombreClase, c.nomProfe, c.codigoClase
-  FROM tarea t
-  JOIN clase c ON c.id_clase = t.Clase_id_clase
-  WHERE t.id = ?
-");
-mysqli_stmt_bind_param($stmt, "i", $tareaId);
-mysqli_stmt_execute($stmt);
-$resT = mysqli_stmt_get_result($stmt);
-if ($resT) { $tarea = mysqli_fetch_assoc($resT); }
-mysqli_stmt_close($stmt);
+// ===================== CONSULTAR TAREA + CLASE =====================
+$tareaDatos = null;
+if ($idTarea > 0) {
+  $sqlTarea = "
+    SELECT t.id, t.Titulo, t.Descripcion, t.Tema, t.Clase_id_clase,
+           c.nombreClase, c.nomProfe, c.codigoClase
+    FROM tarea t
+    JOIN clase c ON c.id_clase = t.Clase_id_clase
+    WHERE t.id = $idTarea
+    LIMIT 1
+  ";
+  $resTarea = mysqli_query($conexion, $sqlTarea);
+  if ($resTarea && mysqli_num_rows($resTarea) > 0) {
+    $tareaDatos = mysqli_fetch_assoc($resTarea);
+    mysqli_free_result($resTarea);
+  }
+}
 
-$entregas = [];
-if ($tarea) {
-  $stmt2 = mysqli_prepare($conexion, "
+// ===================== CONSULTAR ENTREGAS =====================
+$listaEntregas = [];
+if ($tareaDatos) {
+  $sqlEntregas = "
     SELECT e.id_entrega, e.Cuenta_Usuario, e.FechaEntrega, e.contenido, e.Archivo, e.Nota,
            i.Nombres, i.Apellidos, i.Curso
     FROM entrega e
     LEFT JOIN informacion i ON i.Cuenta_Usuario = e.Cuenta_Usuario
-    WHERE e.Tarea_id = ?
+    WHERE e.Tarea_id = $idTarea
     ORDER BY e.FechaEntrega DESC, e.id_entrega DESC
-  ");
-  mysqli_stmt_bind_param($stmt2, "i", $tareaId);
-  mysqli_stmt_execute($stmt2);
-  $resE = mysqli_stmt_get_result($stmt2);
-  if ($resE) { while ($row = mysqli_fetch_assoc($resE)) { $entregas[] = $row; } }
-  mysqli_stmt_close($stmt2);
+  ";
+  $resEntregas = mysqli_query($conexion, $sqlEntregas);
+  if ($resEntregas) {
+    while ($fila = mysqli_fetch_assoc($resEntregas)) {
+      $listaEntregas[] = $fila;
+    }
+    mysqli_free_result($resEntregas);
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -117,24 +122,24 @@ if ($tarea) {
 
   <div class="wrap">
 
-    <?php if(!$tarea): ?>
+    <?php if(!$tareaDatos): ?>
       <div class="panel"><p>No se encontró la tarea solicitada.</p></div>
     <?php else: ?>
       <div class="titulo">Detalle de la Tarea</div>
 
       <div class="panel" style="margin-top:12px;">
         <div class="sub">Tarea</div>
-        <div><b>Título:</b> <?= htmlspecialchars($tarea['Titulo'] ?: '—') ?></div>
-        <div><b>Tema:</b> <?= htmlspecialchars($tarea['Tema'] ?: '—') ?></div>
-        <div><b>Descripción:</b> <?= htmlspecialchars($tarea['Descripcion'] ?: '—') ?></div>
+        <div><b>Título:</b> <?= ($tareaDatos['Titulo'] ?: '—') ?></div>
+        <div><b>Tema:</b> <?= ($tareaDatos['Tema'] ?: '—') ?></div>
+        <div><b>Descripción:</b> <?= ($tareaDatos['Descripcion'] ?: '—') ?></div>
 
         <div class="sub" style="margin-top:12px;">Clase</div>
-        <div><b>Nombre:</b> <?= htmlspecialchars($tarea['nombreClase'] ?: '—') ?></div>
-        <div><b>Profesor:</b> <?= htmlspecialchars($tarea['nomProfe'] ?: '—') ?></div>
-        <div><b>Código:</b> <?= htmlspecialchars($tarea['codigoClase'] ?: '—') ?></div>
+        <div><b>Nombre:</b> <?= ($tareaDatos['nombreClase'] ?: '—') ?></div>
+        <div><b>Profesor:</b> <?= ($tareaDatos['nomProfe'] ?: '—') ?></div>
+        <div><b>Código:</b> <?= ($tareaDatos['codigoClase'] ?: '—') ?></div>
 
         <div class="acciones">
-          <a class="btn-sec" href="TareasClase.php?clase=<?= (int)$tarea['Clase_id_clase'] ?>">← Volver a tareas de la clase</a>
+          <a class="btn-sec" href="TareasClase.php?clase=<?= (int)$tareaDatos['Clase_id_clase'] ?>">← Volver a tareas de la clase</a>
           <a class="btn-sec" href="Tareas.php">← Volver a clases</a>
         </div>
       </div>
@@ -151,31 +156,36 @@ if ($tarea) {
           </tr>
         </thead>
         <tbody>
-          <?php if(empty($entregas)): ?>
+          <?php if(empty($listaEntregas)): ?>
             <tr><td data-label="Alumno" colspan="5">No hay entregas aún.</td></tr>
-          <?php else: foreach($entregas as $e): ?>
+          <?php else: foreach($listaEntregas as $entrega): ?>
             <tr>
               <td data-label="Alumno">
-                <?= htmlspecialchars(trim(($e['Nombres'] ?? '').' '.($e['Apellidos'] ?? '')) ?: '—') ?>
-                <div class="mini">CI/Usuario: <?= (int)$e['Cuenta_Usuario'] ?></div>
+                <?php
+                  $nombres   = $entrega['Nombres']   ?? '';
+                  $apellidos = $entrega['Apellidos'] ?? '';
+                  $nombreCompleto = trim($nombres . ' ' . $apellidos);
+                  echo ($nombreCompleto !== '' ? $nombreCompleto : '—');
+                ?>
+                <div class="mini">CI/Usuario: <?= (int)$entrega['Cuenta_Usuario'] ?></div>
               </td>
-              <td data-label="Curso"><?= htmlspecialchars($e['Curso'] ?? '—') ?></td>
-              <td data-label="Fecha"><?= htmlspecialchars($e['FechaEntrega'] ?? '—') ?></td>
+              <td data-label="Curso"><?= ($entrega['Curso'] ?? '—') ?></td>
+              <td data-label="Fecha"><?= ($entrega['FechaEntrega'] ?? '—') ?></td>
               <td data-label="Contenido / Archivo">
                 <?php
-                  $cont = htmlspecialchars($e['contenido'] ?? '');
-                  $arch = htmlspecialchars($e['Archivo'] ?? '');
-                  echo ($cont !== '' ? $cont : '—');
-                  if ($arch !== '') {
-                    echo '<div class="mini"><a href="'. $arch .'" target="_blank">Ver archivo</a></div>';
+                  $contenido = $entrega['contenido'] ?? '';
+                  $archivo   = $entrega['Archivo']   ?? '';
+                  echo ($contenido !== '' ? $contenido : '—');
+                  if ($archivo !== '') {
+                    echo '<div class="mini"><a href="'.$archivo.'" target="_blank" rel="noopener">Ver archivo</a></div>';
                   }
                 ?>
               </td>
               <td data-label="Nota">
-                <form class="nota-form" method="post" action="?tarea=<?= (int)$tareaId ?>">
-                  <input type="hidden" name="id_entrega" value="<?= (int)$e['id_entrega'] ?>">
+                <form class="nota-form" method="post" action="?tarea=<?= (int)$idTarea ?>">
+                  <input type="hidden" name="id_entrega" value="<?= (int)$entrega['id_entrega'] ?>">
                   <input class="nota-input" type="number" name="nota" min="0" max="100"
-                         value="<?= ($e['Nota'] === null ? '' : (int)$e['Nota']) ?>"
+                         value="<?= ($entrega['Nota'] === null ? '' : (int)$entrega['Nota']) ?>"
                          placeholder="—">
                   <button class="btn" type="submit">Guardar</button>
                 </form>
@@ -189,3 +199,5 @@ if ($tarea) {
   </div>
 </body>
 </html>
+<?php
+mysqli_close($conexion);

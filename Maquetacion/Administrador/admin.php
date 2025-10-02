@@ -57,7 +57,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
 
     <div class="item">
       <img src="/icons/megaphone.svg" alt="Avisos">
-      <a href="/admin/avisos/index.php">Avisos & Mensajería</a>
+      <a href="/FMSDIGITAL/Maquetacion/Administrador/mensajeria.php">Avisos & Mensajería</a>
       <p>Comunicados por rol/curso; historial de envíos.</p>
     </div>
 
@@ -75,14 +75,8 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
     </div>
 
     <div class="item">
-      <img src="/icons/exam.svg" alt="Exámenes">
-      <a href="/admin/examenes/index.php">Exámenes & Banco</a>
-      <p>Bancos de preguntas, versiones y seguridad.</p>
-    </div>
-
-    <div class="item">
       <img src="/icons/grades.svg" alt="Calificaciones">
-      <a href="/admin/calificaciones/index.php">Calificaciones & Actas</a>
+      <a href="/admin/calificaciones/index.php">Calificaciones</a>
       <p>Registros por periodo, exportar a Excel/PDF.</p>
     </div>
     <!-- Cerrar sesión -->
