@@ -16,25 +16,27 @@ if (!$conexion) {
 mysqli_set_charset($conexion, "utf8");
 
 // ===================== PARAMETROS =====================
-$idTarea = isset($_GET['tarea']) ? (int)$_GET['tarea'] : 0;
+$idTarea = 0;
+if (isset($_GET['tarea'])) {
+  $idTarea = (int)$_GET['tarea'];
+}
 
 // ===================== GUARDAR NOTA (POST) =====================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_entrega'], $_POST['nota'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_entrega']) && isset($_POST['nota'])) {
   $idEntrega = (int)$_POST['id_entrega'];
   $notaTexto = trim($_POST['nota']);
 
   if ($notaTexto === '') {
-    // Dejar nota en NULL
-    $sqlUpdate = "UPDATE entrega SET Nota = NULL WHERE id_entrega = $idEntrega AND Tarea_id = $idTarea";
+    $sqlUpdate = "UPDATE entrega SET Nota = NULL WHERE id_entrega = ".$idEntrega." AND Tarea_id = ".$idTarea;
   } else {
     $nota = (int)$notaTexto;
-    if ($nota < 0)   $nota = 0;
-    if ($nota > 100) $nota = 100;
-    $sqlUpdate = "UPDATE entrega SET Nota = $nota WHERE id_entrega = $idEntrega AND Tarea_id = $idTarea";
+    if ($nota < 0) { $nota = 0; }
+    if ($nota > 100) { $nota = 100; }
+    $sqlUpdate = "UPDATE entrega SET Nota = ".$nota." WHERE id_entrega = ".$idEntrega." AND Tarea_id = ".$idTarea;
   }
 
   mysqli_query($conexion, $sqlUpdate);
-  header("Location: admin_tarea_detalle.php?tarea=" . $idTarea);
+  header("Location: admin_tarea_detalle.php?tarea=".$idTarea);
   exit;
 }
 
@@ -46,7 +48,7 @@ if ($idTarea > 0) {
            c.nombreClase, c.nomProfe, c.codigoClase
     FROM tarea t
     JOIN clase c ON c.id_clase = t.Clase_id_clase
-    WHERE t.id = $idTarea
+    WHERE t.id = ".$idTarea."
     LIMIT 1
   ";
   $resTarea = mysqli_query($conexion, $sqlTarea);
@@ -56,15 +58,34 @@ if ($idTarea > 0) {
   }
 }
 
+// Precalcular textos seguros para la vista (sin operadores raros)
+$tituloTxt = '—';
+$temaTxt = '—';
+$descripcionTxt = '—';
+$claseNombreTxt = '—';
+$claseProfeTxt = '—';
+$claseCodigoTxt = '—';
+$idClaseDeTarea = 0;
+
+if ($tareaDatos) {
+  if (isset($tareaDatos['Titulo']) && $tareaDatos['Titulo'] !== '') { $tituloTxt = $tareaDatos['Titulo']; }
+  if (isset($tareaDatos['Tema']) && $tareaDatos['Tema'] !== '') { $temaTxt = $tareaDatos['Tema']; }
+  if (isset($tareaDatos['Descripcion']) && $tareaDatos['Descripcion'] !== '') { $descripcionTxt = $tareaDatos['Descripcion']; }
+  if (isset($tareaDatos['nombreClase']) && $tareaDatos['nombreClase'] !== '') { $claseNombreTxt = $tareaDatos['nombreClase']; }
+  if (isset($tareaDatos['nomProfe']) && $tareaDatos['nomProfe'] !== '') { $claseProfeTxt = $tareaDatos['nomProfe']; }
+  if (isset($tareaDatos['codigoClase']) && $tareaDatos['codigoClase'] !== '') { $claseCodigoTxt = $tareaDatos['codigoClase']; }
+  if (isset($tareaDatos['Clase_id_clase'])) { $idClaseDeTarea = (int)$tareaDatos['Clase_id_clase']; }
+}
+
 // ===================== CONSULTAR ENTREGAS =====================
-$listaEntregas = [];
+$listaEntregas = array();
 if ($tareaDatos) {
   $sqlEntregas = "
     SELECT e.id_entrega, e.Cuenta_Usuario, e.FechaEntrega, e.contenido, e.Archivo, e.Nota,
            i.Nombres, i.Apellidos, i.Curso
     FROM entrega e
     LEFT JOIN informacion i ON i.Cuenta_Usuario = e.Cuenta_Usuario
-    WHERE e.Tarea_id = $idTarea
+    WHERE e.Tarea_id = ".$idTarea."
     ORDER BY e.FechaEntrega DESC, e.id_entrega DESC
   ";
   $resEntregas = mysqli_query($conexion, $sqlEntregas);
@@ -122,24 +143,24 @@ if ($tareaDatos) {
 
   <div class="wrap">
 
-    <?php if(!$tareaDatos): ?>
+    <?php if (!$tareaDatos): ?>
       <div class="panel"><p>No se encontró la tarea solicitada.</p></div>
     <?php else: ?>
       <div class="titulo">Detalle de la Tarea</div>
 
       <div class="panel" style="margin-top:12px;">
         <div class="sub">Tarea</div>
-        <div><b>Título:</b> <?= ($tareaDatos['Titulo'] ?: '—') ?></div>
-        <div><b>Tema:</b> <?= ($tareaDatos['Tema'] ?: '—') ?></div>
-        <div><b>Descripción:</b> <?= ($tareaDatos['Descripcion'] ?: '—') ?></div>
+        <div><b>Título:</b> <?php echo $tituloTxt; ?></div>
+        <div><b>Tema:</b> <?php echo $temaTxt; ?></div>
+        <div><b>Descripción:</b> <?php echo $descripcionTxt; ?></div>
 
         <div class="sub" style="margin-top:12px;">Clase</div>
-        <div><b>Nombre:</b> <?= ($tareaDatos['nombreClase'] ?: '—') ?></div>
-        <div><b>Profesor:</b> <?= ($tareaDatos['nomProfe'] ?: '—') ?></div>
-        <div><b>Código:</b> <?= ($tareaDatos['codigoClase'] ?: '—') ?></div>
+        <div><b>Nombre:</b> <?php echo $claseNombreTxt; ?></div>
+        <div><b>Profesor:</b> <?php echo $claseProfeTxt; ?></div>
+        <div><b>Código:</b> <?php echo $claseCodigoTxt; ?></div>
 
         <div class="acciones">
-          <a class="btn-sec" href="TareasClase.php?clase=<?= (int)$tareaDatos['Clase_id_clase'] ?>">← Volver a tareas de la clase</a>
+          <a class="btn-sec" href="TareasClase.php?clase=<?php echo (int)$idClaseDeTarea; ?>">← Volver a tareas de la clase</a>
           <a class="btn-sec" href="Tareas.php">← Volver a clases</a>
         </div>
       </div>
@@ -156,42 +177,66 @@ if ($tareaDatos) {
           </tr>
         </thead>
         <tbody>
-          <?php if(empty($listaEntregas)): ?>
+          <?php if (empty($listaEntregas)): ?>
             <tr><td data-label="Alumno" colspan="5">No hay entregas aún.</td></tr>
-          <?php else: foreach($listaEntregas as $entrega): ?>
-            <tr>
-              <td data-label="Alumno">
-                <?php
-                  $nombres   = $entrega['Nombres']   ?? '';
-                  $apellidos = $entrega['Apellidos'] ?? '';
-                  $nombreCompleto = trim($nombres . ' ' . $apellidos);
-                  echo ($nombreCompleto !== '' ? $nombreCompleto : '—');
-                ?>
-                <div class="mini">CI/Usuario: <?= (int)$entrega['Cuenta_Usuario'] ?></div>
-              </td>
-              <td data-label="Curso"><?= ($entrega['Curso'] ?? '—') ?></td>
-              <td data-label="Fecha"><?= ($entrega['FechaEntrega'] ?? '—') ?></td>
-              <td data-label="Contenido / Archivo">
-                <?php
-                  $contenido = $entrega['contenido'] ?? '';
-                  $archivo   = $entrega['Archivo']   ?? '';
-                  echo ($contenido !== '' ? $contenido : '—');
-                  if ($archivo !== '') {
-                    echo '<div class="mini"><a href="'.$archivo.'" target="_blank" rel="noopener">Ver archivo</a></div>';
-                  }
-                ?>
-              </td>
-              <td data-label="Nota">
-                <form class="nota-form" method="post" action="?tarea=<?= (int)$idTarea ?>">
-                  <input type="hidden" name="id_entrega" value="<?= (int)$entrega['id_entrega'] ?>">
-                  <input class="nota-input" type="number" name="nota" min="0" max="100"
-                         value="<?= ($entrega['Nota'] === null ? '' : (int)$entrega['Nota']) ?>"
-                         placeholder="—">
-                  <button class="btn" type="submit">Guardar</button>
-                </form>
-              </td>
-            </tr>
-          <?php endforeach; endif; ?>
+          <?php else: ?>
+            <?php foreach ($listaEntregas as $entrega): ?>
+              <?php
+                // Preparar campos por fila (sin ?? ni ?:)
+                $nombresFila = '';
+                if (isset($entrega['Nombres'])) { $nombresFila = $entrega['Nombres']; }
+                $apellidosFila = '';
+                if (isset($entrega['Apellidos'])) { $apellidosFila = $entrega['Apellidos']; }
+                $nombreCompleto = trim($nombresFila.' '.$apellidosFila);
+                if ($nombreCompleto === '') { $nombreCompleto = '—'; }
+
+                $cursoFila = '—';
+                if (isset($entrega['Curso']) && $entrega['Curso'] !== '') { $cursoFila = $entrega['Curso']; }
+
+                $fechaFila = '—';
+                if (isset($entrega['FechaEntrega']) && $entrega['FechaEntrega'] !== '') { $fechaFila = $entrega['FechaEntrega']; }
+
+                $contenidoFila = '—';
+                if (isset($entrega['contenido']) && $entrega['contenido'] !== '') { $contenidoFila = $entrega['contenido']; }
+
+                $archivoFila = '';
+                if (isset($entrega['Archivo']) && $entrega['Archivo'] !== '') { $archivoFila = $entrega['Archivo']; }
+
+                $notaValue = '';
+                if (array_key_exists('Nota', $entrega) && $entrega['Nota'] !== null) {
+                  $notaValue = (int)$entrega['Nota'];
+                }
+
+                $cuentaUsuarioFila = 0;
+                if (isset($entrega['Cuenta_Usuario'])) { $cuentaUsuarioFila = (int)$entrega['Cuenta_Usuario']; }
+
+                $idEntregaFila = 0;
+                if (isset($entrega['id_entrega'])) { $idEntregaFila = (int)$entrega['id_entrega']; }
+              ?>
+              <tr>
+                <td data-label="Alumno">
+                  <?php echo $nombreCompleto; ?>
+                  <div class="mini">CI/Usuario: <?php echo $cuentaUsuarioFila; ?></div>
+                </td>
+                <td data-label="Curso"><?php echo $cursoFila; ?></td>
+                <td data-label="Fecha"><?php echo $fechaFila; ?></td>
+                <td data-label="Contenido / Archivo">
+                  <?php echo $contenidoFila; ?>
+                  <?php if ($archivoFila !== ''): ?>
+                    <div class="mini"><a href="<?php echo $archivoFila; ?>" target="_blank" rel="noopener">Ver archivo</a></div>
+                  <?php endif; ?>
+                </td>
+                <td data-label="Nota">
+                  <form class="nota-form" method="post" action="?tarea=<?php echo (int)$idTarea; ?>">
+                    <input type="hidden" name="id_entrega" value="<?php echo $idEntregaFila; ?>">
+                    <input class="nota-input" type="number" name="nota" min="0" max="100"
+                           value="<?php echo $notaValue; ?>" placeholder="—">
+                    <button class="btn" type="submit">Guardar</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     <?php endif; ?>

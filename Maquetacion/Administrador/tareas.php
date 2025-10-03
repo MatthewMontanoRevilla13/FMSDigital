@@ -7,19 +7,22 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
   exit;
 }
 
-/* === CONEXIÓN MYSQLI (tu bloque) === */
+/* === CONEXIÓN MYSQLI === */
 $conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
 if (!$conexion) {
   echo "Error en la conexion" . mysqli_error($conexion);
   die();
 }
+mysqli_set_charset($conexion, "utf8");
 
-/* Clases */
-$clases = [];
+/* === CONSULTA DE CLASES === */
+$clases = array();
 $sql = "SELECT id_clase, nombreClase, nomProfe, codigoClase FROM clase ORDER BY nombreClase ASC";
 $res = mysqli_query($conexion, $sql);
 if ($res) {
-  while ($row = mysqli_fetch_assoc($res)) { $clases[] = $row; }
+  while ($row = mysqli_fetch_assoc($res)) {
+    $clases[] = $row;
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -28,46 +31,174 @@ if ($res) {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tareas y Entregas · Clases</title>
+
   <style>
-    body{ margin:0; font-family:'Segoe UI',sans-serif; background-color:#fdf9f9; color:#2e0f13; }
-    header{ background-color:#6b0014; color:white; padding:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-    .menu-top{ background-color:#6b0014; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; gap:20px; }
-    .menu-top a{ color:white; background-color:#8b0020; padding:8px 14px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:14px; }
-    .menu-top a:hover{ background-color:#a6192e; }
+    /* Estilos básicos de la página */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf9f9; /* Fondo general muy claro */
+      color: #2e0f13;           /* Texto en tono vino oscuro */
+    }
 
-    .wrap{ max-width:1100px; margin:24px auto; padding:0 16px; }
-    .titulo{ text-align:center; padding:14px; background:#6b0014; color:#fff; border-radius:8px; font-weight:bold; }
+    /* Barra superior del módulo */
+    .topbar {
+      background-color: #6b0014; /* Vino principal */
+      color: #ffffff;            /* Texto blanco */
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:18px; }
-    .card{ background:#fff5f7; border:1px solid #ffdde0; border-radius:10px; padding:16px; box-shadow:0 4px 8px rgba(107,0,20,0.1); }
-    .card h3{ margin:0 0 6px; color:#6b0014; font-size:1.05rem; }
-    .meta{ font-size:.95rem; margin:3px 0; }
-    .btn{ display:inline-block; margin-top:10px; background:#a30c2c; color:#fff; text-decoration:none; padding:10px 12px; border-radius:8px; font-weight:bold; }
-    .btn:hover{ background:#7a0820; }
+    .topbar__title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-    @media (max-width:1024px){ .grid{ grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:768px){ header{ flex-direction:column; text-align:center; } }
-    @media (max-width:600px){ .grid{ grid-template-columns:1fr; } }
+    /* Contenedor general para centrar contenido */
+    .page-wrapper {
+      max-width: 1100px;  /* Ancho máximo */
+      margin: 24px auto;  /* Centrado horizontal y espacio arriba/abajo */
+      padding: 0 16px;    /* Espaciado interno a los lados */
+      box-sizing: border-box;
+    }
+
+    /* Título de la sección */
+    .page-title {
+      text-align: center;
+      padding: 14px;
+      background: #6b0014;
+      color: #ffffff;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    /* Rejilla de tarjetas de clases */
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+      gap: 18px; /* Espacio entre tarjetas */
+      margin-top: 18px;
+    }
+
+    /* Tarjeta individual de clase */
+    .class-card {
+      background: #fff5f7;               /* Fondo rosadito */
+      border: 1px solid #ffdde0;         /* Borde rosado claro */
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(107,0,20,0.1); /* Sombra ligera */
+    }
+
+    /* Título dentro de la tarjeta */
+    .class-card__title {
+      margin: 0 0 6px 0;
+      color: #6b0014;
+      font-size: 1.05rem;
+      font-weight: bold;
+    }
+
+    /* Datos adicionales (profesor, código) */
+    .class-card__meta {
+      font-size: 0.95rem;
+      margin: 4px 0;
+    }
+
+    /* Botón para ver tareas */
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #a30c2c;    /* Rojo oscuro */
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #7a0820; /* Más oscuro al pasar el mouse */
+    }
+
+    /*Estilos responsive (adaptable)*/
+    @media (max-width: 1024px) {
+      .class-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .topbar {
+        flex-direction: column;  /* Barra en columna */
+        text-align: center;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .class-grid {
+        grid-template-columns: 1fr; /* Solo 1 tarjeta por fila en móvil */
+      }
+    }
   </style>
 </head>
 <body>
 
   <?php include '../header.php'; ?>
 
-  <div class="wrap">
-    <div class="titulo">Tareas y Entregas · Clases</div>
+  <!-- Barra superior del módulo -->
+  <div class="topbar">
+    <h1 class="topbar__title">Tareas y Entregas · Clases</h1>
+  </div>
 
-    <div class="grid">
+  <!-- Contenido principal -->
+  <div class="page-wrapper">
+    <div class="page-title">Tareas y Entregas · Clases</div>
+
+    <!-- Rejilla de clases -->
+    <div class="class-grid">
       <?php if (empty($clases)): ?>
-        <div class="card"><p>No hay clases registradas.</p></div>
-      <?php else: foreach ($clases as $c): ?>
-        <div class="card">
-          <h3><?= htmlspecialchars($c['nombreClase'] ?: 'Clase sin nombre') ?></h3>
-          <div class="meta"><b>Profesor:</b> <?= htmlspecialchars($c['nomProfe'] ?: '—') ?></div>
-          <div class="meta"><b>Código:</b> <?= htmlspecialchars($c['codigoClase'] ?: '—') ?></div>
-          <a class="btn" href="TareasClase.php?clase=<?= (int)$c['id_clase'] ?>">Ver tareas</a>
+        <!-- Si no hay clases -->
+        <div class="class-card">
+          <p>No hay clases registradas.</p>
         </div>
-      <?php endforeach; endif; ?>
+      <?php else: ?>
+        <?php foreach ($clases as $c): ?>
+          <?php
+            // Preparar valores sin operadores raros
+            $nombreClase = "Clase sin nombre";
+            if (isset($c['nombreClase']) && $c['nombreClase'] !== '') {
+              $nombreClase = $c['nombreClase'];
+            }
+
+            $nombreProfe = "—";
+            if (isset($c['nomProfe']) && $c['nomProfe'] !== '') {
+              $nombreProfe = $c['nomProfe'];
+            }
+
+            $codigoClase = "—";
+            if (isset($c['codigoClase']) && $c['codigoClase'] !== '') {
+              $codigoClase = $c['codigoClase'];
+            }
+
+            $idClase = 0;
+            if (isset($c['id_clase'])) {
+              $idClase = (int)$c['id_clase'];
+            }
+          ?>
+          <!-- Tarjeta de una clase -->
+          <div class="class-card">
+            <h3 class="class-card__title"><?php echo htmlspecialchars($nombreClase); ?></h3>
+            <div class="class-card__meta"><b>Profesor:</b> <?php echo htmlspecialchars($nombreProfe); ?></div>
+            <div class="class-card__meta"><b>Código:</b> <?php echo htmlspecialchars($codigoClase); ?></div>
+            <a class="btn" href="TareasClase.php?clase=<?php echo $idClase; ?>">Ver tareas</a>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
   </div>
 </body>

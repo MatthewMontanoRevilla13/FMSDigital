@@ -48,13 +48,6 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
       <p>Planificar por paralelo, exportar PDF.</p>
     </div>
 
-    <!-- Contenido y comunicación -->
-    <div class="item">
-      <img src="/icons/folder.svg" alt="Materiales">
-      <a href="/admin/materiales/index.php">Materiales</a>
-      <p>Biblioteca (PDF, videos, enlaces) por curso/semana.</p>
-    </div>
-
     <div class="item">
       <img src="/icons/megaphone.svg" alt="Avisos">
       <a href="/FMSDIGITAL/Maquetacion/Administrador/mensajeria.php">Avisos & Mensajería</a>
