@@ -40,7 +40,7 @@
 
   <!-- Sección extra con info bonita abajo del login -->
   <div class="extra-section">
-    <h2>Unirse a Zentry</h2>
+    <h2>Unirse a FMSDIGITAL</h2>
 
     <div class="features">
       <div class="feature">
