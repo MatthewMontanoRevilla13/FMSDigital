@@ -1,230 +1,182 @@
-/* Estilo general del cuerpo */
+/* Estilo general del body */
 body {
-  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fdf9f9;
-  color: #2e0f13;
+  margin: 0;
+  padding: 0;
+  background-color: #e7a8a8; /* Fondo rosadito */
+  color: #333; /* Texto oscuro para buen contraste */
 }
 
-/* Cabecera con fondo rojo oscuro y texto blanco centrado */
+/* Encabezado con logo y nombre del colegio */
 header {
-  background-color: #6b0014;
+  background-color: #6b0014; /* fondo rojo oscuro */
   color: white;
-  padding: 15px 20px;
+  padding: 16px 32px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 10px;
 }
 
-/* Agrupamos logo y nombre */
+/* Agrupamos logo + nombre */
 .logo-nombre {
   display: flex;
   align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 15px; /* espacio entre logo y texto */
 }
 
-/* Tamaño del logo redondo */
+/* Tamaño del logo */
 .logo {
-  width: 60px;
-  height: auto;
-  max-width: 80px;
-  border-radius: 50%;
+  height: 50px;
 }
 
-/* Nombre del colegio */
-.titulo-colegio {
-  font-size: 1.5em;
+/* Estilo del texto con el nombre del cole */
+.nombre-colegio,
+header h1 {
+  font-size: 22px;
   font-weight: bold;
+  margin: 0; /* quitamos margen extra */
 }
 
-/* Nombre del estudiante */
-.nombre-alumno {
-  font-weight: bold;
-  font-size: 1em;
+/* Caja blanca donde está el formulario */
+.container {
+  max-width: 420px;
+  background-color: white;
+  margin: 50px auto;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
-/* Menú principal (Inicio, Noticias, etc.) */
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-/* Estilo de cada link del menú */
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.95em;
-}
-
-nav a:hover {
-  text-decoration: underline;
-  color: #ffcdd0;
-}
-
-/* Segundo menú debajo del header */
-.menu-secundario {
-  background-color: #800020;
-  padding: 10px;
+/* Título del formulario */
+h1 {
+  font-size: 22px;
+  margin-bottom: 30px;
   text-align: center;
-}
-
-/* Enlaces y botones del segundo menú */
-.menu-secundario a,
-.menu-secundario button {
-  background: none;
-  border: none;
-  color: white;
-  margin: 0 15px;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.menu-secundario a:hover,
-.menu-secundario button:hover {
-  text-decoration: underline;
-  color: #ffd6d9;
-}
-
-/* Formulario para ingresar código de clase */
-.formulario-clase {
-  display: none;
-  background-color: #fff5f7;
-  padding: 20px;
-  text-align: center;
-}
-
-.formulario-clase p {
-  margin-bottom: 10px;
-  font-weight: bold;
   color: #6b0014;
 }
 
-.formulario-clase input {
-  padding: 8px;
-  width: 200px;
-  border-radius: 4px;
-  border: 1px solid #dca6a9;
-  background-color: #fff0f2;
+/* Etiquetas */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
-/* Botón para enviar código de clase */
-.formulario-clase button {
-  margin-top: 10px;
-  padding: 8px 16px;
+/* Campos para escribir */
+input {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Botón de enviar */
+input[type="submit"] {
   background-color: #6b0014;
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 12px;
   font-weight: bold;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-/* Contenedor que muestra las clases del estudiante */
-.contenedor-clases {
+/* Efecto al pasar el mouse por el botón */
+input[type="submit"]:hover {
+  background-color: #a52a2a;
+}
+
+/* Botón "Registrarse" que es un link pero se ve como botón */
+.boton {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #6b0014;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.boton:hover {
+  background-color: #a52a2a;
+}
+
+/* Sección extra abajo del login con beneficios */
+.extra-section {
+  max-width: 1000px;
+  margin: 60px auto 30px;
+  text-align: center;
+}
+
+/* Título de la sección extra */
+.extra-section h2 {
+  font-size: 20px;
+  color: #6b0014;
+  margin-bottom: 30px;
+}
+
+/* Caja que contiene las 3 opciones */
+.features {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 25px;
-  padding: 30px;
+  gap: 20px;
 }
 
-/* Caja de cada clase individual */
-.clase {
-  width: 220px;
-  height: 240px;
-  background-color: #fff5f7;
-  border-radius: 20px;
-  text-align: center;
+/* Cada "feature" individual */
+.feature {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  box-shadow: 0 2px 6px rgba(107, 0, 20, 0.1);
-  transition: transform 0.3s;
+  width: 280px;
+  text-align: center;
 }
 
-/* Efecto al pasar el mouse por una clase */
-.clase:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(107, 0, 20, 0.2);
-}
-
-/* Imagen dentro de cada clase */
-.clase img {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 15px;
-}
-
-/* Nombre de la clase y del profe */
-.clase span {
-  display: block;
-  font-weight: bold;
-  font-size: 1.2em;
+/* Título dentro de cada feature */
+.feature h3 {
+  font-size: 16px;
   color: #6b0014;
+  margin-bottom: 10px;
 }
 
-/* Ajustes responsive */
-@media (max-width: 1024px) {
-  .titulo-colegio {
-    margin-left: 100px;
-  }
+/* Texto dentro de cada feature */
+.feature p {
+  font-size: 14px;
+  color: #a52a2a;
 }
 
-@media (max-width: 768px) {
+/* Adaptación para celular */
+@media (max-width: 600px) {
   header {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .logo {
-    width: 50px;
-  }
-
-  .titulo-colegio {
-    font-size: 1.3em;
-    margin-left: 0;
-    text-align: center;
-  }
-
-  nav {
-    flex-wrap: wrap;
-    justify-content: center;
+    align-items: flex-start;
     gap: 10px;
-    margin-top: 10px;
+    text-align: left;
   }
 
-  .contenedor-clases {
-    padding: 15px;
-  }
-
-  .clase {
-    width: 100%;
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 480px) {
   .logo {
-    width: 45px;
+    height: 40px;
   }
 
-  .titulo-colegio {
-    font-size: 1.2em;
+  .nombre-colegio,
+  header h1 {
+    font-size: 18px;
   }
 
-  .nombre-alumno {
-    font-size: 0.9em;
+  .container {
+    margin: 20px 10px;
+    padding: 30px 20px;
   }
 
-  nav a {
-    font-size: 0.85em;
+  .features {
+    flex-direction: column;
+    align-items: center;
   }
 }
