@@ -14,10 +14,18 @@
   <div class="siete">
     <div><img src="/FMSDIGITAL/Maquetacion/imagenes/imagen 12.jpeg" alt="Imagen 1" class="uno"></div>
     <div><img src="/FMSDIGITAL/Maquetacion/imagenes/imagen 13.jpeg" alt="Imagen 2" class="dos"></div>
-    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/imagen 16.jpeg" alt="Imagen 3" class="tres"></div>
-    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/imagen 17.jpeg" alt="Imagen 4" class="cuatro"></div>
-    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/imagen 19.jpeg" alt="Imagen 5" class="cinco"></div>
-    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/imagen 20.jpeg" alt="Imagen 6" class="seis"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 1.jpeg" alt="Imagen 3" class="tres"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 2.jpeg" alt="Imagen 4" class="cuatro"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 3.jpeg" alt="Imagen 5" class="cinco"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 4.jpeg" alt="Imagen 6" class="seis"></div>
+     <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 5.jpeg" alt="Imagen 1" class="uno"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 6.jpeg" alt="Imagen 2" class="dos"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/img 7.jpeg" alt="Imagen 3" class="tres"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/IMG_4930.jpeg" alt="Imagen 4" class="cuatro"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/IMG_4934.jpeg" alt="Imagen 5" class="cinco"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/IMG_4915.jpeg" alt="Imagen 6" class="seis"></div>
+     <div><img src="/FMSDIGITAL/Maquetacion/imagenes/IMG_4871.jpeg" alt="Imagen 1" class="uno"></div>
+    <div><img src="/FMSDIGITAL/Maquetacion/imagenes/IMG_4845.jpeg" alt="Imagen 2" class="dos"></div>
   </div>
 
   <script>

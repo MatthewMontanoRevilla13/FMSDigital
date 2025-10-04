@@ -37,44 +37,44 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
 
     <!-- Personas -->
     <div class="item">
-      <img src="/icons/users.svg" alt="Usuarios">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/usu.png" alt="Usuarios">
       <a href="/FMSDIGITAL/Maquetacion/Administrador/usuarios.php">Usuarios</a>
       <p>ABM, roles, restablecer contraseñas, importación CSV.</p>
     </div>
 
     <div class="item">
-      <img src="/icons/timetable.svg" alt="Horarios">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/schedule_118702.png" alt="Horarios">
       <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Horario.php">Horarios & Aulas</a>
       <p>Planificar por paralelo, exportar PDF.</p>
     </div>
 
     <div class="item">
-      <img src="/icons/megaphone.svg" alt="Avisos">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/avisos.png" alt="Avisos">
       <a href="/FMSDIGITAL/Maquetacion/Administrador/mensajeria.php">Avisos & Mensajería</a>
       <p>Comunicados por rol/curso; historial de envíos.</p>
     </div>
 
     <div class="item">
-      <img src="/icons/help.svg" alt="Soporte">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/soporte.png" alt="Soporte">
       <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/MensajitoFopen.php">Soporte / Tickets</a>
       <p>Reportes de problemas; estados y seguimiento.</p>
     </div>
 
     <!-- Evaluación -->
     <div class="item">
-      <img src="/icons/tasks.svg" alt="Tareas">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/tareas.png" alt="Tareas">
       <a href="/FMSDIGITAL/Maquetacion/Administrador/tareas.php">Tareas & Entregas</a>
       <p>Calendario, plazos y control de retrasos.</p>
     </div>
 
     <div class="item">
-      <img src="/icons/grades.svg" alt="Calificaciones">
+      <img src="/FMSDIGITAL/Maquetacion/imagenes/cal.png" alt="Calificaciones">
       <a href="/admin/calificaciones/index.php">Calificaciones</a>
       <p>Registros por periodo, exportar a Excel/PDF.</p>
     </div>
     <!-- Cerrar sesión -->
    <div class="item">
-  <img src="/icons/logout.svg" alt="Cerrar sesión">
+  <img src="/FMSDIGITAL/Maquetacion/imagenes/cerrar.png" alt="Cerrar sesión">
 <a href="/FMSDIGITAL/Maquetacion/Administrador/CerrarSesion.php">Cerrar Sesión</a>
   <p>Salir de la plataforma de forma segura.</p>
 </div>

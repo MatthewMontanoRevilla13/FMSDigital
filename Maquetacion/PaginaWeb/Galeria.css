@@ -1,77 +1,104 @@
-/* Estilo general de la página */
+/* ===== Base ===== */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f4f9;
+  background-color: #f5f7fa;         /* fondo claro y limpio */
   color: #2e0f13;
 }
 
-/* Contenedor de las imágenes de la galería */
+/* ===== Galería 7 (siete) ===== */
 .siete {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 columnas */
-  gap: 20px;
-  padding: 40px;
+  grid-template-columns: repeat(6, 1fr); /* 6 columnas en escritorio */
+  gap: 18px;
+  padding: 32px;
   justify-items: center;
 }
 
-/* Estilos de cada imagen de la galería */
 .siete img {
+  display: block;
   width: 100%;
   max-width: 180px;
-  height: 150px;
+  aspect-ratio: 4 / 3;               /* proporción consistente sin forzar height */
+  height: auto;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  transition: transform .18s ease, box-shadow .18s ease; /* animación breve y sutil */
+  will-change: transform;
 }
 
-/* Efecto al pasar el mouse por una imagen */
+/* Hover sutil (sin exagerar) */
 .siete img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
 }
 
-/* Adaptación a pantallas medianas (tablets) */
-@media (max-width: 1024px) {
+/* Accesible al navegar con teclado */
+.siete img:focus-visible {
+  outline: 2px solid #6b0014;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgba(107,0,20,.15);
+}
+
+/* ===== Responsivo ===== */
+/* Tablets grandes / laptops delgados */
+@media (max-width: 1200px) {
   .siete {
-    grid-template-columns: repeat(3, 1fr); /* solo 3 columnas */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* Adaptación a celulares */
+/* Tablets */
+@media (max-width: 900px) {
+  .siete {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 28px;
+    gap: 16px;
+  }
+}
+
+/* Celulares */
 @media (max-width: 600px) {
   .siete {
     grid-template-columns: repeat(2, 1fr);
     padding: 20px;
+    gap: 14px;
   }
 
   .siete img {
-    max-width: 140px;
-    height: 120px;
+    max-width: 160px;  /* un poco más grande pero controlado */
   }
 
+  /* Ajustes ligeros del header en móvil (respetando tu estructura) */
   header {
+    display: flex;              /* por si el header original ya es flex */
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
 
-  .logo {
-    height: 40px;
-  }
+  .logo { height: 40px; }
 
-  header h1 {
-    font-size: 20px;
-  }
+  header h1 { font-size: 20px; }
 
   header nav {
+    display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
   }
 
-  header nav a {
-    font-size: 14px;
+  header nav a { font-size: 14px; }
+}
+
+/* ===== Respeta preferencias del usuario (menos movimiento) ===== */
+@media (prefers-reduced-motion: reduce) {
+  .siete img {
+    transition: none;
+  }
+  .siete img:hover {
+    transform: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
   }
 }
