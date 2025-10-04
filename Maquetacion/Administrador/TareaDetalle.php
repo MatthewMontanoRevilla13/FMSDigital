@@ -21,6 +21,9 @@ if (isset($_GET['tarea'])) {
   $idTarea = (int)$_GET['tarea'];
 }
 
+/* URL del propio script (evita 404 por nombres/ubicaciones distintas) */
+$selfUrl = $_SERVER['PHP_SELF'];
+
 // ===================== GUARDAR NOTA (POST) =====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_entrega']) && isset($_POST['nota'])) {
   $idEntrega = (int)$_POST['id_entrega'];
@@ -36,7 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_entrega']) && isse
   }
 
   mysqli_query($conexion, $sqlUpdate);
-  header("Location: admin_tarea_detalle.php?tarea=".$idTarea);
+
+  /* Redirección PRG a la MISMA página sin hardcodear el nombre */
+  header("Location: " . $selfUrl . "?tarea=" . $idTarea);
   exit;
 }
 
@@ -58,7 +63,7 @@ if ($idTarea > 0) {
   }
 }
 
-// Precalcular textos seguros para la vista (sin operadores raros)
+// Precalcular textos seguros para la vista
 $tituloTxt = '—';
 $temaTxt = '—';
 $descripcionTxt = '—';
@@ -96,6 +101,9 @@ if ($tareaDatos) {
     mysqli_free_result($resEntregas);
   }
 }
+
+/* === BASE WEB de archivos de entregas (tu carpeta real) === */
+$webUploadsBase = "/FMSDIGITAL/Maquetacion/media/entregas/";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -104,30 +112,72 @@ if ($tareaDatos) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Detalle de Tarea</title>
   <style>
-    body{ margin:0; font-family:'Segoe UI',sans-serif; background:#fdf9f9; color:#2e0f13; }
-    header{ background:#6b0014; color:white; padding:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-    .menu-top{ background:#6b0014; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; gap:20px; }
-    .menu-top a{ color:white; background:#8b0020; padding:8px 14px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:14px; }
+    body{
+      margin:0;
+      font-family:'Segoe UI',sans-serif;
+      background:#fdf9f9;
+      color:#2e0f13;
+    }
+    header{
+      background:#6b0014;
+      color:white;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .menu-top{
+      background:#6b0014;
+      padding:10px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+    .menu-top a{
+      color:white;
+      background:#8b0020;
+      padding:8px 14px;
+      border-radius:6px;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:14px;
+    }
     .menu-top a:hover{ background:#a6192e; }
-
     .wrap{ max-width:1100px; margin:24px auto; padding:0 16px; }
-
-    .panel{ background:#fff5f7; border:1px solid #ffdde0; border-radius:10px; padding:16px; box-shadow:0 4px 8px rgba(107,0,20,0.1); }
-    .titulo{ text-align:center; padding:14px; background:#6b0014; color:#fff; border-radius:8px; font-weight:bold; }
+    .panel{
+      background:#fff5f7;
+      border:1px solid #ffdde0;
+      border-radius:10px;
+      padding:16px;
+      box-shadow:0 4px 8px rgba(107,0,20,0.1);
+    }
+    .titulo{
+      text-align:center;
+      padding:14px;
+      background:#6b0014;
+      color:#fff;
+      border-radius:8px;
+      font-weight:bold;
+    }
     .sub{ color:#6b0014; font-weight:bold; margin:10px 0 6px; }
-
     .acciones{ margin:12px 0; display:flex; gap:10px; flex-wrap:wrap; }
     .btn{ background:#a30c2c; color:#fff; text-decoration:none; padding:10px 12px; border-radius:8px; font-weight:bold; }
     .btn:hover{ background:#7a0820; }
-    .btn-sec{ background:#fff; color:#6b0014; border:1px solid #6b0014; text-decoration:none; padding:9px 12px; border-radius:8px; font-weight:bold; }
-
-    .tabla{ width:100%; border-collapse:collapse; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 4px 8px rgba(107,0,20,0.1); }
+    .btn-sec{
+      background:#fff; color:#6b0014; border:1px solid #6b0014;
+      text-decoration:none; padding:9px 12px; border-radius:8px; font-weight:bold;
+    }
+    .tabla{
+      width:100%; border-collapse:collapse; background:#fff; border-radius:10px;
+      overflow:hidden; box-shadow:0 4px 8px rgba(107,0,20,0.1);
+    }
     .tabla th, .tabla td{ padding:12px; border-bottom:1px solid #ffdde0; text-align:left; }
     .tabla th{ background:#6b0014; color:#fff; }
     .nota-form{ display:flex; gap:8px; align-items:center; }
     .nota-input{ width:70px; padding:6px 8px; border:1px solid #6b0014; border-radius:6px; }
     .mini{ font-size:.92rem; opacity:.9; }
-
     @media (max-width:768px){
       header{ flex-direction:column; text-align:center; }
       .tabla thead{ display:none; }
@@ -150,14 +200,14 @@ if ($tareaDatos) {
 
       <div class="panel" style="margin-top:12px;">
         <div class="sub">Tarea</div>
-        <div><b>Título:</b> <?php echo $tituloTxt; ?></div>
-        <div><b>Tema:</b> <?php echo $temaTxt; ?></div>
-        <div><b>Descripción:</b> <?php echo $descripcionTxt; ?></div>
+        <div><b>Título:</b> <?php echo htmlspecialchars($tituloTxt); ?></div>
+        <div><b>Tema:</b> <?php echo htmlspecialchars($temaTxt); ?></div>
+        <div><b>Descripción:</b> <?php echo nl2br(htmlspecialchars($descripcionTxt)); ?></div>
 
         <div class="sub" style="margin-top:12px;">Clase</div>
-        <div><b>Nombre:</b> <?php echo $claseNombreTxt; ?></div>
-        <div><b>Profesor:</b> <?php echo $claseProfeTxt; ?></div>
-        <div><b>Código:</b> <?php echo $claseCodigoTxt; ?></div>
+        <div><b>Nombre:</b> <?php echo htmlspecialchars($claseNombreTxt); ?></div>
+        <div><b>Profesor:</b> <?php echo htmlspecialchars($claseProfeTxt); ?></div>
+        <div><b>Código:</b> <?php echo htmlspecialchars($claseCodigoTxt); ?></div>
 
         <div class="acciones">
           <a class="btn-sec" href="TareasClase.php?clase=<?php echo (int)$idClaseDeTarea; ?>">← Volver a tareas de la clase</a>
@@ -182,11 +232,8 @@ if ($tareaDatos) {
           <?php else: ?>
             <?php foreach ($listaEntregas as $entrega): ?>
               <?php
-                // Preparar campos por fila (sin ?? ni ?:)
-                $nombresFila = '';
-                if (isset($entrega['Nombres'])) { $nombresFila = $entrega['Nombres']; }
-                $apellidosFila = '';
-                if (isset($entrega['Apellidos'])) { $apellidosFila = $entrega['Apellidos']; }
+                $nombresFila = isset($entrega['Nombres']) ? $entrega['Nombres'] : '';
+                $apellidosFila = isset($entrega['Apellidos']) ? $entrega['Apellidos'] : '';
                 $nombreCompleto = trim($nombresFila.' '.$apellidosFila);
                 if ($nombreCompleto === '') { $nombreCompleto = '—'; }
 
@@ -199,38 +246,48 @@ if ($tareaDatos) {
                 $contenidoFila = '—';
                 if (isset($entrega['contenido']) && $entrega['contenido'] !== '') { $contenidoFila = $entrega['contenido']; }
 
+                // Normalizar archivo a URL pública /FMSDIGITAL/Maquetacion/media/entregas/
                 $archivoFila = '';
                 if (isset($entrega['Archivo']) && $entrega['Archivo'] !== '') { $archivoFila = $entrega['Archivo']; }
+
+                $archivoUrlFila = '';
+                if ($archivoFila !== '') {
+                  $archivoFila = str_replace('\\', '/', $archivoFila);
+                  if (strpos($archivoFila, 'http://') === 0 || strpos($archivoFila, 'https://') === 0) {
+                    $archivoUrlFila = $archivoFila;
+                  } else {
+                    if ($archivoFila[0] === '/') { $archivoUrlFila = $archivoFila; }
+                    else { $archivoUrlFila = $webUploadsBase . $archivoFila; }
+                  }
+                }
 
                 $notaValue = '';
                 if (array_key_exists('Nota', $entrega) && $entrega['Nota'] !== null) {
                   $notaValue = (int)$entrega['Nota'];
                 }
 
-                $cuentaUsuarioFila = 0;
-                if (isset($entrega['Cuenta_Usuario'])) { $cuentaUsuarioFila = (int)$entrega['Cuenta_Usuario']; }
-
-                $idEntregaFila = 0;
-                if (isset($entrega['id_entrega'])) { $idEntregaFila = (int)$entrega['id_entrega']; }
+                $cuentaUsuarioFila = isset($entrega['Cuenta_Usuario']) ? (int)$entrega['Cuenta_Usuario'] : 0;
+                $idEntregaFila = isset($entrega['id_entrega']) ? (int)$entrega['id_entrega'] : 0;
               ?>
               <tr>
                 <td data-label="Alumno">
-                  <?php echo $nombreCompleto; ?>
+                  <?php echo htmlspecialchars($nombreCompleto); ?>
                   <div class="mini">CI/Usuario: <?php echo $cuentaUsuarioFila; ?></div>
                 </td>
-                <td data-label="Curso"><?php echo $cursoFila; ?></td>
-                <td data-label="Fecha"><?php echo $fechaFila; ?></td>
+                <td data-label="Curso"><?php echo htmlspecialchars($cursoFila); ?></td>
+                <td data-label="Fecha"><?php echo htmlspecialchars($fechaFila); ?></td>
                 <td data-label="Contenido / Archivo">
-                  <?php echo $contenidoFila; ?>
-                  <?php if ($archivoFila !== ''): ?>
-                    <div class="mini"><a href="<?php echo $archivoFila; ?>" target="_blank" rel="noopener">Ver archivo</a></div>
+                  <?php echo nl2br(htmlspecialchars($contenidoFila)); ?>
+                  <?php if ($archivoUrlFila !== ''): ?>
+                    <div class="mini">
+                      <a href="<?php echo htmlspecialchars($archivoUrlFila); ?>" target="_blank" rel="noopener">Ver archivo</a>
+                    </div>
                   <?php endif; ?>
                 </td>
                 <td data-label="Nota">
-                  <form class="nota-form" method="post" action="?tarea=<?php echo (int)$idTarea; ?>">
+                  <form class="nota-form" method="post" action="<?php echo htmlspecialchars($selfUrl) . '?tarea=' . (int)$idTarea; ?>">
                     <input type="hidden" name="id_entrega" value="<?php echo $idEntregaFila; ?>">
-                    <input class="nota-input" type="number" name="nota" min="0" max="100"
-                           value="<?php echo $notaValue; ?>" placeholder="—">
+                    <input class="nota-input" type="number" name="nota" min="0" max="100" value="<?php echo $notaValue; ?>" placeholder="—">
                     <button class="btn" type="submit">Guardar</button>
                   </form>
                 </td>

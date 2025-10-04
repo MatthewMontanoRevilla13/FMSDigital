@@ -147,7 +147,7 @@ if ($id_clase > 0) {
       <!-- ahora lleva al nuevo índice -->
       <a href="TareasDeClase.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Tareas</a>
       <a href="ListaEstudiantes.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Lista de estudiantes</a>
-      <a href="calificaciones.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Calificaciones</a>
+      <a href="/FMSDigital/Maquetacion/Profesor/ProfesorCalificaciones.php?id_clase=<?php echo $id_clase; ?>"><span class="icon"></span> Calificaciones</a>
       <a href="cerrarL.php"><span class="icon"></span> Cerrar Sesión</a>
     </nav>
   </aside>

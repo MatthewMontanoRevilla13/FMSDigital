@@ -17,7 +17,7 @@
   <div class="header">
     <div class="logo-nombre">
       <img src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="Logo" class="logo">
-      <span class="nombre-colegio">Zentry - Julio Mendez</span>
+      <span class="nombre-colegio">FMSDIGITAL - Julio Mendez</span>
     </div>
   </div>
   

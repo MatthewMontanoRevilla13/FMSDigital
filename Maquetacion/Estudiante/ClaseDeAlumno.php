@@ -146,7 +146,6 @@ if ($sec === "trabajo") {
   <nav>
     <a class="btn-ghost" href="ClaseDeAlumno.php?id_clase=<?php echo $id_clase; ?>">Tablero</a>
     <a class="btn-ghost" href="ClaseDeAlumno.php?id_clase=<?php echo $id_clase; ?>&sec=trabajo">Trabajo de clase</a>
-    <a class="btn-ghost" href="#">Materiales</a>
     <a href="/FMSDIGITAL/Maquetacion/Profesor/ListaEstudiantes.php?id_clase=<?php echo $id_clase; ?>">Lista de estudiantes</a>
   </nav>
 

@@ -69,7 +69,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
 
     <div class="item">
       <img src="/FMSDIGITAL/Maquetacion/imagenes/cal.png" alt="Calificaciones">
-      <a href="/admin/calificaciones/index.php">Calificaciones</a>
+      <a href="/FMSDIGITAL/Maquetacion/Administrador/calificaciones.php">Calificaciones</a>
       <p>Registros por periodo, exportar a Excel/PDF.</p>
     </div>
     <!-- Cerrar sesión -->
