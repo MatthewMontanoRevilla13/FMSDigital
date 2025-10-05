@@ -1,0 +1,195 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fbeaec;
+  color: #2e0f13;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+/* ======== BARRA BAJA DEL HEADER GLOBAL ======== */
+.barra-regreso {
+  background: #fbeaec;
+  border-bottom: 1px solid #efd0d5;
+  padding: 10px 16px;
+}
+.barra-regreso a {
+  color: #6b0014;
+  font-weight: 700;
+  text-decoration: none;
+}
+.barra-regreso a:hover {
+  text-decoration: underline;
+}
+
+/* ======== ENCABEZADO LOCAL DE ESTA PÁGINA ======== */
+.encabezado-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #efd0d5;
+}
+.encabezado-pagina h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #6b0014;
+}
+.enlace-simple {
+  color: #6b0014;
+  text-decoration: none;
+  font-weight: 700;
+}
+.enlace-simple:hover {
+  text-decoration: underline;
+}
+
+/* ======== CONTENEDOR GENERAL ======== */
+.contenedor {
+  width: 100%;
+  max-width: 1080px;
+  margin: 18px auto 28px;
+  padding: 0 16px;
+}
+
+/* ======== TARJETA ======== */
+.tarjeta {
+  background: #fff;
+  border: 1px solid #efd0d5;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+}
+.tarjeta h2 {
+  margin: 0 0 12px 0;
+  color: #6b0014;
+  font-size: 1.25rem;
+}
+
+/* ======== FILAS DE FORMULARIO ======== */
+.fila {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+input, select {
+  padding: 12px;
+  border: 1px solid #efd0d5;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 1rem;
+  background: #fff;
+}
+.caja-boton {
+  margin-top: 14px;
+}
+
+/* ======== BOTONES ======== */
+.boton {
+  background: #6b0014;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+.boton.alerta {
+  background: #8b0020;
+}
+
+/* ======== TABLA ======== */
+.caja-tabla {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+th, td {
+  border: 1px solid #e9d7da;
+  padding: 12px;
+  text-align: left;
+  font-size: 1rem;
+  vertical-align: top;
+}
+thead th {
+  background: #f7eef0;
+}
+
+/* =================== MEDIAS RESPONSIVAS =================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  body { font-size: 18px; }
+  .encabezado-pagina { padding: 18px; }
+  .encabezado-pagina h1 { font-size: 1.8rem; }
+  .contenedor { max-width: 920px; padding: 0 14px; }
+  .tarjeta { padding: 16px; border-radius: 12px; }
+  .tarjeta h2 { font-size: 1.3rem; }
+  input, select { padding: 14px; font-size: 1.05rem; }
+  .boton { padding: 14px 18px; font-size: 1.05rem; }
+  th, td { padding: 14px; font-size: 1.05rem; }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  body { font-size: 19px; }
+  .encabezado-pagina {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 26px 16px;
+  }
+  .encabezado-pagina h1 { font-size: 2rem; }
+  .contenedor {
+    max-width: 100%;
+    margin: 14px 0 22px;
+    padding: 0 12px;
+  }
+  .tarjeta {
+    padding: 20px;
+    border-radius: 14px;
+  }
+  .tarjeta h2 { font-size: 1.4rem; }
+  .fila {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  label { font-size: 1.1rem; }
+  input, select {
+    font-size: 1.15rem;
+    padding: 16px;
+  }
+  .boton {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 16px;
+    border-radius: 12px;
+  }
+  th, td {
+    font-size: 1.15rem;
+    padding: 16px;
+  }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 380px) {
+  body { font-size: 20px; }
+  .encabezado-pagina { padding: 30px 14px; }
+  .encabezado-pagina h1 { font-size: 2.2rem; }
+  .boton { font-size: 1.25rem; padding: 18px; }
+}
