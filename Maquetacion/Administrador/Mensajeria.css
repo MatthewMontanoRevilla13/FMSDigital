@@ -1,20 +1,209 @@
-:root{ --vino:#6b0014; --fondo:#fbeaec; --borde:#efd0d5; }
-*{box-sizing:border-box}
-body{font-family:Arial, Helvetica, sans-serif;background:var(--fondo);margin:0}
-header{background:var(--vino);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
-header a{color:#fff;text-decoration:none}
-.contenedor{max-width:980px;margin:18px auto;padding:0 12px}
-.barra{display:flex;justify-content:space-between;align-items:center;margin:16px 0}
-.boton{display:inline-block;background:var(--vino);color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700}
-.boton:hover{filter:brightness(1.1)}
-.tarjeta{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:14px;margin:10px 0}
-.tabla{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--borde);border-radius:12px;overflow:hidden}
-.tabla th, .tabla td{padding:12px;border-bottom:1px solid #f2dce0;text-align:left}
-.tabla tr:last-child td{border-bottom:none}
-.form{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:16px;display:grid;gap:10px}
-.form input[type=text], .form select, .form textarea{width:100%;padding:10px;border:1px solid var(--borde);border-radius:10px}
-.form input[type=file]{padding:6px}
-.form input[type=submit]{background:var(--vino);color:#fff;padding:10px 16px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
-.form input[type=submit]:hover{filter:brightness(1.1)}
-.filas{display:grid;gap:10px}
-.tag{display:inline-block;background:#f2dce0;color:#6b0014;padding:4px 8px;border-radius:8px;font-size:12px;margin-left:6px}
+/* ====== ESTILO BASE (ESCRITORIO) ====== */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fbeaec;
+  color: #2e0f13;
+  font-size: 18px;
+}
+
+/* header global viene de header.php */
+
+/* Barra debajo del header global (propia de esta página) */
+.sub-barra {
+  background: #fbeaec;
+  border-bottom: 1px solid #efd0d5;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sub-barra a {
+  color: #6b0014;
+  text-decoration: none;
+  font-weight: bold;
+}
+.sub-barra a:hover { text-decoration: underline; }
+
+/* Contenedor general */
+.contenedor {
+  width: 100%;
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 20px;
+}
+
+/* Tarjetas */
+.tarjeta {
+  background: #ffffff;
+  border: 1px solid #efd0d5;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.tarjeta h3 {
+  margin-top: 0;
+  color: #6b0014;
+  font-size: 1.4rem;
+}
+
+/* Formularios */
+.formulario {
+  display: grid;
+  gap: 14px;
+}
+.formulario label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.formulario select,
+.formulario textarea,
+.formulario input[type="file"],
+.formulario input[type="text"] {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #efd0d5;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #ffffff;
+}
+
+/* Botones */
+.boton {
+  display: inline-block;
+  background: #6b0014;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+.boton:hover { opacity: 0.9; }
+.boton-pequeno { padding: 8px 12px; font-size: 0.95rem; }
+
+/* Tabla */
+.tabla-caja { overflow-x: auto; }     /* por si no entra en pantallas chicas */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+.tabla th,
+.tabla td {
+  padding: 14px;
+  border-bottom: 1px solid #f2dce0;
+  text-align: left;
+  font-size: 1rem;
+  vertical-align: top;
+}
+.tabla thead { background: #f7eef0; }
+
+/* ===========================================================
+   ===========  MEDIA QUERIES PARA PANTALLAS MÓVILES ===========
+   =========================================================== */
+
+/* TABLET */
+@media (max-width: 900px) {
+  /* el header global se mantiene; hacemos crecer nuestra sub-barra y contenido */
+  .sub-barra { padding: 16px 16px; }
+
+  .contenedor {
+    padding: 0 16px;
+    max-width: 100%;
+  }
+
+  .tarjeta {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .formulario select,
+  .formulario textarea,
+  .formulario input[type="file"],
+  .formulario input[type="text"] {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  .boton {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  .tabla th,
+  .tabla td {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+
+/* CELULAR GRANDE */
+@media (max-width: 600px) {
+  body { font-size: 20px; }
+
+  /* sub-barra más alta y cómoda de tocar */
+  .sub-barra { padding: 20px 16px; gap: 10px; }
+
+  .contenedor {
+    width: 100%;
+    padding: 0 14px;
+    margin: 20px 0;
+  }
+
+  .tarjeta {
+    padding: 28px;
+    border-radius: 16px;
+  }
+  .tarjeta h3 { font-size: 1.6rem; }
+
+  .formulario { gap: 16px; }
+  .formulario label { font-size: 1.3rem; }
+
+  .formulario select,
+  .formulario textarea,
+  .formulario input[type="file"],
+  .formulario input[type="text"] {
+    font-size: 1.3rem;
+    padding: 18px;
+  }
+
+  .boton {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .tabla th,
+  .tabla td {
+    font-size: 1.3rem;
+    padding: 20px;
+  }
+}
+
+/* CELULAR PEQUEÑO */
+@media (max-width: 400px) {
+  body { font-size: 22px; }
+
+  .sub-barra { padding: 24px 14px; }
+
+  .tarjeta { padding: 30px; }
+
+  .formulario select,
+  .formulario textarea,
+  .formulario input[type="file"],
+  .formulario input[type="text"] {
+    font-size: 1.4rem;
+    padding: 20px;
+  }
+
+  .boton {
+    font-size: 1.5rem;
+    padding: 22px;
+  }
+}

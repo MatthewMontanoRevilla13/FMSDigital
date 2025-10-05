@@ -150,10 +150,7 @@ header h1 {
   .item a { font-size: 1em; }
 }
   </style>
-  <header>
-    <h1>Panel · Cursos</h1>
-    <img class="logo-colegio" src="/FMSDIGITAL/Maquetacion/imagenes/logo.png" alt="logo">
-  </header>
+  <?php include '../header.php'; ?>
 <main class="admin-main">
   <button onclick="window.history.back()" class="btn-volver">⬅ Volver atrás</button>
   <div class="menu-top">

@@ -1,0 +1,134 @@
+/* ===== Base ===== */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f7f7fb;
+  color: #2e0f13;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+/* ===== Barra superior propia del módulo ===== */
+.barra-superior {
+  background: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.acciones-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-modulo {
+  height: 36px;
+}
+
+/* ===== Botones y enlaces ===== */
+.boton {
+  background: #6b0014;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+}
+.boton-gris { background: #666; }
+.enlace {
+  color: #6b0014;
+  text-decoration: none;
+  font-weight: 700;
+}
+.enlace:hover { text-decoration: underline; }
+
+/* ===== Contenido en tarjetas ===== */
+.contenedor {
+  width: 100%;
+  max-width: 1100px;
+  margin: 18px auto 26px;
+  padding: 0 16px;
+}
+.tarjeta {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 18px;
+  margin: 14px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.titulo-pagina {
+  margin: 0 0 6px 0;
+  font-size: 1.4rem;
+  color: #6b0014;
+}
+.texto-suave { margin: 0; color: #333; }
+
+/* ===== Tabla ===== */
+.caja-tabla { overflow-x: auto; }
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+.tabla th, .tabla td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  vertical-align: top;
+  font-size: 15px;
+}
+.tabla thead th {
+  background: #f7eef0;
+  border-bottom: 1px solid #e6cfd6;
+}
+
+/* ===== Medias ===== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  body { font-size: 18px; }
+  .contenedor { max-width: 920px; padding: 0 14px; }
+  .tarjeta { padding: 16px; }
+  .tabla th, .tabla td { padding: 14px; font-size: 16px; }
+}
+
+/* Celular: header alto, botones e inputs grandes, textos grandes */
+@media (max-width: 600px) {
+  body { font-size: 19px; }
+
+  .barra-superior {
+    padding: 20px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .acciones-izquierda {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .boton, .boton-gris {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .contenedor { max-width: 100%; padding: 0 12px; margin: 14px auto 22px; }
+  .tarjeta { padding: 20px; border-radius: 14px; }
+  .titulo-pagina { font-size: 1.6rem; }
+
+  .tabla th, .tabla td { font-size: 17px; padding: 16px; }
+}
+
+/* Celular pequeño */
+@media (max-width: 400px) {
+  body { font-size: 20px; }
+  .barra-superior { padding: 22px 14px; }
+  .boton, .boton-gris { font-size: 18px; padding: 16px; }
+}

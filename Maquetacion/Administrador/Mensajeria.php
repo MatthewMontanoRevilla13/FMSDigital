@@ -2,6 +2,7 @@
 session_start();
 $conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
 if (!$conexion) { die("Error en la conexion"); }
+mysqli_set_charset($conexion, "utf8");
 
 $clases = mysqli_query($conexion, "SELECT id_clase, nombreClase, codigoClase FROM clase ORDER BY id_clase DESC");
 
@@ -18,94 +19,96 @@ if ($clase_seleccionada > 0) {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mensajería (Admin)</title>
+  <!-- CSS global si lo tienes -->
+  <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Administrador/admin.css">
+  <!-- CSS propio y responsivo de esta vista -->
   <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/Administrador/Mensajeria.css">
-  <style>
-    /* Estilos mínimos solo para la sub-barra bajo el header global */
-    .sub-barra {
-      background: #fbeaec;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      border-bottom: 1px solid #efd0d5;
-    }
-    .sub-barra span { font-weight: bold; color: #6b0014; }
-    .sub-barra a { text-decoration: none; color: #6b0014; font-weight: bold; }
-    .sub-barra a:hover { text-decoration: underline; }
-  </style>
 </head>
 <body>
 
 <?php include '../header.php'; ?>
 
-<!-- Sub-barra específica de esta página (NO se modifica header.php) -->
+<!-- Sub-barra específica de esta página -->
 <div class="sub-barra">
   <a href="/FMSDIGITAL/Maquetacion/Administrador/admin.php">← Volver al panel</a>
 </div>
 
 <div class="contenedor">
   <div class="tarjeta">
-    <form action="" method="get" class="form">
+    <form action="" method="get" class="formulario">
       <label for="clase">Seleccionar clase</label>
       <select id="clase" name="clase">
         <option value="0">-- Elegir --</option>
         <?php
-        while ($c = mysqli_fetch_assoc($clases)) {
-          $sel = ($clase_seleccionada == $c['id_clase']) ? "selected" : "";
-          echo "<option value='".$c['id_clase']."' ".$sel.">".$c['nombreClase']." (".$c['codigoClase'].")</option>";
+        if ($clases) {
+          while ($c = mysqli_fetch_assoc($clases)) {
+            $sel = ($clase_seleccionada == (int)$c['id_clase']) ? "selected" : "";
+            echo "<option value='".(int)$c['id_clase']."' ".$sel.">".htmlspecialchars($c['nombreClase'])." (".htmlspecialchars($c['codigoClase']).")</option>";
+          }
         }
         ?>
       </select>
-      <input type="submit" value="Ver mensajes">
+      <button type="submit" class="boton">Ver mensajes</button>
     </form>
   </div>
 
   <?php if ($clase_seleccionada > 0) { ?>
     <div class="tarjeta">
-      <h3>Nuevo mensaje para la clase #<?php echo $clase_seleccionada; ?></h3>
-      <form class="form" action="MensajeGuardar.php" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id_clase" value="<?php echo $clase_seleccionada; ?>">
+      <h3>Nuevo mensaje para la clase #<?php echo (int)$clase_seleccionada; ?></h3>
+      <form class="formulario" action="MensajeGuardar.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id_clase" value="<?php echo (int)$clase_seleccionada; ?>">
+
         <label for="texto">Texto</label>
-        <textarea id="texto" name="texto" rows="3" required></textarea>
+        <textarea id="texto" name="texto" rows="4" required></textarea>
 
         <label for="archivo">Archivo (opcional)</label>
         <input type="file" id="archivo" name="archivo">
 
-        <input type="submit" value="Publicar mensaje">
+        <button type="submit" class="boton">Publicar mensaje</button>
       </form>
     </div>
 
     <div class="tarjeta">
       <h3>Mensajes existentes</h3>
-      <table class="tabla">
-        <thead>
-          <tr>
-            <th>Texto</th>
-            <th>Autor (Usuario)</th>
-            <th>Fecha</th>
-            <th>Archivo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          if ($mensajes) {
-            while ($m = mysqli_fetch_assoc($mensajes)) {
-              echo "<tr>";
-              echo "<td>".$m['contenido']."</td>";
-              echo "<td>".$m['Cuenta_Usuario']."</td>";
-              echo "<td>".$m['fechaEdi']."</td>";
-              if ($m['archivo'] != "") {
-                echo "<td><a class='boton' href='media/clases/".$m['archivo']."' target='_blank'>Ver archivo</a></td>";
-              } else {
-                echo "<td>—</td>";
+      <div class="tabla-caja">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Texto</th>
+              <th>Autor (Usuario)</th>
+              <th>Fecha</th>
+              <th>Archivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($mensajes) {
+              while ($m = mysqli_fetch_assoc($mensajes)) {
+                $texto   = htmlspecialchars($m['contenido']);
+                $autor   = htmlspecialchars($m['Cuenta_Usuario']);
+                $fecha   = htmlspecialchars($m['fechaEdi']);
+                $archivo = htmlspecialchars($m['archivo'] ?? '');
+
+                echo "<tr>";
+                echo "<td>{$texto}</td>";
+                echo "<td>{$autor}</td>";
+                echo "<td>{$fecha}</td>";
+                if ($archivo !== "") {
+                  echo "<td><a class='boton boton-pequeno' href='media/clases/{$archivo}' target='_blank'>Ver archivo</a></td>";
+                } else {
+                  echo "<td>—</td>";
+                }
+                echo "</tr>";
               }
-              echo "</tr>";
+            } else {
+              echo "<tr><td colspan='4'>No hay mensajes.</td></tr>";
             }
-          }
-          ?>
-        </tbody>
-      </table>
+            ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   <?php } ?>
 </div>
