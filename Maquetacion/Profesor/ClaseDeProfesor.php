@@ -126,18 +126,7 @@ if ($id_clase > 0) {
   </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">Julio Mendez</div>
-    <nav class="topnav">
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.php">Inicio</a>
-      <a href="/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.php">Tus clases</a>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Noticias.php">Noticias</a>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Galeria.php">Galería</a>
-      <a href="/FMSDIGITAL/Maquetacion/PaginaWeb/Contacto.php">Contacto</a>
-    </nav>
-  </div>
-</header>
+<?php include '../header.php'; ?>
 
 <div class="shell">
   <aside class="sidebar">

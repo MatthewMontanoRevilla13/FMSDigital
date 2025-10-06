@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Plataforma Escolar</title>
-
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Conexión con el CSS -->
   <link rel="stylesheet" href="/FMSDIGITAL/Maquetacion/PaginaWeb/PaginaPrincipal.css">
 </head>
 <body>
+  <body onload="presentacion()">
 
   <!-- Header con el título y menú -->
   <?php include '../header.php'; ?>
@@ -81,6 +82,17 @@
 
   <!-- Footer -->
   <?php include '../footer.php'; ?>
-
+<script>
+  function presentacion(){
+   Swal.fire({
+  title: "BIENVENIDOS A NUESTRO PROYECTO!",
+  text: "esta plataforma web escolar esta pensada para mejorar la educación.",
+  imageUrl: "/FMSDIGITAL/Maquetacion/imagenes/FMSDIGITAL.png",
+  imageWidth: 400,
+  imageHeight: 200,
+  imageAlt: "Custom image"
+}); 
+  }
+</script>
 </body>
 </html>

@@ -122,7 +122,7 @@ if ($id_clase>0) {
 <body class="page--wide">
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand">NOMBRE DEL COLEGIO</div>
+    <div class="brand">JULIO MENDEZ</div>
     <nav class="topnav"><a href="TareasDeClase.php?id_clase=<?php echo $id_clase; ?>">← Volver a Tareas</a></nav>
   </div>
 </header>

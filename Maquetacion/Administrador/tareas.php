@@ -150,10 +150,7 @@ if ($res) {
 
   <?php include '../header.php'; ?>
 
-  <!-- Barra superior del módulo -->
-  <div class="topbar">
-    <h1 class="topbar__title">Tareas y Entregas · Clases</h1>
-  </div>
+
 
   <!-- Contenido principal -->
   <div class="page-wrapper">

@@ -34,7 +34,7 @@
 
   <!-- Menú secundario debajo del header -->
   <div class="menu-secundario">
-    <a href="#">Calendario</a>
+
     <a href="/FMSDIGITAL/Maquetacion/Profesor/FormularioEditarClase.php">Editar cursos</a>
     <a href="#" id="mostrarFormulario">Crear una clase</a>
     <a href="/FMSDIGITAL/Maquetacion/CuentasDeUsuario/cerrarL.php">Cerrar Sesion</a>
