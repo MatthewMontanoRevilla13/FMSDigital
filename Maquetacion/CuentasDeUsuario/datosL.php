@@ -6,61 +6,117 @@
     <title>datosL.php</title>
 </head>
 <body>
-    <?php
-    // Guardamos lo que se escribió en el formulario
-    $usu = $_POST['Usuario'];
-    $clave = $_POST['Contraseña'];
-    // Iniciamos sesión para guardar datos del usuario si todo sale bien
-    session_start();
-    // Conectamos con la base de datos local
-    $conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
-    // Si no se conecta, mostramos error y paramos todo
-    if (!$conexion) {
-        echo "Error en la conexion" . mysqli_error();
-        die();
-    }
-    // Consulta para ver si el usuario y contraseña existen y obtener sus datos
-    $sqlJ = "SELECT c.Usuario, c.Contraseña, c.Rol, c.Bloqueado, 
-                    i.Nombres, i.Apellidos
-             FROM Cuenta c 
-             JOIN Informacion i ON c.Usuario = i.Cuenta_Usuario
-             WHERE c.Usuario = '$usu' AND c.Contraseña = '$clave'";
-    // Ejecutamos la consulta
-    $resultado = mysqli_query($conexion, $sqlJ);
-    // Si encontró resultados y hay por lo menos un usuario
-    if (!empty($resultado) && mysqli_num_rows($resultado) > 0) {
-        $fila = mysqli_fetch_assoc($resultado); // Guardamos los datos del usuario
-        // Si el usuario está bloqueado, se lo avisa y se lo manda de vuelta al login
-        if (!empty($fila['Bloqueado'])) {
-            echo "<script>alert('Tu cuenta está bloqueada. Contacta con el administrador.');</script>";
-            echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
-            exit;
-        }
-        // Guardamos los datos del usuario en variables de sesión
-        $_SESSION['usu'] = $fila['Usuario'];
-        $_SESSION['rol'] = $fila['Rol'];
-        $_SESSION['nom'] = $fila['Nombres'];
-        $_SESSION['apes'] = $fila['Apellidos'];
-        // Según su rol, lo mandamos a su panel correspondiente
-        if($fila['Rol'] === 'Administrador'){
-            header('Location:/FMSDIGITAL/Maquetacion/Administrador/admin.php');
-        }else{
-            if ($fila['Rol'] === 'Estudiante') {
-            header('Location:/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.php');
-            } elseif ($fila['Rol'] === 'Profesor') {
-            header('Location:/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.php');
-          } else {
-             // Si por algún motivo el rol no es válido
-             echo "<script>alert('Rol desconocido. Contacta al administrador.');</script>";
-             echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/cuentasDeUsuario/FormularioLogin.php';</script>";
-          }
+<?php
+// Iniciar sesión
+session_start();
+
+// 1) Validación de llegada de datos y que no estén vacíos
+if (!isset($_POST['Usuario'], $_POST['Contraseña'])) {
+    // Si no vinieron los campos esperados
+    header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php?e=faltan_campos');
+    exit;
+}
+
+$usu   = trim($_POST['Usuario']);
+$clave = trim($_POST['Contraseña']);
+
+if ($usu === '' || $clave === '') {
+    // Si llegaron vacíos
+    header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php?e=vacíos');
+    exit;
+}
+
+// 2) Conectar con la base de datos
+$conexion = mysqli_connect("localhost", "root", "", "RegistroP6");
+if (!$conexion) {
+    // No mostramos detalles del error al usuario final (seguridad)
+    // Puedes loguearlo si quieres en un archivo.
+    echo "<script>alert('Error de conexión con la base de datos.');</script>";
+    echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
+    exit;
+}
+
+// Usar el set de caracteres correcto ANTES de escapar
+mysqli_set_charset($conexion, "utf8mb4");
+
+// 3) Escapar valores para evitar inyección SQL (sin prepared statements)
+$usu_safe   = mysqli_real_escape_string($conexion, $usu);
+$clave_safe = mysqli_real_escape_string($conexion, $clave);
+
+// 4) Construir la consulta (misma lógica, ahora con variables escapadas)
+$sqlJ = "
+    SELECT c.Usuario, c.Contraseña, c.Rol, c.Bloqueado,
+           i.Nombres, i.Apellidos
+    FROM Cuenta c
+    JOIN Informacion i ON c.Usuario = i.Cuenta_Usuario
+    WHERE c.Usuario = '$usu_safe' AND c.Contraseña = '$clave_safe'
+";
+
+// 5) Ejecutar y validar que la consulta se ejecute correctamente
+$resultado = mysqli_query($conexion, $sqlJ);
+
+if ($resultado === false) {
+    // Error al ejecutar la consulta
+    // (opcional) Puedes loguear mysqli_error($conexion) en un archivo .log
+    echo "<script>alert('Ocurrió un problema al procesar la solicitud.');</script>";
+    echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
+    mysqli_close($conexion);
+    exit;
+}
+
+// 6) Validar si hay filas
+if (mysqli_num_rows($resultado) > 0) {
+    $fila = mysqli_fetch_assoc($resultado);
+
+    // 7) Chequear bloqueo (si tu campo es 1/0, esto lo cubre)
+    if (!empty($fila['Bloqueado'])) {
+        echo "<script>alert('Tu cuenta está bloqueada. Contacta con el administrador.');</script>";
+        echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
+        mysqli_free_result($resultado);
+        mysqli_close($conexion);
         exit;
     }
-    } else {
-        // Si no se encontró el usuario, lo mandamos de nuevo al login
-        header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php');
-    }
-?>
 
+    // 8) Guardar datos en sesión
+    $_SESSION['usu']  = $fila['Usuario'];
+    $_SESSION['rol']  = $fila['Rol'];
+    $_SESSION['nom']  = $fila['Nombres'];
+    $_SESSION['apes'] = $fila['Apellidos'];
+
+    // 9) Redirigir según rol
+    if ($fila['Rol'] === 'Administrador') {
+        mysqli_free_result($resultado);
+        mysqli_close($conexion);
+        header('Location:/FMSDIGITAL/Maquetacion/Administrador/admin.php');
+        exit;
+    } else {
+        if ($fila['Rol'] === 'Estudiante') {
+            mysqli_free_result($resultado);
+            mysqli_close($conexion);
+            header('Location:/FMSDIGITAL/Maquetacion/Estudiante/PanelDeEstudiante.php');
+            exit;
+        } elseif ($fila['Rol'] === 'Profesor') {
+            mysqli_free_result($resultado);
+            mysqli_close($conexion);
+            header('Location:/FMSDIGITAL/Maquetacion/Profesor/PanelPrincipalDeProfesor.php');
+            exit;
+        } else {
+            // Rol inesperado
+            echo "<script>alert('Rol desconocido. Contacta al administrador.');</script>";
+            echo "<script>window.location.href = '/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php';</script>";
+            mysqli_free_result($resultado);
+            mysqli_close($conexion);
+            exit;
+        }
+    }
+} else {
+    // 10) Credenciales inválidas
+    mysqli_free_result($resultado);
+    mysqli_close($conexion);
+    // Puedes pasar un flag por querystring para mostrar mensaje en el login
+    header('Location:/FMSDIGITAL/Maquetacion/CuentasDeUsuario/FormularioLogin.php?e=credenciales');
+    exit;
+}
+?>
 </body>
 </html>
